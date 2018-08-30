@@ -19,6 +19,9 @@ body {
     border: 1px solid #000;
     border-radius: 5px;
 }
+.uw-madison-white-theme .card a {
+    color: var(--myuw-accent-color);
+}
 .uw-madison-white-theme .card button {
     font-weight: 500;
 }
