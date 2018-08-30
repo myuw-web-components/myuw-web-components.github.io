@@ -1,14 +1,27 @@
 <html>
     <head>
-        <!-- Web component polyfill loader -->
-        <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1/webcomponents-loader.js"></script>
+        <!-- Viewport meta tag -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <!-- UW-Madison brand fonts -->
+        <link rel="stylesheet" id="uwmadison-fonts-css"  href="https://brand.wisc.edu/content/themes/uw-theme/dist/fonts/uw160/fonts.css?ver=1.2.2" type="text/css" media="all" />
+        
+        <!-- Demo styles -->
+        <link rel="stylesheet" href="./demo/styles.css" type="text/css" />
+        
         <style>
             body {
                 padding: 0;
                 margin: 0;
+                font-family: 'Roboto';
+                font-size: 16px;
+            }
+            myuw-app-bar {
+                --myuw-app-bar-font: 'Verlag';
             }
         </style>
+        <!-- Web component polyfill loader -->
+        <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1/webcomponents-loader.js"></script>
 
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1?module"></script>
         <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1"></script>
@@ -21,43 +34,12 @@
 
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-search@^1?module"></script>
         <script nomodule scr="https://unpkg.com/@myuw-web-components/myuw-search@^1"></script>
+        
+        <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-profile@^1?module"></script>
+        <script nomodule scr="https://unpkg.com/@myuw-web-components/myuw-profile@^1"></script>
 
     </head>
-    <body>
-        <!-- Styles for demo purposes only -->
-        <style>
-            body {
-                margin: 0;
-                background: #ccc;
-            }
-            div.demo__test-content {
-                min-height: 1000px;
-                padding: 18px 36px;
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-content: flex-start
-            }
-            div.demo__test-content .demo__grid-box {
-                font-family: 'Arial';
-                height: 300px;
-                width: 300px;
-                box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
-                background: #555;
-                color: #fff;
-                font-size: 28px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 18px;
-                border-radius: 5px;
-            }
-            div.demo__test-content .demo__grid-box label {
-                font-size: 16px;
-                display: block;
-                flex: auto;
-            }
-        </style>
+    <body class="uw-madison-red-theme">
         <myuw-app-bar
             role="toolbar"
             theme-name="MyUW"
@@ -113,27 +95,186 @@
                   href="https://github.com/myuw-web-components/myuw-search/">
                 </myuw-drawer-link>
             </myuw-drawer>
+            <myuw-search id="search" slot="myuw-search"></myuw-search>
+            <span slot="myuw-help">
+                <button class="demo__toolbar-button help">
+                    <i class="material-icons">help</i>
+                </button>
+            </span>
+            <span slot="myuw-notifications">
+                <button class="demo__toolbar-button notifications">
+                    <i class="material-icons">notifications</i>
+                </button>
+            </span>
+            <myuw-profile slot="myuw-profile"
+                session-endpoint="./demo/session.json"
+                login-url="#"
+                logout-url="#">
+                <a href="https://myuw-web-components.github.io/myuw-profile/" slot="nav-item">Profile demo page</a>
+            </myuw-profile>
         </myuw-app-bar>
 
-        <div class="demo__container">
-          <div class="demo__test-content">
-              <div class="demo__grid-box">
-                  <div><a href="https://myuw-web-components.github.io/myuw-app-bar/"><button name="myuw-app-bar">MyUW App Bar</button></a></div>
-              </div>
-              <div class="demo__grid-box">
-                  <div><a href="https://myuw-web-components.github.io/myuw-drawer/"><button name="myuw-drawer">MyUW Drawer</button></a></div>
-              </div>
-              <div class="demo__grid-box">
-                  <div><a href="https://myuw-web-components.github.io/myuw-help/"><button name="myuw-help">MyUW Help and Feedback</button></a></div>
-              </div>
-              <div class="demo__grid-box">
-                  <div><a href="https://myuw-web-components.github.io/myuw-profile/"><button name="myuw-profile">MyUW Profile</button></a></div>
-              </div>
-              <div class="demo__grid-box">
-                  <div><a href="https://myuw-web-components.github.io/myuw-search/"><button name="myuw-search">MyUW Search</button></a></div>
-              </div>
-          </div>
+        <div class="demo__container" role="main">
+            <section>
+                <h2 id="page-title">Interactive Components</h2>
+                <div class="test-content">
+                    <!-- TOP BAR INTERACTIVE CONTENT -->
+                    <div class="card">
+                        <h3>Top app bar</h3>
+                        <a class="subtitle" href="https://github.com/myuw-web-components/myuw-app-bar">myuw-app-bar</a>
+                        <div class="interactive">
+                            <form name="topBarDemos">
+                                <div class="form-control row">
+                                    <input id="newPortalName" type="text" placeholder="New portal name"/>
+                                    <button onclick="updateTitle(event, 'theme-name',  newPortalName.value)">Update theme name</button>
+                                </div>
+                                <div class="form-control row">
+                                    <input id="newAppName" type="text" placeholder="New app name"/>
+                                    <button onclick="updateTitle(event, 'app-name',  newAppName.value)">Update app name</button>
+                                </div>
+                                <div class="form-control row">
+                                    <input id="newBackground" type="text" placeholder="rgb(33,150,243)"/>
+                                    <button onclick="updateBarBackground(event, 'myuw-app-bar-bg',  newBackground.value)">Update background color</button>
+                                </div>
+                                <div class="form-control row">
+                                    <label for="newTheme">Change the theme:</label>
+                                    <select id="newTheme" type="text" onchange="updateTheme(newTheme.value)">
+                                        <option value="uw-madison-red-theme">MyUW Red</option>
+                                        <option value="uw-madison-white-theme">MyUW White</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- PROFILE BUTTON INTERACTIVE CONTENT -->
+                    <div class="card">
+                        <h3>Profile button/menu</h3>
+                        <a class="subtitle" href="https://github.com/myuw-web-components/myuw-profile">myuw-profile</a>
+                        <div class="interactive">
+                            <form name="profileDemos">
+                                <div class="form-control row">
+                                    <input id="newProfileColor" type="text" placeholder="#888">
+                                    <button aria-label="set profile button color" onclick="setProfileColor(newProfileColor.value)">Set profile color</button>
+                                </div>
+                                <div class="form-control">
+                                    <button aria-label="set no session" onclick="setSession('jargon')">No session</button>
+                                </div>
+                                <div class="form-control">
+                                    <button aria-label="restore demo session" onclick="setSession('./demo/session.json')">Restore demo session</button>
+                                </div>
+                                <div class="form-control">
+                                    <button aria-label="set missing session-endpoint" onclick="setSession(null)">Set missing session endpoint</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- SEARCH BAR INTERACTIVE CONTENT -->
+                    <div class="card">
+                        <h3>Search bar</h3>
+                        <a class="subtitle" href="https://github.com/myuw-web-components/myuw-search">myuw-search</a>
+                        <div class="interactive">
+                            <form name="profileDemos">
+                                <div class="form-control row">
+                                    <input id="newPlaceholder" type="text" placeholder="Search MyUW">
+                                    <button aria-label="change search bar placeholder" onclick="updateSearchBar('input-label', newPlaceholder.value)">Update placeholder</button>
+                                </div>
+                                <div class="form-control row">
+                                    <input id="newIcon" type="text" placeholder="search">
+                                    <button aria-label="change search button icon" onclick="updateSearchBar('icon', newIcon.value)">Update search icon</button>
+                                </div>
+                                <div class="form-control row">
+                                    <label for="newCallback">Choose search behavior: </label>
+                                    <select id="newCallback" onchange="updateCallback(newCallback.value)">
+                                        <option value="alert">Generate an alert</option>
+                                        <option value="yahoo">Change some text on screen</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+            </section>
+            <!-- Brief about section / mission statement -->
+            <section>
+                <h1>About MyUW Web Components</h1>
+            </section>
         </div>
-        <script src="./node_modules/tota11y/build/tota11y.min.js"></script>
     </body>
+    <script>
+            /*
+                TOP BAR DEMO FUNCTIONS
+            */
+            function updateTitle(e, attribute, newValue) {
+                e.preventDefault();
+                // Get app bar
+                var _appBar = document.getElementsByTagName('myuw-app-bar')[0];
+                _appBar.setAttribute(attribute, newValue);
+            }
+            function updateBarBackground(e, property, value) {
+                e.preventDefault();
+                var _newCss = document.createElement('style');
+                _newCss.innerHTML = `
+                    myuw-app-bar {
+                        --${property}: ${value};
+                    }
+                `
+                document.head.appendChild(_newCss);
+            }
+            function updateTheme(theme) {
+                document.body.className = theme;
+            }
+
+            /*
+                PROFILE DEMO FUNCTIONS
+            */
+            function setProfileColor(newColor) {
+                if (newColor.indexOf('#') < 0) {
+                    newColor = '#' + newColor;
+                }
+                document.getElementsByTagName('myuw-profile')[0].setAttribute('background-color', newColor);
+            }
+
+            function setSession(session) {
+                // Remove profile from DOM
+                document.getElementsByTagName('myuw-profile')[0].remove();
+                // Construct new profile template
+                var newProfileTemplate = document.createElement('myuw-profile');
+                newProfileTemplate.setAttribute('slot', 'myuw-profile');
+                newProfileTemplate.setAttribute('login-url', 'https://wisc.edu/');
+                newProfileTemplate.setAttribute('logout-url', 'https://wisc.edu/');
+                newProfileTemplate.setAttribute('color', '#fb686d');
+                newProfileTemplate.innerHTML = `
+                    <a href="https://wisc.edu" slot="nav-item">UW Madison Home</a>
+                    <a href="https://wisc.edu" slot="nav-item">STAR</a>
+                `;
+                if (session) {
+                    newProfileTemplate.setAttribute('session-endpoint', session);
+                }
+                // Reinsert into DOM
+                document.getElementsByTagName('myuw-app-bar')[0].appendChild(newProfileTemplate);
+            }
+
+            /*
+                SEARCH BAR DEMO FUNCTIONS
+            */
+            document.getElementById('search').callback = (value) => {
+                window.alert('You searched for: ' + value);
+            }
+            function updateSearchBar(attribute, newValue) {
+                var _searchBar = document.getElementsByTagName('myuw-search')[0];
+                _searchBar.setAttribute(attribute, newValue);
+            }
+            function updateCallback(value) {
+                if (value === 'alert') {
+                    document.getElementById('search').callback = (value) => {
+                        window.alert('You searched for: ' + value);
+                    }
+                } else {
+                    document.getElementById('search').callback = (value) => {
+                       document.getElementById('page-title').innerText = value;
+                    }
+                }
+            }
+    </script>
 </html>
