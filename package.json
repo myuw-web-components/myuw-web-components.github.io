@@ -1,0 +1,23 @@
+{
+  "name": "@myuw-web-components/mwc-site",
+  "version": "1.0.0",
+  "description": "A demo site to showcase MyUW web components",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "live-server --port=4200"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myuw-web-components/myuw-web-components.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/myuw-web-components/myuw-web-components.github.io/issues"
+  },
+  "homepage": "https://github.com/myuw-web-components/myuw-web-components.github.io#readme",
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  }
+}
