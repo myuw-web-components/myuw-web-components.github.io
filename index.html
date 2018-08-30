@@ -154,16 +154,16 @@
                             <form name="profileDemos">
                                 <div class="form-control row">
                                     <input id="newProfileColor" type="text" placeholder="#888">
-                                    <button aria-label="set profile button color" onclick="setProfileColor(newProfileColor.value)">Set profile color</button>
+                                    <button aria-label="set profile button color" onclick="setProfileColor(event, newProfileColor.value)" type="button">Set profile color</button>
                                 </div>
                                 <div class="form-control">
-                                    <button aria-label="set no session" onclick="setSession('jargon')">No session</button>
+                                    <button aria-label="set no session" onclick="setSession('jargon')" type="button">No session</button>
                                 </div>
                                 <div class="form-control">
-                                    <button aria-label="restore demo session" onclick="setSession('./demo/session.json')">Restore demo session</button>
+                                    <button aria-label="restore demo session" onclick="setSession('./demo/session.json')" type="button">Restore demo session</button>
                                 </div>
                                 <div class="form-control">
-                                    <button aria-label="set missing session-endpoint" onclick="setSession(null)">Set missing session endpoint</button>
+                                    <button aria-label="set missing session-endpoint" onclick="setSession(null)" type="button">Set missing session endpoint</button>
                                 </div>
                             </form>
                         </div>
@@ -176,11 +176,11 @@
                             <form name="profileDemos">
                                 <div class="form-control row">
                                     <input id="newPlaceholder" type="text" placeholder="Search MyUW">
-                                    <button aria-label="change search bar placeholder" onclick="updateSearchBar('input-label', newPlaceholder.value)">Update placeholder</button>
+                                    <button aria-label="change search bar placeholder" onclick="updateSearchBar('input-label', newPlaceholder.value)" type="button">Update placeholder</button>
                                 </div>
                                 <div class="form-control row">
                                     <input id="newIcon" type="text" placeholder="search">
-                                    <button aria-label="change search button icon" onclick="updateSearchBar('icon', newIcon.value)">Update search icon</button>
+                                    <button aria-label="change search button icon" onclick="updateSearchBar('icon', newIcon.value)" type="button">Update search icon</button>
                                 </div>
                                 <div class="form-control row">
                                     <label for="newCallback">Choose search behavior: </label>
@@ -228,7 +228,7 @@
             /*
                 PROFILE DEMO FUNCTIONS
             */
-            function setProfileColor(newColor) {
+            function setProfileColor(e, newColor) {
                 if (newColor.indexOf('#') < 0) {
                     newColor = '#' + newColor;
                 }
