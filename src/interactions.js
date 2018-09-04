@@ -248,8 +248,11 @@ function generateComponentMarkup() {
 
     // Include script tags for all components currently toggled ON
     var importsString = `
-&lt!-- Web component polyfill loader (required to support older browsers) --&gt;
-&lt;script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1/webcomponents-loader.js"&gt;&lt;/script&gt;
+&lt;!-- Viewport metage tag (required for cross-browser support) --&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+
+&lt;!-- Web component polyfill loader (required for cross-browser support) --&gt;
+&lt;script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/webcomponents-bundle.js"&gt;&lt;/script&gt;
 
 &lt!-- UW-Madison app styles (recommended if you're a UW-Madison adopter) --&gt;
 &lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1?module"&gt;&lt;/script&gt;
