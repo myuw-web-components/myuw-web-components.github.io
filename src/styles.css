@@ -30,6 +30,24 @@ body {
     background-color: #047aa848;
 }
 
+/* Layout styles */
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.helper {
+    font-size: 14px;
+    color: #777;
+    margin: 0 8px;
+}
+
 div.demo__container {
     margin: 18px 36px;
 }
@@ -54,19 +72,26 @@ div.demo__container {
     margin: 18px;
     border-radius: 5px;
     min-width: 450px;
+    max-width: 450px;
 }
 .card .interactive {
     margin-top: 26px;
     width: 100%;
 }
+.card code.prettyprint {
+    overflow-x: scroll;
+    padding: 1rem;
+    font-size: 14px;
+}
 .card .form-control {
     margin-bottom: 20px;
 }
 .card .form-control.row {
-    display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+}
+.card .form-control.column {
+    flex: auto;
+    align-content: center;
 }
 .card h3 {
     margin-bottom: 8px;
@@ -77,10 +102,16 @@ div.demo__container {
 .card label {
     font-size: 16px;
     margin-bottom: 8px;
-    display: block;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    line-height: 24px;
 }
 .card .form-control.row label {
     margin-bottom: 0;
+}
+.card .form-control.column input {
+    margin-bottom: 8px;
 }
 .card input {
     height: 36px;
@@ -97,6 +128,7 @@ div.demo__container {
 .card button {
     min-width: 48px;
     min-height: 24px;
+    max-height: 36px;
     padding: 8px 8px;
     font-size: 14px;
     overflow-y: hidden;
@@ -104,48 +136,27 @@ div.demo__container {
     transition: background 0.15s ease-in-out;
     background: var(--myuw-accent-bg);
     color: var(--myuw-accent-color);
+    outline: none;
 }
 .card button:hover {
     background: #046085;
     cursor: pointer;
 }
-button.demo__toolbar-button {
-    margin: 0;
-    display: flex;
-    position: relative;
-    cursor: pointer;
-    min-height: 36px;
-    line-height: 38px;
-    vertical-align: middle;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-grid-row-align: center;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    box-sizing: border-box;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border: 0;
-    padding: 0 6px;
+.card button.icon-button {
+    color: #046085;
     background: transparent;
-    color: inherit;
-    white-space: nowrap;
-    font-weight: 500;
-    font-size: 14px;
-    font-style: inherit;
-    font-variant: inherit;
-    font-family: inherit;
-    text-decoration: none;
-    overflow: hidden;
-    -webkit-transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1);
-    transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1);
-    height: 38px;
-    min-width: 38px;
     border-radius: 50%;
+    height: 48px;
+    max-height: 48px;
+    width: 48px;
+    border: none;
 }
-button.demo__toolbar-button .material-icons {
-    font-size: 28px;
+.card button.icon-button:hover {
+    background: rgba(0,0,0,0.12);
+}
+.card-title {
+    width: 100%;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
 }

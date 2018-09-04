@@ -7,7 +7,15 @@
         <link rel="stylesheet" id="uwmadison-fonts-css"  href="https://brand.wisc.edu/content/themes/uw-theme/dist/fonts/uw160/fonts.css?ver=1.2.2" type="text/css" media="all" />
         
         <!-- Demo styles -->
-        <link rel="stylesheet" href="./demo/styles.css" type="text/css" />
+        <link rel="stylesheet" href="./src/styles.css" type="text/css" />
+
+        <!-- Syntax highlighting -->
+        <link href="./src/themes/prism.css" rel="stylesheet" />
+
+        <!-- Material Design Lite Library -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
         
         <style>
             body {
@@ -23,8 +31,8 @@
         <!-- Web component polyfill loader -->
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1/webcomponents-loader.js"></script>
 
-        <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1?module"></script>
-        <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1"></script>
+        <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@1.1.6?module"></script>
+        <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-styles@1.1.6"></script>
 
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1?module"></script>
         <script nomodule scr="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1"></script>
@@ -37,76 +45,35 @@
         
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-profile@^1?module"></script>
         <script nomodule scr="https://unpkg.com/@myuw-web-components/myuw-profile@^1"></script>
-
     </head>
     <body class="uw-madison-red-theme">
         <myuw-app-bar
             role="toolbar"
             theme-name="MyUW"
-            theme-url="https://my.wisc.edu"
-            app-name="Web Components">
-            <myuw-drawer slot="myuw-navigation">
+            app-name="Web Components" 
+            app-url="#">
+            <myuw-drawer id="drawer" 
+                slot="myuw-navigation">
                 <myuw-drawer-link
                   slot="myuw-drawer-links"
                   name="MyUW home"
-                  icon="apps"
+                  icon="home"
                   href="https://my.wisc.edu/">
                 </myuw-drawer-link>
                 <myuw-drawer-link
                   slot="myuw-drawer-links"
                   name="MyUW Web Components"
-                  icon="home"
+                  icon="apps"
                   href="https://github.com/myuw-web-components/">
                 </myuw-drawer-link>
-                <myuw-drawer-link
-                  slot="myuw-drawer-links"
-                  name="MyUW App Styles"
-                  icon="palette"
-                  href="https://github.com/myuw-web-components/myuw-app-styles/">
-                </myuw-drawer-link>
-                <myuw-drawer-link
-                  slot="myuw-drawer-links"
-                  name="MyUW App Bar"
-                  icon="star"
-                  href="https://github.com/myuw-web-components/myuw-app-bar/">
-                </myuw-drawer-link>
-                <myuw-drawer-link
-                  slot="myuw-drawer-links"
-                  name="MyUW Drawer"
-                  icon="menu"
-                  href="https://github.com/myuw-web-components/myuw-drawer/">
-                </myuw-drawer-link>
-                <myuw-drawer-link
-                  slot="myuw-drawer-links"
-                  name="MyUW Help and Feedback"
-                  icon="help"
-                  href="https://github.com/myuw-web-components/myuw-help/">
-                </myuw-drawer-link>
-                <myuw-drawer-link
-                  slot="myuw-drawer-links"
-                  name="MyUW Profile"
-                  icon="account_circle"
-                  href="https://github.com/myuw-web-components/myuw-profile/">
-                </myuw-drawer-link>
-                <myuw-drawer-link
-                  slot="myuw-drawer-links"
-                  name="MyUW Search"
-                  icon="search"
-                  href="https://github.com/myuw-web-components/myuw-search/">
-                </myuw-drawer-link>
             </myuw-drawer>
-            <myuw-search id="search" slot="myuw-search"></myuw-search>
-            <span slot="myuw-help">
-                <button class="demo__toolbar-button help">
-                    <i class="material-icons">help</i>
-                </button>
-            </span>
-            <span slot="myuw-notifications">
-                <button class="demo__toolbar-button notifications">
-                    <i class="material-icons">notifications</i>
-                </button>
-            </span>
-            <myuw-profile slot="myuw-profile"
+            <myuw-search id="search" 
+                input-label="Search"
+                button-label="Submit search"
+                icon="search"
+                slot="myuw-search"></myuw-search>
+            <myuw-profile id="profile" 
+                slot="myuw-profile"
                 session-endpoint="./demo/session.json"
                 login-url="#"
                 logout-url="#">
@@ -125,20 +92,20 @@
                         <div class="interactive">
                             <form name="topBarDemos">
                                 <div class="form-control row">
-                                    <input id="newPortalName" type="text" placeholder="New portal name"/>
-                                    <button onclick="updateTitle(event, 'theme-name',  newPortalName.value)">Update theme name</button>
+                                    <input id="themeName" type="text" placeholder="New portal name"/>
+                                    <button onclick="updateTitle(event, 'theme-name',  themeName.value)">Update theme name</button>
                                 </div>
                                 <div class="form-control row">
-                                    <input id="newAppName" type="text" placeholder="New app name"/>
-                                    <button onclick="updateTitle(event, 'app-name',  newAppName.value)">Update app name</button>
+                                    <input id="appName" type="text" placeholder="New app name"/>
+                                    <button onclick="updateTitle(event, 'app-name',  appName.value)">Update app name</button>
                                 </div>
                                 <div class="form-control row">
-                                    <input id="newBackground" type="text" placeholder="rgb(33,150,243)"/>
-                                    <button onclick="updateBarBackground(event, 'myuw-app-bar-bg',  newBackground.value)">Update background color</button>
+                                    <input id="barBackground" type="text" placeholder="rgb(33,150,243)"/>
+                                    <button onclick="updateBarBackground(event, 'myuw-app-bar-bg',  barBackground.value)">Update background color</button>
                                 </div>
                                 <div class="form-control row">
-                                    <label for="newTheme">Change the theme:</label>
-                                    <select id="newTheme" type="text" onchange="updateTheme(newTheme.value)">
+                                    <label for="theme">Change the theme:</label>
+                                    <select id="theme" type="text" onchange="updateTheme(theme.value)">
                                         <option value="uw-madison-red-theme">MyUW Red</option>
                                         <option value="uw-madison-white-theme">MyUW White</option>
                                     </select>
@@ -146,49 +113,164 @@
                             </form>
                         </div>
                     </div>
-                    <!-- PROFILE BUTTON INTERACTIVE CONTENT -->
+                    <!-- NAVIGATION DRAWER INTERACTIVE CONTENT -->
                     <div class="card">
-                        <h3>Profile button/menu</h3>
-                        <a class="subtitle" href="https://github.com/myuw-web-components/myuw-profile">myuw-profile</a>
+                        <div class="card-title row">
+                            <div class="column">
+                                <h3>Navigation drawer</h3>
+                                <a class="subtitle" href="https://github.com/myuw-web-components/myuw-drawer">myuw-drawer</a>
+                            </div>
+                            <button id="toggleDrawer" aria-label="Hide navigation drawer" class="icon-button" onclick="toggleComponent('drawer')">
+                                <i id="drawerIconVisibility" class="material-icons">visibility</i>
+                            </button>
+                            <div id="drawerToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleDrawer">
+                                Hide drawer
+                            </div>
+                        </div>
                         <div class="interactive">
-                            <form name="profileDemos">
-                                <div class="form-control row">
-                                    <input id="newProfileColor" type="text" placeholder="#888">
-                                    <button aria-label="set profile button color" onclick="setProfileColor(event, newProfileColor.value)" type="button">Set profile color</button>
+                            <form name="drawerDemos" onsubmit="event.preventDefault(); addDrawerLink(navItemLabel.value, navItemHref.value, navItemIcon.value)">
+                                <div class="row">
+                                    <div class="form-control column">
+                                        <label for="navItemLabel">Link text:</label>
+                                        <input id="navItemLabel" required type="text" placeholder="e.g. 'Course Search and Enroll'">
+                                    </div>
+                                    <div class="form-control column">
+                                        <label for="navItemIcon">Material icon&nbsp;
+                                            <a aria-label="see material icons" id="navIconInfo" class="icon-button" href="https://material.io/tools/icons" target="_blank"><i class="material-icons">help</i></a>
+                                        </label>
+                                        <input id="navItemIcon" type="text" placeholder="e.g. 'help'">
+                                    </div>
+                                    <div id="materialIconTooltip" class="mdl-tooltip" data-mdl-for="navIconInfo">
+                                        See available icons
+                                    </div>
                                 </div>
-                                <div class="form-control">
-                                    <button aria-label="set no session" onclick="setSession('jargon')" type="button">No session</button>
+                                <div class="row">
+                                    <div class="form-control column">
+                                        <label for="navItemHref">Link URL:</label>
+                                        <input id="navItemHref" required type="text" placeholder="e.g. 'https://enroll.wisc.edu'">
+                                    </div>
                                 </div>
-                                <div class="form-control">
-                                    <button aria-label="restore demo session" onclick="setSession('./demo/session.json')" type="button">Restore demo session</button>
-                                </div>
-                                <div class="form-control">
-                                    <button aria-label="set missing session-endpoint" onclick="setSession(null)" type="button">Set missing session endpoint</button>
-                                </div>
+                                <button aria-label="add navigation link">Add navigation item</button>
+                                <span id="drawerHelperText" class="helper"></span>
                             </form>
                         </div>
                     </div>
                     <!-- SEARCH BAR INTERACTIVE CONTENT -->
                     <div class="card">
-                        <h3>Search bar</h3>
-                        <a class="subtitle" href="https://github.com/myuw-web-components/myuw-search">myuw-search</a>
+                        <div class="card-title row">
+                            <div class="column">
+                                <h3>Search bar</h3>
+                                <a class="subtitle" href="https://github.com/myuw-web-components/myuw-search">myuw-search</a>
+                            </div>
+                            <button id="toggleSearch" aria-label="Hide search bar component" class="icon-button" onclick="toggleComponent('search')">
+                                <i id="searchIconVisibility" class="material-icons">visibility</i>
+                            </button>
+                            <div id="searchToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleSearch">
+                                Hide search
+                            </div>
+                        </div>
                         <div class="interactive">
-                            <form name="profileDemos">
-                                <div class="form-control row">
-                                    <input id="newPlaceholder" type="text" placeholder="Search MyUW">
-                                    <button aria-label="change search bar placeholder" onclick="updateSearchBar('input-label', newPlaceholder.value)" type="button">Update placeholder</button>
+                            <form name="profileDemos" onsubmit="event.preventDefault();updateSearchBar();">
+                                <div class="row">
+                                    <div class="form-control column">
+                                        <label for="searchPlaceholder">Search box placeholder:</label> 
+                                        <input id="searchPlaceholder" type="text" placeholder="Search MyUW">
+                                    </div>
+                                    <div class="form-control column">
+                                        <label for="searchAriaLabel">Search button aria-label:</label>
+                                        <input id="searchAriaLabel" type="text" placeholder="Submit MyUW search">
+                                    </div>
                                 </div>
-                                <div class="form-control row">
-                                    <input id="newIcon" type="text" placeholder="search">
-                                    <button aria-label="change search button icon" onclick="updateSearchBar('icon', newIcon.value)" type="button">Update search icon</button>
+                                <div class="row">
+                                    <div class="form-control column">
+                                        <label for="searchIcon">
+                                            Material icon&nbsp;
+                                            <a aria-label="see material icons" id="searchIconInfo" class="icon-button" href="https://material.io/tools/icons" target="_blank"><i class="material-icons">help</i></a>
+                                        </label>
+                                        <div id="materialIconTooltip" class="mdl-tooltip" data-mdl-for="searchIconInfo">
+                                            See available icons
+                                        </div>
+                                        <input id="searchIcon" type="text" placeholder="search">
+                                    </div>
                                 </div>
-                                <div class="form-control row">
-                                    <label for="newCallback">Choose search behavior: </label>
-                                    <select id="newCallback" onchange="updateCallback(newCallback.value)">
-                                        <option value="alert">Generate an alert</option>
-                                        <option value="yahoo">Change some text on screen</option>
-                                    </select>
+                                <button>Update search component</button>
+                            </form>
+                            <h4>Search callback function</h4>
+                            <div class="form-control row">
+                                <label for="searchCallback">Choose search behavior: </label>
+                                <select id="searchCallback" onchange="updateCallback(searchCallback.value)">
+                                    <option value="alert">Generate an alert</option>
+                                    <option value="yahoo">Change some text on screen</option>
+                                </select>
+                            </div>
+                            <p>
+                                The search component allows you to set a "callback" value on the root element. The example code below demonstrates how this page handles searches:
+                            </p>
+                            <pre class="language-js"><code id="searchCallbackCode"></code></pre>
+                        </div>
+                    </div>
+                    <!-- PROFILE BUTTON INTERACTIVE CONTENT -->
+                    <div class="card">
+                        <div class="card-title row">
+                            <div class="column">
+                                <h3>Profile button/menu</h3>
+                                <a class="subtitle" href="https://github.com/myuw-web-components/myuw-profile">myuw-profile</a>
+                            </div>
+                            <button id="toggleProfile" aria-label="Hide profile menu component" class="icon-button" onclick="toggleComponent('profile')">
+                                <i id="profileIconVisibility" class="material-icons">visibility</i>
+                            </button>
+                            <div id="profileToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleProfile">
+                                Hide profile
+                            </div>                                
+                        </div>
+                        <div class="interactive">
+                            <form name="profileDemos" onsubmit="event.preventDefault(); updateProfileTemplate()">
+                                <div class="row">
+                                    <div class="form-control column">
+                                        <label for="profileColor">Profile button color: </label>
+                                        <input id="profileColor" type="text" placeholder="#888">
+                                    </div>
+                                    <button aria-label="set profile button color" onclick="setProfileColor(event, profileColor.value)" type="button">Set profile color</button>
                                 </div>
+                                <div class="form-control column">
+                                    <div class="row">
+                                        <label for="sessionStates">Session states:</label>
+                                    </div>
+                                    <div class="row" id="sessionStates">
+                                        <button aria-label="set no session" onclick="setSession('jargon')" type="button">No session</button>&nbsp;&nbsp;
+                                        <button aria-label="set alternate session" onclick="setSession('/demo/session2.json')" type="button">Swap session</button>&nbsp;&nbsp;
+                                        <button aria-label="restore demo session" onclick="setSession('/demo/session.json')" type="button">Restore demo session</button>
+                                    </div>
+                                </div>
+                                <h4>Other configurable fields</h4>
+                                <div class="row">
+                                    <div class="form-control column">
+                                        <label for="loginUrl">Login URL:</label>
+                                        <input id="loginUrl" type="text" placeholder="Enter login url">
+                                    </div>
+                                    <div class="form-control column">
+                                        <label for="logoutUrl">Logout URL:</label>
+                                        <input id="logoutUrl" type="text" placeholder="Enter logout url">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-control column">
+                                        <label for="sessionEndpoint">Session endpoint:</label>
+                                        <input id="sessionEndpoint" type="text" placeholder="/demo/session2.json">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-control column">
+                                        <label for="profileLinkLabel">Menu link text:</label>
+                                        <input id="profileLinkLabel" type="text" placeholder="Google">
+                                    </div>
+                                    <div class="form-control column">
+                                        <label for="profileLinkUrl">Menu link url:</label>
+                                        <input id="profileLinkUrl" type="text" placeholder="www.google.com">
+                                    </div>
+                                </div>
+                                <button aria-label="update profile component">Update profile template</button>
+                                <span id="profileHelperText" class="helper"></span>
                             </form>
                         </div>
                     </div>
@@ -197,84 +279,33 @@
             </section>
             <!-- Brief about section / mission statement -->
             <section>
-                <h1>About MyUW Web Components</h1>
+                <h2>Use MyUW web components</h2>
+                <!-- Document HEAD markup -->
+                <pre><code class="lang-markup">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+...
+                </code></pre>
+                <!-- Module imports -->
+                <pre><code class="lang-markup">
+&lt;!-- TODO: Update module imports depending on toggled elements --&gt;
+                </code></pre>
+                <!-- Document BODY markup -->
+                <pre><code class="lang-markup">
+&lt;/head&gt;
+&lt;body&gt;
+...
+                </code></pre>
+                <!-- Component markup -->
+                <pre><code class="lang-markup">
+&lt;!-- TODO: Add basic template code here and update according to demo interaction --&gt;
+                </code></pre>
             </section>
         </div>
+        <!-- Demo interactions -->
+        <script src='./src/interactions.js'></script>
+        <!-- Syntax highlighting -->
+        <script src="./src/themes/prism.js" data-manual></script>
     </body>
-    <script>
-            /*
-                TOP BAR DEMO FUNCTIONS
-            */
-            function updateTitle(e, attribute, newValue) {
-                e.preventDefault();
-                // Get app bar
-                var _appBar = document.getElementsByTagName('myuw-app-bar')[0];
-                _appBar.setAttribute(attribute, newValue);
-            }
-            function updateBarBackground(e, property, value) {
-                e.preventDefault();
-                var _newCss = document.createElement('style');
-                _newCss.innerHTML = `
-                    myuw-app-bar {
-                        --${property}: ${value};
-                    }
-                `
-                document.head.appendChild(_newCss);
-            }
-            function updateTheme(theme) {
-                document.body.className = theme;
-            }
-
-            /*
-                PROFILE DEMO FUNCTIONS
-            */
-            function setProfileColor(e, newColor) {
-                if (newColor.indexOf('#') < 0) {
-                    newColor = '#' + newColor;
-                }
-                document.getElementsByTagName('myuw-profile')[0].setAttribute('background-color', newColor);
-            }
-
-            function setSession(session) {
-                // Remove profile from DOM
-                document.getElementsByTagName('myuw-profile')[0].remove();
-                // Construct new profile template
-                var newProfileTemplate = document.createElement('myuw-profile');
-                newProfileTemplate.setAttribute('slot', 'myuw-profile');
-                newProfileTemplate.setAttribute('login-url', 'https://wisc.edu/');
-                newProfileTemplate.setAttribute('logout-url', 'https://wisc.edu/');
-                newProfileTemplate.setAttribute('color', '#fb686d');
-                newProfileTemplate.innerHTML = `
-                    <a href="https://wisc.edu" slot="nav-item">UW Madison Home</a>
-                    <a href="https://wisc.edu" slot="nav-item">STAR</a>
-                `;
-                if (session) {
-                    newProfileTemplate.setAttribute('session-endpoint', session);
-                }
-                // Reinsert into DOM
-                document.getElementsByTagName('myuw-app-bar')[0].appendChild(newProfileTemplate);
-            }
-
-            /*
-                SEARCH BAR DEMO FUNCTIONS
-            */
-            document.getElementById('search').callback = (value) => {
-                window.alert('You searched for: ' + value);
-            }
-            function updateSearchBar(attribute, newValue) {
-                var _searchBar = document.getElementsByTagName('myuw-search')[0];
-                _searchBar.setAttribute(attribute, newValue);
-            }
-            function updateCallback(value) {
-                if (value === 'alert') {
-                    document.getElementById('search').callback = (value) => {
-                        window.alert('You searched for: ' + value);
-                    }
-                } else {
-                    document.getElementById('search').callback = (value) => {
-                       document.getElementById('page-title').innerText = value;
-                    }
-                }
-            }
-    </script>
 </html>
