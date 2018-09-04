@@ -19,7 +19,7 @@ body {
     border: 1px solid #000;
     border-radius: 5px;
 }
-.uw-madison-white-theme .card a {
+.uw-madison-white-theme a {
     color: var(--myuw-accent-color);
 }
 .uw-madison-white-theme .card button {
@@ -29,7 +29,9 @@ body {
 .uw-madison-white-theme .card button:hover {
     background-color: #047aa848;
 }
-
+.uw-madison-red-theme a {
+    color: var(--myuw-accent-bg);
+}
 /* Layout styles */
 .row {
     display: flex;
@@ -101,9 +103,6 @@ div.demo__container {
     flex-wrap: wrap;
     justify-content: space-between;
     align-content: flex-start;
-}
-.test-content a {
-    color: var(--myuw-accent-bg);
 }
 .card {
     padding: 16px 36px;
