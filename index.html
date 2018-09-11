@@ -95,12 +95,16 @@
                             <div class="interactive">
                                 <form name="topBarDemos">
                                     <div class="form-control row">
-                                        <input id="themeName" type="text" placeholder="New portal name"/>
+                                        <input id="themeName" type="text" placeholder="New theme name"/>
                                         <button onclick="updateTitle(event, 'theme-name',  themeName.value)">Update theme name</button>
                                     </div>
                                     <div class="form-control row">
                                         <input id="appName" type="text" placeholder="New app name"/>
                                         <button onclick="updateTitle(event, 'app-name',  appName.value)">Update app name</button>
+                                    </div>
+                                    <div class="form-control row">
+                                        <input id="appUrl" type="text" placeholder="https://www.wisc.edu"/>
+                                        <button onclick="updateTitle(event, 'app-url',  appUrl.value)">Update title link</button>
                                     </div>
                                     <div class="form-control row">
                                         <input id="barBackground" type="text" placeholder="rgb(33,150,243)"/>
