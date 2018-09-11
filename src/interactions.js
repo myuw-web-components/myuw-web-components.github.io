@@ -46,7 +46,19 @@ function updateTitle(e, attribute, newValue) {
     e.preventDefault();
     // Get app bar
     var _appBar = document.getElementsByTagName('myuw-app-bar')[0];
+    // Update attribute
     _appBar.setAttribute(attribute, newValue);
+
+    // Get property fields
+    var themeText = document.getElementById('themeName');
+    var appText = document.getElementById('appName');
+    var appUrl = document.getElementById('appUrl');
+
+    // Update template for code generation
+    this.appBarTemplateStart = `&lt;myuw-app-bar
+    theme-name="${themeName.value}"
+    app-name="${appName.value}" 
+    app-url="${appUrl.value}"&gt;`;
 }
 function updateBarBackground(e, property, value) {
     e.preventDefault();
