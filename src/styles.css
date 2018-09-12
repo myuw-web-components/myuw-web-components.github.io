@@ -2,26 +2,7 @@ body {
     margin: 0;
     background: #ccc;
 }
-.uw-madison-red-theme {
-    --myuw-primary-bg: #c5050c;
-    --myuw-primary-color: #fff;
-    --myuw-accent-bg: #0479a8;
-    --myuw-accent-color: #fff;
-}
-.uw-madison-white-theme {
-    --myuw-primary-bg: #fff;
-    --myuw-primary-color: #c5050c;
-    --myuw-accent-bg: #fff;
-    --myuw-accent-color: #0479a8;
-}
 /* TODO: Update more components to use variables that can be set in theme component (like search field colors/borders) */
-.uw-madison-white-theme myuw-search {
-    border: 1px solid #000;
-    border-radius: 5px;
-}
-.uw-madison-white-theme a {
-    color: var(--myuw-accent-color);
-}
 .uw-madison-white-theme .card button {
     font-weight: 500;
 }
@@ -29,8 +10,8 @@ body {
 .uw-madison-white-theme .card button:hover {
     background-color: #047aa848;
 }
-.uw-madison-red-theme a {
-    color: var(--myuw-accent-bg);
+.demo__container a {
+    color: var(--myuw-link-color);
 }
 /* Layout styles */
 .row {
