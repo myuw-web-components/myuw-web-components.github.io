@@ -31,8 +31,7 @@
         <!-- Web component polyfill loader -->
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 
-        <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@1.1.6?module"></script>
-        <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-styles@1.1.6"></script>
+        <script src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1"></script>
 
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1?module"></script>
         <script nomodule scr="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1"></script>
@@ -46,7 +45,7 @@
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-profile@^1?module"></script>
         <script nomodule scr="https://unpkg.com/@myuw-web-components/myuw-profile@^1"></script>
     </head>
-    <body class="uw-madison-red-theme">
+    <body class="">
         <myuw-app-bar
             role="toolbar"
             theme-name="MyUW"
@@ -113,7 +112,7 @@
                                     <div class="form-control">
                                         <label for="theme">Change the theme:</label>
                                         <select id="theme" type="text" onchange="updateTheme(theme.value)">
-                                            <option value="uw-madison-red-theme">MyUW Red</option>
+                                            <option value="">MyUW Red</option>
                                             <option value="uw-madison-white-theme">MyUW White</option>
                                         </select>
                                     </div>
