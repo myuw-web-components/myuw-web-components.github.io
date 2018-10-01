@@ -2,7 +2,7 @@ body {
     margin: 0;
     background: #ccc;
 }
-p {
+p, ul, ol {
     font-size: 16px;
 }
 a {
