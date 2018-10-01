@@ -226,11 +226,13 @@ function toggleComponent(componentId) {
         document.getElementById(componentId).hidden = true;
         document.getElementById(componentId + 'IconVisibility').innerText = 'visibility_off';
         document.getElementById(componentId + 'ToggleTooltip').innerText = 'Show ' + componentId;
+        // Remove hidden component from "included" array for code generation
         this.includedComponents.splice(this.includedComponents.indexOf(componentId), 1);
     } else {
         document.getElementById(componentId).hidden = false;
         document.getElementById(componentId + 'IconVisibility').innerText = 'visibility';
         document.getElementById(componentId + 'ToggleTooltip').innerText = 'Hide ' + componentId;
+        // Add component to "included" array for code generation
         this.includedComponents.push(componentId);
     }
 }
@@ -276,15 +278,22 @@ ${searchImport}
 ${profileImport}
     `;
     
-    // Build component template string
-    var templateString = `${this.appBarTemplateStart}
-    ${this.drawerTemplateStart}
-        ${this.drawerLinkTemplate}
-    ${this.drawerTemplateEnd}
-    ${this.searchTemplate}
-    ${this.profileTemplate}
-${this.appBarTemplateEnd}
-    `;
+    // Build component template string, including only markup for visible components
+    var templateString = `${this.appBarTemplateStart}`;
+
+    if (this.includedComponents.indexOf('drawer') != -1) {
+        templateString += `\n\t${this.drawerTemplateStart}\n\t\t${this.drawerLinkTemplate}\n\t${this.drawerTemplateEnd}`;
+    }
+
+    if (this.includedComponents.indexOf('search') != -1) {
+        templateString += `\n\t${this.searchTemplate}`;
+    }
+
+    if (this.includedComponents.indexOf('profile') != -1) {
+        templateString += `\n\t${this.profileTemplate}`;
+    }
+    
+    templateString += `\n${this.appBarTemplateEnd}`;
 
     // Update DOM and call syntax highlighter
     importsContainer.innerHTML = importsString;
