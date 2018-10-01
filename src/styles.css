@@ -195,3 +195,7 @@ dialog h4 {
         max-width: 45%;
     }
 }
+/* CONTACTS page */
+.mdl-list.list-contacts {
+    max-width: 700px;
+}
