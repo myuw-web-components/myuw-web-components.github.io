@@ -19,5 +19,8 @@
   "homepage": "https://github.com/myuw-web-components/myuw-web-components.github.io#readme",
   "devDependencies": {
     "live-server": "^1.2.0"
+  },
+  "dependencies": {
+    "dialog-polyfill": "^0.4.10"
   }
 }
