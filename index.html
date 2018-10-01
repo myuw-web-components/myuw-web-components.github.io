@@ -56,9 +56,15 @@
             role="toolbar"
             theme-name="MyUW"
             app-name="Web Components" 
-            app-url="#">
+            app-url="/">
             <myuw-drawer id="drawer" 
                 slot="myuw-navigation">
+                <myuw-drawer-link
+                  slot="myuw-drawer-links"
+                  name="Project info and contacts"
+                  icon="person"
+                  href="./contacts.html">
+                </myuw-drawer-link>
                 <myuw-drawer-link
                   slot="myuw-drawer-links"
                   name="MyUW home"
