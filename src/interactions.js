@@ -38,41 +38,56 @@ this.profileTemplate = `&lt;myuw-profile
 
 this.customCssTemplate = `&#47;&#42; You didn't change any theme colors &#42;&#47;`;
 
-
+/*
+    THEME DEMO
+*/
+function toggleTheme() {
+    var themeTooltip = document.getElementById('alternateThemeName');
+    if (document.body.classList.contains('uw-madison-white-theme')) {
+        document.body.classList.remove('uw-madison-white-theme');
+        themeTooltip.innerText = 'MyUW White';
+    } else {
+        document.body.classList.add('uw-madison-white-theme');
+        themeTooltip.innerText = 'MyUW Red';
+    }
+}
 /*
     TOP BAR DEMO FUNCTIONS
 */
-function updateTitle(e, attribute, newValue) {
+function updateTopAppBar(e) {
     e.preventDefault();
+
     // Get app bar
     var _appBar = document.getElementsByTagName('myuw-app-bar')[0];
-    // Update attribute
-    _appBar.setAttribute(attribute, newValue);
-
+    
     // Get property fields
     var themeText = document.getElementById('themeName');
     var appText = document.getElementById('appName');
     var appUrl = document.getElementById('appUrl');
+    var barBackground = document.getElementById('barBackground');
+    
+    // Update attributes
+    _appBar.setAttribute('theme-name', themeText.value);
+    _appBar.setAttribute('app-name', appText.value);
+    _appBar.setAttribute('app-url', appUrl.value);
 
     // Update template for code generation
     this.appBarTemplateStart = `&lt;myuw-app-bar
     theme-name="${themeName.value}"
     app-name="${appName.value}" 
     app-url="${appUrl.value}"&gt;`;
-}
-function updateBarBackground(e, property, value) {
-    e.preventDefault();
-    this.customCssTemplate = `
+
+    // If value was entered for background, create and use custom css template
+    if (barBackground.value.length > 0) {
+        this.customCssTemplate = `
 myuw-app-bar {
-    --${property}: ${value};
+    --myuw-primary-bg: ${barBackground.value};
 }
     `;
     var newCss = document.createElement('style');
     newCss.innerHTML = this.customCssTemplate;
     document.head.appendChild(newCss);
-}
-function updateTheme(theme) {
-    document.body.className = theme;
+    }
 }
 /*
     NAV DRAWER DEMO FUNCTIONS
@@ -163,13 +178,6 @@ function updateCallback(value) {
 /*
     PROFILE DEMO FUNCTIONS
 */
-function setProfileColor(e, newColor) {
-    if (newColor.indexOf('#') < 0) {
-        newColor = '#' + newColor;
-    }
-    document.getElementsByTagName('myuw-profile')[0].setAttribute('background-color', newColor);
-}
-
 function setSession(session) {
     // Remove profile from DOM
     document.getElementsByTagName('myuw-profile')[0].remove();
@@ -205,11 +213,14 @@ function updateProfileTemplate() {
         slot="myuw-profile"
         session-endpoint="${session.value}"
         login-url="${login.value}"
-        logout-url="${logout.value}"&gt;
-        &lt;a href="${linkUrl.value}" slot="nav-item"&gt;${linkText.value}&lt;/a&gt;
-    &lt;/myuw-profile&gt;`;
-    
-    // TODO: Print template to page for copy+paste
+        logout-url="${logout.value}"`;
+
+    if (color.value.length > 0) {
+        document.getElementsByTagName('myuw-profile')[0].setAttribute('background-color', color.value);
+        this.profileTemplate += `\n\t\tbackground-color="${color.value}"`;
+    }
+
+    this.profileTemplate += `&gt;\n\t\t&lt;a href="${linkUrl.value}" slot="nav-item"&gt;${linkText.value}&lt;/a&gt;\n\t&lt;/myuw-profile&gt;`;
 
     // Clear fields and update helper text
     login.value = "";
@@ -225,12 +236,16 @@ function toggleComponent(componentId) {
     if (this.includedComponents.indexOf(componentId) != -1) {
         document.getElementById(componentId).hidden = true;
         document.getElementById(componentId + 'IconVisibility').innerText = 'visibility_off';
+        document.getElementById(componentId + 'IconVisibilityTable').innerText = 'visibility_off';
         document.getElementById(componentId + 'ToggleTooltip').innerText = 'Show ' + componentId;
+        // Remove hidden component from "included" array for code generation
         this.includedComponents.splice(this.includedComponents.indexOf(componentId), 1);
     } else {
         document.getElementById(componentId).hidden = false;
         document.getElementById(componentId + 'IconVisibility').innerText = 'visibility';
+        document.getElementById(componentId + 'IconVisibilityTable').innerText = 'visibility';
         document.getElementById(componentId + 'ToggleTooltip').innerText = 'Hide ' + componentId;
+        // Add component to "included" array for code generation
         this.includedComponents.push(componentId);
     }
 }
@@ -264,7 +279,7 @@ function generateComponentMarkup() {
 &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
 
 &lt;!-- Web component polyfill loader (required for cross-browser support) --&gt;
-&lt;script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/webcomponents-bundle.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-loader.js"&gt;&lt;/script&gt;
 
 &lt!-- UW-Madison app styles (recommended if you're a UW-Madison adopter) --&gt;
 &lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1?module"&gt;&lt;/script&gt;
@@ -276,15 +291,22 @@ ${searchImport}
 ${profileImport}
     `;
     
-    // Build component template string
-    var templateString = `${this.appBarTemplateStart}
-    ${this.drawerTemplateStart}
-        ${this.drawerLinkTemplate}
-    ${this.drawerTemplateEnd}
-    ${this.searchTemplate}
-    ${this.profileTemplate}
-${this.appBarTemplateEnd}
-    `;
+    // Build component template string, including only markup for visible components
+    var templateString = `${this.appBarTemplateStart}`;
+
+    if (this.includedComponents.indexOf('drawer') != -1) {
+        templateString += `\n\t${this.drawerTemplateStart}\n\t\t${this.drawerLinkTemplate}\n\t${this.drawerTemplateEnd}`;
+    }
+
+    if (this.includedComponents.indexOf('search') != -1) {
+        templateString += `\n\t${this.searchTemplate}`;
+    }
+
+    if (this.includedComponents.indexOf('profile') != -1) {
+        templateString += `\n\t${this.profileTemplate}`;
+    }
+    
+    templateString += `\n${this.appBarTemplateEnd}`;
 
     // Update DOM and call syntax highlighter
     importsContainer.innerHTML = importsString;
