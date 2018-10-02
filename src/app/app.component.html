@@ -1,0 +1,33 @@
+<myuw-app-bar
+  role="toolbar"
+  theme-name="MyUW"
+  app-name="Web Components" 
+  app-url="/">
+  <myuw-drawer id="drawer" 
+    slot="myuw-navigation">
+    <myuw-drawer-link
+      *ngFor="let link of links"
+      slot="myuw-drawer-links"
+      [attr.icon]="link.icon"
+      [attr.name]="link.name"
+      [attr.href]="link.href"
+      (click)="useAngularRoute(link.href, $event)">
+    </myuw-drawer-link>
+  </myuw-drawer>
+  <myuw-search id="search" 
+    input-label="Search"
+    button-label="Submit search"
+    icon="search"
+    slot="myuw-search">
+  </myuw-search>
+  <myuw-profile id="profile" 
+    slot="myuw-profile"
+    session-endpoint="./assets/session.json"
+    login-url="#"
+    logout-url="#">
+    <a href="https://myuw-web-components.github.io/myuw-profile/" slot="nav-item">Profile demo page</a>
+  </myuw-profile>
+</myuw-app-bar>
+<div class="demo__container" role="main">
+  <router-outlet></router-outlet>
+</div>
