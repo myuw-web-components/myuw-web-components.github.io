@@ -1,0 +1,163 @@
+@import "~prismjs/plugins/toolbar/prism-toolbar.css";
+@import "~prismjs/themes/prism-coy";
+@import "~dialog-polyfill/dialog-polyfill.css";
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto';
+    font-size: 16px;
+    background: #ccc;
+}
+
+p, ul, ol {
+    font-size: 16px;
+}
+a {
+    color: inherit;
+    font-weight: inherit;
+}
+/* TODO: Update more components to use variables that can be set in theme component (like search field colors/borders) */
+.uw-madison-white-theme .card button {
+    font-weight: 500;
+}
+
+.uw-madison-white-theme .card button:hover {
+    background-color: #047aa848;
+}
+
+.demo__container {
+    margin: 18px 36px;
+
+    a {
+        color: var(--myuw-link-color);
+    }
+
+    ol {
+        font-size: 16px;
+    }
+
+    section {
+        width: 100%;
+        margin: 0 auto;
+    
+        &.section__demos li {
+            margin-bottom: 12px;
+        }
+    
+        &.section__usage li {
+            font-size: 18px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media (min-width: 600px) {
+            width: 85%;
+        }
+    }
+
+    .card {
+        padding: 16px 36px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12);
+        background: #fafafa;
+        color: #222;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        border-radius: 5px;
+        margin-bottom: 24px;
+
+        code.prettyprint {
+            overflow-x: scroll;
+            padding: 1rem;
+            font-size: 14px;
+        }
+    }
+}
+
+dialog.mdl-dialog {
+    width: 100%;
+    border-radius: 3px;
+
+    .dialog-title {
+        width: 100%;
+        justify-content: space-between;
+        align-content: center;
+        align-items: center;
+    }
+    .dialog-item h3 {
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+    h4 {
+        margin-bottom: 0;
+    }
+    .mdl-textfield {
+        margin-right: 12px;
+    }
+    .mdl-dialog__actions {
+        align-items: center;
+    }
+    .mdl-dialog__actions>* {
+        height: auto;
+    }
+    @media (min-width: 600px) {
+        width: 80%;
+    }
+    @media (min-width: 1260px) {
+        width: 60%;
+    }
+}
+
+.demo__container,
+dialog {
+    button.mdl-button {
+        text-transform: none;
+        background: transparent;
+        color: var(--myuw-accent-bg);
+
+        &.mdl-button--raised {
+            text-transform: none;
+            background: var(--myuw-accent-bg);
+            color: var(--myuw-accent-color);
+
+            &:hover,
+            &:focus:not(:active) {
+                background: #046085;
+            }
+        }
+
+        &.mdl-button--fab {
+            background: var(--myuw-accent-bg);
+            color: var(--myuw-accent-color);
+        }
+
+        &.mdl-button--icon {
+            height: 42px;
+            width: 42px;
+            min-width: 42px;
+        }
+    }
+
+    button.icon-button {
+        color: #046085;
+        background: transparent;
+        border-radius: 50%;
+        height: 48px;
+        max-height: 48px;
+        width: 48px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+
+        &:hover {
+            background: rgba(0,0,0,0.12);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
