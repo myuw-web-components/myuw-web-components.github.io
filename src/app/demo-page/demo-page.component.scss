@@ -1,0 +1,55 @@
+
+/* Layout styles */
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.title.row {
+    justify-content: space-between;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.helper {
+    font-size: 14px;
+    color: #777;
+    margin: 0 8px;
+}
+
+.mdl-data-table {
+    width: 100%;
+    font-size: 16px;
+
+    tr {
+        cursor: pointer;
+    }
+}
+
+.interactive {
+    .form-control {
+        margin-bottom: 20px;
+
+        &.row {
+            justify-content: space-between;
+        }
+
+        &.column {
+            flex: auto;
+            align-content: center;
+
+            input {
+                margin-bottom: 8px;
+            }
+        }
+    }  
+    
+    select {
+        height: 36px;
+        font-size: 16px;
+    }
+}

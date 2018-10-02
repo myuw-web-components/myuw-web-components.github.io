@@ -1,1 +1,1 @@
-# MyUW Web Components Github pages
+# MyUW Web Components on Github Pages
