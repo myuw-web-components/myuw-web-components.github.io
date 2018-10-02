@@ -144,11 +144,8 @@ myuw-app-bar {
 
   /**
    * 
-   * @param label 
-   * @param url 
-   * @param icon 
    */
-  addDrawerLink(label, url, icon) {
+  addDrawerLink() {
     // Get form elements
     var linkText = document.getElementById('navItemLabel') as HTMLInputElement;
     var linkUrl = document.getElementById('navItemHref') as HTMLInputElement;
