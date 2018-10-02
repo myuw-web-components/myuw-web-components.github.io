@@ -1,34 +1,54 @@
-/* Initial properties */
-this.includedComponents = ['drawer', 'search', 'profile'];
+import { Component, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { HighlightService } from '../prism.service';
+import 'dialog-polyfill';
 
-this.searchCallbackCode = `\ndocument.getElementById('search').callback = (value) => {\n\twindow.alert('You searched for: ' + value);\n}\n\n`;
+declare var dialogPolyfill: any;
 
-// Code generation templates
-this.appBarTemplateStart = `&lt;myuw-app-bar
+@Component({
+  selector: 'demo-page',
+  templateUrl: './demo-page.component.html',
+  styleUrls: ['./demo-page.component.scss']
+})
+
+export class DemoPageComponent implements AfterViewInit {
+  
+  constructor(
+    private router: Router,
+    private highlightService: HighlightService
+  ) { }
+
+  /* Initial properties */
+  public includedComponents = ['drawer', 'search', 'profile'];
+  public searchCallbackCode = `\ndocument.getElementById('search').callback = (value) => {\n\twindow.alert('You searched for: ' + value);\n}\n\n`;
+  public callbacks = [
+      { label: 'Generate an alert', value: 'alert' },
+      { label: 'Change some text on screen', value: 'yahoo' }
+  ];
+
+  // Code generation templates
+  public appBarTemplateStart = `&lt;myuw-app-bar
     theme-name="MyUW"
     app-name="Web Components" 
     app-url=""&gt;`;
-
-this.appBarTemplateEnd = `&lt;/myuw-app-bar&gt;`;
-
-this.drawerTemplateStart = `&lt;myuw-drawer slot="myuw-navigation"&gt;`
-this.drawerLinkTemplate = `&lt;myuw-drawer-link
+  
+  public appBarTemplateEnd = `&lt;/myuw-app-bar&gt;`;
+  public drawerTemplateStart = `&lt;myuw-drawer slot="myuw-navigation"&gt;`;
+  public drawerLinkTemplate = `&lt;myuw-drawer-link
             slot="myuw-drawer-links"
             name=""
             icon=""
             href=""&gt;
         &lt;/myuw-drawer-link&gt;`;
-
-this.drawerTemplateEnd = `&lt;/myuw-drawer&gt`;
-
-this.searchTemplate = `&lt;myuw-search
+  public drawerTemplateEnd = `&lt;/myuw-drawer&gt`;
+  public searchTemplate = `&lt;myuw-search
         input-label="Search"
         button-label="Submit search"
         icon="search"
         slot="myuw-search"&gt;
     &lt;/myuw-search&gt;`;
 
-this.profileTemplate = `&lt;myuw-profile
+  public profileTemplate = `&lt;myuw-profile
         slot="myuw-profile"
         session-endpoint=""
         login-url=""
@@ -36,12 +56,42 @@ this.profileTemplate = `&lt;myuw-profile
         &lt;a href="" slot="nav-item"&gt;&lt;/a&gt;
     &lt;/myuw-profile&gt;`;
 
-this.customCssTemplate = `&#47;&#42; You didn't change any theme colors &#42;&#47;`;
+  public customCssTemplate = `&#47;&#42; You didn't change any theme colors &#42;&#47;`;
 
-/*
-    THEME DEMO
-*/
-function toggleTheme() {
+  /**
+   * 
+   */
+  ngAfterViewInit() {
+    (document.getElementById('search') as any).callback = (value: string) => {
+      window.alert('You searched for: ' + value);
+    };
+    (document.getElementById('searchCallbackCode') as any).innerText = this.searchCallbackCode;
+    this.highlightService.highlightAll();
+  }
+
+  /**
+   * 
+   * @param id 
+   */
+  showDialog(id) {
+    var dialog = (document.getElementById(id) as any);
+
+    // Register dialog if polyfill needed
+    if (!dialog.showModal) {
+        dialogPolyfill.registerDialog(dialog);
+    }
+    
+    dialog.showModal();
+      
+    dialog.querySelector('.close').addEventListener('click', function() {
+        dialog.close();
+    });
+  }
+
+  /**
+   * 
+   */
+  toggleTheme() {
     var themeTooltip = document.getElementById('alternateThemeName');
     if (document.body.classList.contains('uw-madison-white-theme')) {
         document.body.classList.remove('uw-madison-white-theme');
@@ -50,21 +100,23 @@ function toggleTheme() {
         document.body.classList.add('uw-madison-white-theme');
         themeTooltip.innerText = 'MyUW Red';
     }
-}
-/*
-    TOP BAR DEMO FUNCTIONS
-*/
-function updateTopAppBar(e) {
+  }
+
+  /**
+   * 
+   * @param e 
+   */
+  updateTopAppBar(e) {
     e.preventDefault();
 
     // Get app bar
     var _appBar = document.getElementsByTagName('myuw-app-bar')[0];
     
     // Get property fields
-    var themeText = document.getElementById('themeName');
-    var appText = document.getElementById('appName');
-    var appUrl = document.getElementById('appUrl');
-    var barBackground = document.getElementById('barBackground');
+    var themeText = document.getElementById('themeName') as HTMLInputElement;
+    var appText = document.getElementById('appName') as HTMLInputElement;
+    var appUrl = document.getElementById('appUrl') as HTMLInputElement;
+    var barBackground = document.getElementById('barBackground') as HTMLInputElement;
     
     // Update attributes
     _appBar.setAttribute('theme-name', themeText.value);
@@ -73,8 +125,8 @@ function updateTopAppBar(e) {
 
     // Update template for code generation
     this.appBarTemplateStart = `&lt;myuw-app-bar
-    theme-name="${themeName.value}"
-    app-name="${appName.value}" 
+    theme-name="${themeText.value}"
+    app-name="${appText.value}" 
     app-url="${appUrl.value}"&gt;`;
 
     // If value was entered for background, create and use custom css template
@@ -88,15 +140,16 @@ myuw-app-bar {
     newCss.innerHTML = this.customCssTemplate;
     document.head.appendChild(newCss);
     }
-}
-/*
-    NAV DRAWER DEMO FUNCTIONS
-*/
-function addDrawerLink(label, url, icon) {
+  }
+
+  /**
+   * 
+   */
+  addDrawerLink() {
     // Get form elements
-    var linkText = document.getElementById('navItemLabel');
-    var linkUrl = document.getElementById('navItemHref');
-    var linkIcon = document.getElementById('navItemIcon');
+    var linkText = document.getElementById('navItemLabel') as HTMLInputElement;
+    var linkUrl = document.getElementById('navItemHref') as HTMLInputElement;
+    var linkIcon = document.getElementById('navItemIcon') as HTMLInputElement;
     
     // Update template for code generation
     this.drawerLinkTemplate = `&lt;myuw-drawer-link
@@ -117,27 +170,20 @@ function addDrawerLink(label, url, icon) {
 
     // Reset fields and update helper text
     document.getElementById('drawerHelperText').innerText = `Added "${linkText.value}"`;
-    document.getElementById('navItemLabel').value = "";
-    document.getElementById('navItemHref').value = "";
-    document.getElementById('navItemIcon').value = "";
-}
+    (document.getElementById('navItemLabel') as HTMLInputElement).value = "";
+    (document.getElementById('navItemHref') as HTMLInputElement).value = "";
+    (document.getElementById('navItemIcon') as HTMLInputElement).value = "";
+  }
 
-/*
-    SEARCH BAR DEMO FUNCTIONS
-*/
-// Set up code demo
-document.getElementById('searchCallbackCode').innerText = this.searchCallbackCode;
-// Set up initial callback
-document.getElementById('search').callback = (value) => {
-    window.alert('You searched for: ' + value);
-}
-
-function updateSearchBar() {
+  /**
+   * 
+   */
+  updateSearchBar() {
     // Get all elements
     var searchBar = document.getElementsByTagName('myuw-search')[0];
-    var ariaLabel = document.getElementById('searchAriaLabel');
-    var placeholder = document.getElementById('searchPlaceholder');
-    var icon = document.getElementById('searchIcon');
+    var ariaLabel = document.getElementById('searchAriaLabel') as HTMLInputElement;
+    var placeholder = document.getElementById('searchPlaceholder') as HTMLInputElement;
+    var icon = document.getElementById('searchIcon') as HTMLInputElement;
 
     // Update search template for code generation
     this.searchTemplate = `&lt;myuw-search id="search" 
@@ -157,28 +203,33 @@ function updateSearchBar() {
     if (icon.value) {
         searchBar.setAttribute('icon', icon.value);
     }
-}
+  }
 
-function updateCallback(value) {
+  /**
+   * 
+   * @param value 
+   */
+  updateCallback(value) {
     if (value === 'alert') {
-        document.getElementById('search').callback = (value) => {
+        (document.getElementById('search') as any).callback = (value) => {
             window.alert('You searched for: ' + value);
         }
         document.getElementById('searchCallbackCode').innerText = `\ndocument.getElementById('search').callback = (value) => {\n\twindow.alert('You searched for: ' + value);\n}\n\n`;
     } else {
-        document.getElementById('search').callback = (value) => {
+        (document.getElementById('search') as any).callback = (value) => {
            document.getElementById('page-title').innerText = value;
         }
         document.getElementById('searchCallbackCode').innerText = `\ndocument.getElementById('search').callback = (value) => {\n\tdocument.getElementById('page-title').innerText = value;\n}\n\n`;
     }
     // Call syntax highlighter
-    Prism.highlightElement(document.getElementById('searchCallbackCode'));
-}
+    this.highlightService.highlightAll();
+  }
 
-/*
-    PROFILE DEMO FUNCTIONS
-*/
-function setSession(session) {
+  /**
+   * 
+   * @param session 
+   */
+  setSession(session) {
     // Remove profile from DOM
     document.getElementsByTagName('myuw-profile')[0].remove();
     // Construct new profile template
@@ -194,16 +245,19 @@ function setSession(session) {
     `;
     // Reinsert into DOM
     document.getElementsByTagName('myuw-app-bar')[0].appendChild(newProfileTemplate);
-}
+  } 
 
-function updateProfileTemplate() {
+  /**
+   * 
+   */
+  updateProfileTemplate() {
     // Get all input fields
-    var color = document.getElementById('profileColor');
-    var login = document.getElementById('loginUrl');
-    var logout = document.getElementById('logoutUrl');
-    var session = document.getElementById('sessionEndpoint');
-    var linkText = document.getElementById('profileLinkLabel');
-    var linkUrl = document.getElementById('profileLinkUrl');
+    var color = document.getElementById('profileColor') as HTMLInputElement;
+    var login = document.getElementById('loginUrl') as HTMLInputElement;
+    var logout = document.getElementById('logoutUrl') as HTMLInputElement;
+    var session = document.getElementById('sessionEndpoint') as HTMLInputElement;
+    var linkText = document.getElementById('profileLinkLabel') as HTMLInputElement;
+    var linkUrl = document.getElementById('profileLinkUrl') as HTMLInputElement;
 
     if (!session.value) {
         session.value = '';
@@ -229,10 +283,13 @@ function updateProfileTemplate() {
     linkText.value = "";
     linkUrl.value = "";
     document.getElementById('profileHelperText').innerText = 'Updated profile component';
-}
+  }
 
-/* SHOW/HIDE COMPONENTS */
-function toggleComponent(componentId) {
+  /**
+   * 
+   * @param componentId 
+   */
+  toggleComponent(componentId) {
     if (this.includedComponents.indexOf(componentId) != -1) {
         document.getElementById(componentId).hidden = true;
         document.getElementById(componentId + 'IconVisibility').innerText = 'visibility_off';
@@ -248,13 +305,12 @@ function toggleComponent(componentId) {
         // Add component to "included" array for code generation
         this.includedComponents.push(componentId);
     }
-}
+  }
 
-/**
- * Generate all markup necessary for including myuw-web-components
- * on a page.
- */
-function generateComponentMarkup() {
+  /**
+   * 
+   */
+  generateComponentMarkup() {
     // Get container elements
     var importsContainer = document.getElementById('generatedModuleImports');
     var templateContainer = document.getElementById('generatedTemplate');
@@ -312,25 +368,6 @@ ${profileImport}
     importsContainer.innerHTML = importsString;
     templateContainer.innerHTML = templateString;
     cssContainer.innerHTML = this.customCssTemplate;
-    Prism.highlightElement(importsContainer);
-    Prism.highlightElement(templateContainer);
-    Prism.highlightElement(cssContainer);
-}
-
-/**
- * Copy code to the clipboard
- * @param {string} id ID of the <code> block to copy
- */
-function copyMarkup(id) {
-    // Get plain text
-    var snippet = document.getElementById(id).innerText;
-    // Create textarea
-    var selection = document.createElement('textarea');
-    selection.value = snippet;
-    document.body.appendChild(selection);
-    // Select and copy
-    selection.select();
-    document.execCommand('copy');
-    // Remove textarea
-    document.body.removeChild(selection);
+    this.highlightService.highlightAll();
+  }
 }
