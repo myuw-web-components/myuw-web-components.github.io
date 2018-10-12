@@ -20,7 +20,5 @@
   "devDependencies": {
     "live-server": "^1.2.0"
   },
-  "dependencies": {
-    "dialog-polyfill": "^0.4.10"
-  }
+  "dependencies": {}
 }
