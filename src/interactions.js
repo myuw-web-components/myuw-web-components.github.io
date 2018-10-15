@@ -1,5 +1,5 @@
 /* Initial properties */
-this.includedComponents = ['drawer', 'search', 'profile'];
+this.includedComponents = ['nav', 'search', 'profile'];
 
 this.searchCallbackCode = `\ndocument.getElementById('search').callback = (value) => {\n\twindow.alert('You searched for: ' + value);\n}\n\n`;
 
@@ -113,7 +113,7 @@ function addDrawerLink(label, url, icon) {
     newLink.setAttribute('icon', linkIcon.value);
     newLink.setAttribute('href', linkUrl.value);
 
-    document.getElementById('drawer').appendChild(newLink);
+    document.getElementById('nav').appendChild(newLink);
 
     // Reset fields and update helper text
     document.getElementById('drawerHelperText').innerText = `Added "${linkText.value}"`;
@@ -263,7 +263,7 @@ function generateComponentMarkup() {
     var searchImport = '';
     var profileImport = '';
 
-    if (this.includedComponents.indexOf('drawer') != -1) {
+    if (this.includedComponents.indexOf('nav') != -1) {
         drawerImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-drawer@^1?module"&gt;&lt;/script&gt';
     }
     if (this.includedComponents.indexOf('search') != -1) {
@@ -294,7 +294,7 @@ ${profileImport}
     // Build component template string, including only markup for visible components
     var templateString = `${this.appBarTemplateStart}`;
 
-    if (this.includedComponents.indexOf('drawer') != -1) {
+    if (this.includedComponents.indexOf('nav') != -1) {
         templateString += `\n\t${this.drawerTemplateStart}\n\t\t${this.drawerLinkTemplate}\n\t${this.drawerTemplateEnd}`;
     }
 
