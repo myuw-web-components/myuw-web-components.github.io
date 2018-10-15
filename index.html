@@ -57,7 +57,7 @@
             theme-name="MyUW"
             app-name="Web Components" 
             app-url="/">
-            <myuw-drawer slot="myuw-navigation">
+            <myuw-drawer id="nav" slot="myuw-navigation">
                 <myuw-drawer-link
                   slot="myuw-drawer-links"
                   name="Project info and contacts"
@@ -131,9 +131,12 @@
                                 <td class="mdl-data-table__cell--non-numeric">Navigation drawer</td>
                                 <td><a href="https://github.com/myuw-web-components/myuw-drawer" target="_blank" onclick="event.stopImmediatePropagation()">myuw-drawer</a></td>
                                 <td>
-                                    <button aria-label="Hide navigation drawer" class="icon-button" onclick="event.stopPropagation();toggleComponent('drawer')">
-                                        <i id="drawerIconVisibilityTable" class="material-icons">visibility</i>
+                                    <button id="toggleNav" aria-label="Hide navigation drawer" class="icon-button" onclick="event.stopPropagation();toggleComponent('nav')">
+                                        <i id="navIconVisibilityTable" class="material-icons">visibility</i>
                                     </button>
+                                    <div id="navToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleNav">
+                                      Hide nav drawer
+                                    </div>
                                 </td>
                             </tr>
                             <tr onclick="showDialog('searchDialog')">
@@ -266,8 +269,8 @@
             <div class="dialog-title row">
                 <h4>Navigation drawer</h4>
                 <div class="dialog-title-controls row">
-                    <button id="toggleDrawer" aria-label="Hide navigation drawer" class="icon-button" onclick="toggleComponent('drawer')">
-                        <i id="drawerIconVisibility" class="material-icons">visibility</i>
+                    <button id="toggleDrawer" aria-label="Hide navigation drawer" class="icon-button" onclick="toggleComponent('nav')">
+                        <i id="navIconVisibility" class="material-icons">visibility</i>
                     </button>
                     <div id="drawerToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleDrawer">
                         Hide drawer
