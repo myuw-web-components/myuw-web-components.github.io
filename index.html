@@ -219,6 +219,20 @@
                         <pre><code class="lang-css" id="generatedCss">
 &#47;&#42;  Custom CSS properties will appear here &#42;&#47; 
                         </code></pre>
+                        <!-- Component javascript -->
+                        <li id="profileJsDescription">
+                          <span>
+                            Profile component custom event
+                            <p>When you know a user has an active session, dispatch this custom event to tell the profile component that someone is logged in.</p>
+                          </span>
+                          <button id="copyJsButton" class="icon-button" onclick="copyMarkup('generatedJs')"><i class="material-icons">file_copy</i></button>
+                          <div class="mdl-tooltip" data-mdl-for="copyJsButton">
+                            Copy to clipboard
+                          </div>
+                        </li>
+                        <pre class="lang-js"><code class="lang-js" id="generatedJs">
+&#47;&#42; Javascript event for profile component &#42;&#47; 
+                        </code></pre>
                     </ol>
                 </div>
             </section>
@@ -397,10 +411,6 @@
                         <label class="mdl-textfield__label" for="logoutUrl">Logout URL</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="sessionEndpoint" placeholder="/demo/session2.json">
-                        <label class="mdl-textfield__label" for="sessionEndpoint">Session endpoint</label>
-                    </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="profileLinkLabel">
                         <label class="mdl-textfield__label" for="profileLinkLabel">Menu link text</label>
                     </div>
@@ -414,11 +424,11 @@
                     </div>
                 </form>
                 <h5>Example session states</h5>
-                <p>These buttons alter the "session-endpoint" attribute of the profile component. The component displays a different appearance depending on the JSON available at the provided endpoint.</p>
+                <p>These buttons dispatch the "myuw-login" custom event. The component listens for this event and displays the data it receives. See the component's readme on Github for more information.</p>
                 <div class="row" id="sessionStates">
-                    <button aria-label="set no session" class="mdl-button md-js-button" onclick="setSession('jargon')" type="button">No session</button>&nbsp;&nbsp;
-                    <button aria-label="set alternate session" class="mdl-button md-js-button" onclick="setSession('/demo/session2.json')" type="button">Swap session</button>&nbsp;&nbsp;
-                    <button aria-label="restore demo session" class="mdl-button md-js-button" onclick="setSession('/demo/session.json')" type="button">Restore demo session</button>
+                    <button aria-label="set no session" class="mdl-button md-js-button" onclick="noSession()" type="button">No session</button>&nbsp;&nbsp;
+                    <button aria-label="set alternate session" class="mdl-button md-js-button" onclick="setSession('Bucky')" type="button">Known user session</button>&nbsp;&nbsp;
+                    <button aria-label="restore demo session" class="mdl-button md-js-button" onclick="setSession()" type="button">Generic session</button>
                 </div>
             </div>
         </dialog>
@@ -428,5 +438,13 @@
         <script src='./src/dialogs.js'></script>
         <!-- Syntax highlighting -->
         <script src="./src/themes/prism.js" data-manual></script>
+        <script>
+          document.addEventListener('WebComponentsReady', function() {
+            var initProfile = new CustomEvent('myuw-login', {
+              detail: {}
+            });
+            document.dispatchEvent(initProfile);
+          });
+        </script>
     </body>
 </html>
