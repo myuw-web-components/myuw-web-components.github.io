@@ -39,7 +39,7 @@ this.helpTemplate = `&lt;myuw-help
         slot="myuw-help"
         myuw-help-title="Need more help?"
         show-button&gt;
-        &lt;div&gt;Here's your custom help content&lt;/div&gt;
+        &lt;div slot="myuw-help-content"&gt;&lt;/div&gt;
     &lt;/myuw-help&gt;`;
 
 this.customCssTemplate = `&#47;&#42; You didn't change any theme colors &#42;&#47;`;
@@ -376,23 +376,21 @@ function generateComponentMarkup() {
 &lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1?module"&gt;&lt;/script&gt;
 &lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1"&gt;&lt;/script&gt;
 
-&lt!-- Import selected myuw-web-components --&gt;
-&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1?module"&gt;&lt;/script&gt;
-${drawerImport}
-${searchImport}
-${profileImport}
-${helpImport}
-
 &lt!-- 
-  No-module fallbacks are required for cross-browser support.
-  These will only be loaded in older browser and browsers that don't support ES6 modules.
+  Import selected myuw-web-components 
+  Note: "nomodule" fallbacks are required for cross-browser support. They will only be loaded in browsers without ES6 module support. 
 --&gt;
+&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1?module"&gt;&lt;/script&gt;
 &lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1"&gt;&lt;/script&gt;
+${drawerImport}
 ${drawerNoModule}
+${searchImport}
 ${searchNoModule}
+${profileImport}
 ${profileNoModule}
+${helpImport}
 ${helpNoModule}
-    `;
+`;
     
     // Build component template string, including only markup for visible components
     var templateString = `${this.appBarTemplateStart}`;
