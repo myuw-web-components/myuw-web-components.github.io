@@ -43,10 +43,13 @@
         <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-drawer@^1"></script>
 
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-search@^1?module"></script>
-        <script nomodule scr="https://unpkg.com/@myuw-web-components/myuw-search@^1"></script>
+        <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-search@^1"></script>
         
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-profile@^1?module"></script>
-        <script nomodule scr="https://unpkg.com/@myuw-web-components/myuw-profile@^1"></script>
+        <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-profile@^1"></script>
+
+        <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-help@^1?module"></script>
+        <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-help@^1"></script>
     </head>
     <body class="">
         <myuw-app-bar
@@ -130,5 +133,10 @@
                 </div>
             </section>
         </div>
+        <script>
+            document.addEventListener('WebComponentsReady', function() {
+              document.body.style.opacity = 1;
+            });
+          </script>
     </body>
 </html>

@@ -1,6 +1,7 @@
 body {
     margin: 0;
     background: #ccc;
+    opacity: 0;
 }
 p, ul, ol {
     font-size: 16px;
@@ -49,6 +50,10 @@ a {
 
 .mdl-data-table tr {
     cursor: pointer;
+}
+
+.mdl-textfield.html-textfield {
+  width: auto;
 }
 
 section {
@@ -151,6 +156,18 @@ dialog button.icon-button:focus {
 .interactive select {
     height: 36px;
     font-size: 16px;
+}
+.interactive .checkbox {
+    -webkit-transition: .24s;
+    transition: .24s;
+    background: transparent;
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: rgba(0,0,0,0.54);
+    margin-right: 12px;
 }
 .dialog-title {
     width: 100%;
