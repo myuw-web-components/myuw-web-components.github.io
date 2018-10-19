@@ -30,13 +30,15 @@ this.searchTemplate = `&lt;myuw-search
 
 this.profileTemplate = `&lt;myuw-profile
         slot="myuw-profile"
-        session-endpoint=""
         login-url=""
         logout-url=""&gt;
         &lt;a href="" slot="nav-item"&gt;&lt;/a&gt;
     &lt;/myuw-profile&gt;`;
 
 this.customCssTemplate = `&#47;&#42; You didn't change any theme colors &#42;&#47;`;
+
+this.customJsTemplate = profileJs = `\nvar profileLoginEvent = new CustomEvent('myuw-login', {\n\tdetail: {\n\t\tperson: {\n\t\t\tfirstName: "Bucky" // Name you want to pass to the component\n\t\t}\n\t}\n});\ndocument.dispatchEvent(profileLoginEvent);\n`;
+
 
 /*
     THEME DEMO
@@ -178,22 +180,32 @@ function updateCallback(value) {
 /*
     PROFILE DEMO FUNCTIONS
 */
-function setSession(session) {
-    // Remove profile from DOM
-    document.getElementsByTagName('myuw-profile')[0].remove();
-    // Construct new profile template
-    var newProfileTemplate = document.createElement('myuw-profile');
-    newProfileTemplate.setAttribute('id', 'profile');
-    newProfileTemplate.setAttribute('slot', 'myuw-profile');
-    newProfileTemplate.setAttribute('login-url', 'https://wisc.edu/');
-    newProfileTemplate.setAttribute('logout-url', 'https://wisc.edu/');
-    newProfileTemplate.setAttribute('session-endpoint', session);
-    newProfileTemplate.setAttribute('color', '#fb686d');
-    newProfileTemplate.innerHTML = `
-        <a href="https://myuw-web-components.github.io/myuw-profile/" slot="nav-item">Profile demo page</a>
-    `;
-    // Reinsert into DOM
-    document.getElementsByTagName('myuw-app-bar')[0].appendChild(newProfileTemplate);
+
+function noSession() {
+  var initProfile = new CustomEvent('myuw-login', {
+    detail: {}
+  });
+  document.dispatchEvent(initProfile);
+}
+
+function setSession(name) {
+  var sessionEvent;
+  if (name) {
+    sessionEvent = new CustomEvent('myuw-login', {
+      detail: {
+        person: {
+          "firstName": name
+        }
+      }
+    });
+  } else {
+    sessionEvent = new CustomEvent('myuw-login', {
+      detail: {
+        person: {}
+      }
+    });
+  }
+  document.dispatchEvent(sessionEvent);
 }
 
 function updateProfileTemplate() {
@@ -201,17 +213,12 @@ function updateProfileTemplate() {
     var color = document.getElementById('profileColor');
     var login = document.getElementById('loginUrl');
     var logout = document.getElementById('logoutUrl');
-    var session = document.getElementById('sessionEndpoint');
     var linkText = document.getElementById('profileLinkLabel');
     var linkUrl = document.getElementById('profileLinkUrl');
-
-    if (!session.value) {
-        session.value = '';
-    }
+    
     // Update template for code generation
     this.profileTemplate = `&lt;myuw-profile
         slot="myuw-profile"
-        session-endpoint="${session.value}"
         login-url="${login.value}"
         logout-url="${logout.value}"`;
 
@@ -225,7 +232,6 @@ function updateProfileTemplate() {
     // Clear fields and update helper text
     login.value = "";
     logout.value = "";
-    session.value = "";
     linkText.value = "";
     linkUrl.value = "";
     document.getElementById('profileHelperText').innerText = 'Updated profile component';
@@ -259,6 +265,8 @@ function generateComponentMarkup() {
     var importsContainer = document.getElementById('generatedModuleImports');
     var templateContainer = document.getElementById('generatedTemplate');
     var cssContainer = document.getElementById('generatedCss');
+    var jsContainer = document.getElementById('generatedJs');
+    
     var drawerImport = '';
     var searchImport = '';
     var profileImport = '';
@@ -303,7 +311,10 @@ ${profileImport}
     }
 
     if (this.includedComponents.indexOf('profile') != -1) {
-        templateString += `\n\t${this.profileTemplate}`;
+        templateString += `\n\t${this.profileTemplate}`;        
+    } else {
+      document.getElementById('profileJsDescription').hidden = true;
+      jsContainer.hidden = true;
     }
     
     templateString += `\n${this.appBarTemplateEnd}`;
@@ -312,9 +323,12 @@ ${profileImport}
     importsContainer.innerHTML = importsString;
     templateContainer.innerHTML = templateString;
     cssContainer.innerHTML = this.customCssTemplate;
+    jsContainer.innerHTML = this.customJsTemplate;
+    
     Prism.highlightElement(importsContainer);
     Prism.highlightElement(templateContainer);
     Prism.highlightElement(cssContainer);
+    Prism.highlightElement(jsContainer);
 }
 
 /**
