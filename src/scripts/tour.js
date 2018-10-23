@@ -1,3 +1,4 @@
+
 const banner = document.getElementById('tour-banner');
 const mediator = new Shepherd.Evented();
 const tableRow = document.getElementById('tourHighlightAppBar');
@@ -212,6 +213,9 @@ function dismissTourBanner() {
 }
 
 function startTour() {
+  if (Shepherd.activeTour) {
+    Shepherd.activeTour.cancel();
+  }
   banner.classList.remove('open');
   tour.start();
 }
