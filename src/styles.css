@@ -10,6 +10,12 @@ a {
     color: inherit;
     font-weight: inherit;
 }
+h3 {
+  font-size: 24px;
+}
+.font__small {
+  font-size: 14px;
+}
 /* TODO: Update more components to use variables that can be set in theme component (like search field colors/borders) */
 .uw-madison-white-theme .card button {
     font-weight: 500;
@@ -78,16 +84,15 @@ section {
 }
 
 div.demo__container {
-    margin: 18px 36px;
+    margin: 0;
 }
-.demo__container button.mdl-button,
-dialog button.mdl-button {
+
+.demo__container button.mdl-button {
     text-transform: none;
     background: transparent;
     color: var(--myuw-accent-bg);
 }
-.demo__container button.mdl-button.mdl-button--raised,
-dialog button.mdl-button.mdl-button--raised {
+.demo__container button.mdl-button.mdl-button--raised {
     text-transform: none;
     background: var(--myuw-accent-bg);
     color: var(--myuw-accent-color);
@@ -96,12 +101,8 @@ dialog button.mdl-button.mdl-button--raised {
     background: var(--myuw-accent-bg);
     color: var(--myuw-accent-color);
 }
-dialog button.mdl-button.mdl-button--raised:hover,
-dialog button.mdl-button.mdl-button--raised:focus:not(:active) {
-    background: #046085;
-}
-.demo__container button.icon-button,
-dialog button.icon-button {
+
+.demo__container button.icon-button {
     color: #046085;
     background: transparent;
     border-radius: 50%;
@@ -112,12 +113,8 @@ dialog button.icon-button {
     outline: none;
     cursor: pointer;
 }
-.demo__container button.icon-button:hover,
-dialog button.icon-button:hover {
+.demo__container button.icon-button:hover {
     background: rgba(0,0,0,0.12);
-}
-dialog button.icon-button:focus {
-    outline: none;
 }
 .mdl-button--icon {
     height: 42px;
@@ -169,48 +166,19 @@ dialog button.icon-button:focus {
     border-color: rgba(0,0,0,0.54);
     margin-right: 12px;
 }
-.dialog-title {
-    width: 100%;
-    justify-content: space-between;
-    align-content: center;
-    align-items: center;
+
+@media (min-width: 680px) {
+  section {
+    width: 95%;
+  }
+  div.demo__container {
+    margin: 24px 0;
+  }
 }
-.dialog-item h3 {
-    font-size: 24px;
-    margin-bottom: 8px;
-}
-dialog.mdl-dialog {
-    width: 100%;
-    border-radius: 3px;
-}
-dialog .mdl-textfield {
-    margin-right: 12px;
-}
-dialog h4 {
-    margin-bottom: 0;
-}
-.mdl-dialog__actions {
-    align-items: center;
-}
-.mdl-dialog__actions>* {
-    height: auto;
-}
-@media (min-width: 600px) {
-    dialog.mdl-dialog {
-        width: 80%;
-    }
-    section {
-        width: 85%;
-    }
-}
-@media (min-width: 1260px) {
-    dialog.mdl-dialog {
-        width: 60%;
-    }
-    .grid-item {
-        flex: 1 1 45%;
-        max-width: 45%;
-    }
+@media (min-width: 960px) {
+  section {
+    width: 85%;
+  }
 }
 /* CONTACTS page */
 .mdl-list.list-contacts {
