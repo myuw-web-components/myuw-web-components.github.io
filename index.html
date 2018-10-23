@@ -154,7 +154,13 @@
                             </div>
                         </div>
                     </div>
-                    <p>Each entry in the table below represents one of the components used to build this site.</p>
+                    <p>
+                      <strong>Our mission:</strong>
+                      This small library of web components was created to provide developers across the UW-Madison campus with an easy-to-use, framework agnostic 
+                      collection of elements that closely follows the design specifications of our university's User Experience experts. Our mission is to give UW-Madison's 
+                      presence across the web a superior, quickly recognizable sense of place -- a "digital campus."
+                    </p>
+                    <p>Each entry in the table below has information about one of our components, the latest versions of which were used to build this site.</p>
                     <table class="mdl-data-table mdl-js-data-table">
                         <thead>
                             <tr>
@@ -193,14 +199,14 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr onclick="showDialog('profileDialog')">
+                            <tr id="tourAnchorStep4" onclick="showDialog('profileDialog')">
                                 <td class="mdl-data-table__cell--non-numeric">Profile button</td>
                                 <td><a href="https://github.com/myuw-web-components/myuw-profile" target="_blank" onclick="event.stopImmediatePropagation()">myuw-profile</a></td>
                                 <td>
-                                    <button id="tour-button__step4" aria-label="Hide profile button" class="icon-button" onclick="event.stopPropagation();toggleComponent('profile');mediator.trigger('enable-step-6');">
+                                    <button id="profileToggleButton" aria-label="Hide profile button" class="icon-button" onclick="event.stopPropagation();toggleComponent('profile');mediator.trigger('enable-step-6');">
                                         <i id="profileIconVisibilityTable" class="material-icons">visibility</i>
                                     </button>
-                                    <div id="profileToggleTooltip" class="mdl-tooltip" data-mdl-for="tour-button__step4">
+                                    <div id="profileToggleTooltip" class="mdl-tooltip" data-mdl-for="profileToggleButton">
                                         Hide profile
                                     </div>
                                 </td>
