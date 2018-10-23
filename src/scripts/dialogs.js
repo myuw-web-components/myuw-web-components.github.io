@@ -1,4 +1,3 @@
-
 function showDialog(id) {
   // instantiate new modal
   MicroModal.show(id);
