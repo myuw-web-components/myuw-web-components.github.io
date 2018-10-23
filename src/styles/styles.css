@@ -38,6 +38,10 @@ h3 {
     justify-content: space-between;
 }
 
+.title .title__actions button {
+  margin-left: 12px;
+}
+
 .column {
     display: flex;
     flex-direction: column;

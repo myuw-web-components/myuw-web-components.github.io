@@ -139,11 +139,19 @@
                 <div class="card">
                     <div class="title row">
                         <h2 id="page-title">MyUW Web Components</h2>
-                        <button id="toggleTheme" class="mdl-button mdl-js-button mdl-button--raised mdl-button--icon" onclick="toggleTheme()">
-                            <i class="material-icons">style</i>
-                        </button>
-                        <div class="mdl-tooltip" data-mdl-for="toggleTheme">
-                            Try <span id="alternateThemeName">MyUW White</span> theme
+                        <div class="title__actions">
+                            <button id="tourIconButton" class="mdl-button mdl-js-button mdl-button--raised mdl-button--icon" onclick="startTour()">
+                                <i class="material-icons">directions</i>
+                            </button>
+                            <div class="mdl-tooltip" data-mdl-for="tourIconButton">
+                              Get a tour of the site
+                            </div>
+                            <button id="toggleTheme" class="mdl-button mdl-js-button mdl-button--raised mdl-button--icon" onclick="toggleTheme()">
+                                <i class="material-icons">style</i>
+                            </button>
+                            <div class="mdl-tooltip" data-mdl-for="toggleTheme">
+                                Try <span id="alternateThemeName">MyUW White</span> theme
+                            </div>
                         </div>
                     </div>
                     <p>Each entry in the table below represents one of the components used to build this site.</p>
