@@ -16,10 +16,8 @@
 
         <!-- Demo styles -->
         <link rel="stylesheet" href="./src/styles.css" type="text/css" />
-
-        <!-- <dialog> element polyfill -->
-        <link rel="stylesheet" href="https://unpkg.com/dialog-polyfill@0.4.10/dialog-polyfill.css" type="text/css"/>
-        <script src="https://unpkg.com/dialog-polyfill@0.4.10/dialog-polyfill.js"></script>
+        <link rel="stylesheet" href="./src/themes/tour-styles.css" type="text/css" />
+        <link rel="stylesheet" href="./src/themes/modals.css" type="text/css" />
 
         <style>
             body {
@@ -57,6 +55,14 @@
 
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-help@^1?module"></script>
         <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-help@^1"></script>
+
+        <!-- micromodal for modals -->
+        <script src="./node_modules/micromodal/dist/micromodal.min.js"></script>
+
+        <!-- ShepherdJS tour guide -->
+        <script src="./node_modules/shepherd.js/dist/js/popper.min.js"></script>
+        <script src="./node_modules/shepherd.js/dist/js/popper-utils.min.js"></script>
+        <script src="./node_modules/shepherd.js/dist/js/shepherd.min.js"></script>
     </head>
     <body class="">
         <myuw-app-bar
@@ -82,6 +88,13 @@
                   name="MyUW Web Components"
                   icon="apps"
                   href="https://github.com/myuw-web-components/">
+                </myuw-drawer-link>
+                <myuw-drawer-link
+                  slot="myuw-drawer-links"
+                  name="Take the tour"
+                  icon="directions"
+                  onclick="startTour()"
+                  href="#">
                 </myuw-drawer-link>
             </myuw-drawer>
             <myuw-help id="help"
@@ -110,6 +123,17 @@
             </myuw-profile>
         </myuw-app-bar>
 
+        <div id="tour-banner" class="tour-banner" role="alert">
+          <div class="tour-banner__message">
+            <i class="material-icons">directions</i>
+            <span>First time here? Consider taking the quick, five-step tour to get the most out of this site.</span>
+          </div>
+          <div class="tour-banner__actions">
+            <button class="mdl-button mdl-js-button" type="button" onclick="dismissTourBanner()" aria-label="dismiss banner">Dismiss</button>
+            <button class="mdl-button mdl-js-button" type="button" onclick="startTour()">Take the tour</button>
+          </div>
+        </div>
+
         <div class="demo__container" role="main">
             <section class="section__demos">
                 <div class="card">
@@ -122,16 +146,7 @@
                             Try <span id="alternateThemeName">MyUW White</span> theme
                         </div>
                     </div>
-                    <p>This site was created to allow anyone to see, test, and play with the
-                        <a href="https://github.com/myuw-web-components" target="_blank">MyUW Web Components</a> library.
-                        Each entry in the table below represents one of the components used to build this site.</p>
-                    <p>You can also see myuw-web-components being used on the following sites*:</p>
-                    <ul>
-                        <li><a href="https://kbtest.wisc.edu/kb-site/">KnowledgeBase redesign test site</a></li>
-                        <li><a href="https://buckybackup.doit.wisc.edu/admin/app/#!/">Bucky Backup admin app</a></li>
-                        <li><a href="https://predev.my.wisc.edu/">MyUW predev tier</a></li>
-                    </ul>
-                    <p><i>*may require a static vpn connection and/or Shibboleth session to view</i></p>
+                    <p>Each entry in the table below represents one of the components used to build this site.</p>
                     <table class="mdl-data-table mdl-js-data-table">
                         <thead>
                             <tr>
@@ -141,8 +156,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr onclick="showDialog('topBarDialog')">
-                                <td class="mdl-data-table__cell--non-numeric">Top app bar</td>
+                            <tr id="tourHighlightAppBar" onclick="showDialog('topBarDialog');mediator.trigger('show-step-3');">
+                                <td id="tourAnchorAppBar" class="mdl-data-table__cell--non-numeric">Top app bar</td>
                                 <td><a href="https://github.com/myuw-web-components/myuw-app-bar" target="_blank" onclick="event.stopImmediatePropagation()">myuw-app-bar</a></td>
                                 <td>n/a</td>
                             </tr>
@@ -154,7 +169,7 @@
                                         <i id="navIconVisibilityTable" class="material-icons">visibility</i>
                                     </button>
                                     <div id="navToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleNav">
-                                      Hide nav drawer
+                                      Hide nav
                                     </div>
                                 </td>
                             </tr>
@@ -162,36 +177,47 @@
                                 <td class="mdl-data-table__cell--non-numeric">Search bar</td>
                                 <td><a href="https://github.com/myuw-web-components/myuw-search" target="_blank" onclick="event.stopImmediatePropagation()">myuw-search</a></td>
                                 <td>
-                                    <button aria-label="Hide navigation drawer" class="icon-button" onclick="event.stopPropagation();toggleComponent('search')">
+                                    <button id="toggleSearch" aria-label="Hide search box" class="icon-button" onclick="event.stopPropagation();toggleComponent('search')">
                                         <i id="searchIconVisibilityTable" class="material-icons">visibility</i>
                                     </button>
+                                    <div id="searchToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleSearch">
+                                        Hide search
+                                    </div>
                                 </td>
                             </tr>
                             <tr onclick="showDialog('profileDialog')">
                                 <td class="mdl-data-table__cell--non-numeric">Profile button</td>
                                 <td><a href="https://github.com/myuw-web-components/myuw-profile" target="_blank" onclick="event.stopImmediatePropagation()">myuw-profile</a></td>
                                 <td>
-                                    <button aria-label="Hide navigation drawer" class="icon-button" onclick="event.stopPropagation();toggleComponent('profile')">
+                                    <button id="tour-button__step4" aria-label="Hide profile button" class="icon-button" onclick="event.stopPropagation();toggleComponent('profile');mediator.trigger('enable-step-6');">
                                         <i id="profileIconVisibilityTable" class="material-icons">visibility</i>
                                     </button>
+                                    <div id="profileToggleTooltip" class="mdl-tooltip" data-mdl-for="tour-button__step4">
+                                        Hide profile
+                                    </div>
                                 </td>
                             </tr>
                             <tr onclick="showDialog('helpDialog')">
                                 <td class="mdl-data-table__cell--non-numeric">Help and feedback</td>
                                 <td><a href="https://github.com/myuw-web-components/myuw-help" target="_blank" onclick="event.stopImmediatePropagation()">myuw-help</a></td>
                                 <td>
-                                    <button aria-label="Hide help component" class="icon-button" onclick="event.stopPropagation();toggleComponent('help')">
+                                    <button id="toggleHelp" aria-label="Hide help component" class="icon-button" onclick="event.stopPropagation();toggleComponent('help')">
                                         <i id="helpIconVisibilityTable" class="material-icons">visibility</i>
                                     </button>
+                                    <div id="helpToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleHelp">
+                                        Hide help
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <h3>How to use this site</h3>
+                    <p>The best way to get the most out of this site is to <a href="#" onclick="startTour()">take a quick tour.</a> 
+                    <p>Otherwise, you can follow these basic instructions:</p>
                     <ol>
-                        <li>Click a component's name in the table above</li>
-                        <li>Use the dialog that opens to customize the component however you like. <strong>Any changes you make will be reflected live on this page.</strong></li>
-                        <li>When you've customized the page to your liking, scroll down to the "<a href="#get-components">Get components</a>" section where you can generate the code for your custom components that you can copy and paste into your own app/web page.</li>
+                        <li class="font__small">Click a component's name in the table above</li>
+                        <li class="font__small">Use the dialog that opens to customize the component however you like. <strong>Any changes you make will be reflected live on this page.</strong></li>
+                        <li class="font__small">When you've customized the page to your liking, scroll down to the "<a href="#get-components">Get components</a>" section where you can generate the code for your custom components that you can copy and paste into your own app/web page.</li>
                     </ol>
                 </div>
             </section>
@@ -208,7 +234,9 @@
                         Each component's repository on Github includes a CHANGELOG.md file where you can see each version's changes. Any breaking changes
                         will result in a new major version (i.e. 2.0.0).
                     </p>
-                    <button class="mdl-button mdl-js-button mdl-button--raised" onclick="generateComponentMarkup()">Generate code</button>
+                    <span id="tour-button__step5">
+                        <button id="tour-button__step6-trigger" class="mdl-button mdl-js-button mdl-button--raised" onclick="generateComponentMarkup()">Generate code</button>
+                    </span>
                     <ol>
                         <li>
                             Import components and dependencies into your document
@@ -266,103 +294,100 @@
             Dialogs for interactive content
         -->
         <!-- TOP BAR DIALOG -->
-        <dialog class="mdl-dialog" id="topBarDialog">
-            <div class="dialog-title row">
-                <h4>Top app bar</h4>
-                <button id="closeBarDialog" type="button" class="icon-button close"><i class="material-icons">close</i></button>
-                <div id="closeBarTooltip" class="mdl-tooltip" data-mdl-for="closeBarDialog">
-                    Close app bar dialog
-                </div>
-            </div>
-            <div class="mdl-dialog__content interactive">
+        <div class="modal micromodal-slide mdl-dialog" id="topBarDialog">
+          <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="topBarDialogTitle">
+              <div class="modal-title row">
+                <h4 id="topBarDialogTitle">Top app bar</h4>
+                <button id="closeBarDialog" class="icon-button close" onclick="closeDialog('topBarDialog')"><i class="material-icons">close</i></button>
+              </div>
+              <main class="modal__content interactive">
                 <form name="topBarDemos">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="themeName" >
-                        <label class="mdl-textfield__label" for="themeName">Theme name</label>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="themeName" onkeydown="mediator.trigger('show-step-4');">
+                    <label class="mdl-textfield__label" for="themeName">Theme name</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="appName" >
+                    <label class="mdl-textfield__label" for="appName">App name</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="appUrl" >
+                    <label class="mdl-textfield__label" for="appUrl">Title link</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="barBackground">
+                    <label class="mdl-textfield__label" for="barBackground">Background color</label>
+                    <div id="barBackgroundTooltip" class="mdl-tooltip" data-mdl-for="barBackground">
+                      Accepts hex value, rgb, rgba, or plain text color
                     </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="appName" >
-                        <label class="mdl-textfield__label" for="appName">App name</label>
-                    </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="appUrl" >
-                        <label class="mdl-textfield__label" for="appUrl">Title link</label>
-                    </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="barBackground">
-                        <label class="mdl-textfield__label" for="barBackground">Background color</label>
-                        <div id="barBackgroundTooltip" class="mdl-tooltip" data-mdl-for="barBackground">
-                            Accepts hex value, rgb, rgba, or plain text color
-                        </div>
-                    </div>
+                  </div>
                 </form>
-                <div class="mdl-dialog__actions">
-                    <button type="button" class="mdl-button md-js-button mdl-button--raised" onclick="updateTopAppBar(event)">Update top bar</button>
+                <div class="modal__actions">
+                  <span id="tour-button__step3">
+                      <button type="button" class="mdl-button md-js-button mdl-button--raised" onclick="updateTopAppBar(event);mediator.trigger('show-step-5');">Update top bar</button>
+                  </span>
                 </div>
+              </main>
             </div>
-        </dialog>
+          </div>
+        </div>
 
         <!-- NAVIGATION DRAWER DIALOG -->
-        <dialog class="mdl-dialog" id="drawerDialog">
-            <div class="dialog-title row">
-                <h4>Navigation drawer</h4>
-                <div class="dialog-title-controls row">
-                    <button id="toggleDrawer" aria-label="Hide navigation drawer" class="icon-button" onclick="toggleComponent('nav')">
-                        <i id="navIconVisibility" class="material-icons">visibility</i>
-                    </button>
-                    <div id="drawerToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleDrawer">
-                        Hide drawer
-                    </div>
-                    <button id="closeDrawerDialog" type="button" class="icon-button close"><i class="material-icons">close</i></button>
-                    <div id="closeDrawerTooltip" class="mdl-tooltip" data-mdl-for="closeDrawerDialog">
-                        Close drawer dialog
-                    </div>
+        <div class="modal micromodal-slide mdl-dialog" id="drawerDialog">
+          <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="drawerDialogTitle">
+              <div class="modal-title row">
+                <h4 id="drawerDialogTitle">Navigation drawer</h4>
+                <div class="modal-title-controls row">
+                  <button id="toggleDrawer" aria-label="Hide navigation drawer" class="icon-button" onclick="toggleComponent('nav')">
+                    <i id="navIconVisibility" class="material-icons">visibility</i>
+                  </button>
+                  <button id="closeDrawerDialog" type="button" class="icon-button close" onclick="closeDialog('drawerDialog')"><i class="material-icons">close</i></button>
                 </div>
-            </div>
-            <div class="mdl-dialog__content interactive">
+              </div>
+              <main class="modal__content interactive">
                 <form name="drawerDemos" onsubmit="event.preventDefault(); addDrawerLink()">
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="navItemLabel" required>
-                        <label class="mdl-textfield__label" for="navItemLabel">Link text</label>
-                    </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="navItemHref" required>
-                        <label class="mdl-textfield__label" for="navItemHref">Link URL:</label>
-                    </div>
-                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="navItemIcon">
-                        <label class="mdl-textfield__label" for="navItemIcon">Material icon</label>
-                    </div>
-                    <a aria-label="see material icons" id="navIconInfo" class="icon-button" href="https://material.io/tools/icons" target="_blank"><i class="material-icons">help</i></a>
-                    <div id="materialIconTooltip" class="mdl-tooltip" data-mdl-for="navIconInfo">
-                        See available icons
-                    </div>
-                    <div class="mdl-dialog__actions">
-                        <button type="submit" class="mdl-button md-js-button mdl-button--raised">Add navigation link</button>
-                        <span id="drawerHelperText" class="helper"></span>
-                    </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="navItemLabel" required>
+                    <label class="mdl-textfield__label" for="navItemLabel">Link text</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="navItemHref" required>
+                    <label class="mdl-textfield__label" for="navItemHref">Link URL:</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="navItemIcon">
+                    <label class="mdl-textfield__label" for="navItemIcon">Material icon</label>
+                  </div>
+                  <a aria-label="see material icons" id="navIconInfo" class="icon-button" href="https://material.io/tools/icons" target="_blank"><i class="material-icons">help</i></a>
+                  <div id="materialIconTooltip" class="mdl-tooltip" data-mdl-for="navIconInfo">
+                    See available icons
+                  </div>
+                  <div class="modal__actions">
+                    <button type="submit" class="mdl-button md-js-button mdl-button--raised">Add navigation link</button>
+                    <span id="drawerHelperText" class="helper"></span>
+                  </div>
                 </form>
+              </main>
             </div>
-        </dialog>
+          </div>
+        </div>
 
         <!-- SEARCH BAR DIALOG -->
-        <dialog class="mdl-dialog" id="searchDialog">
-            <div class="dialog-title row">
-                <h4>Search bar</h4>
-                <div class="dialog-title-controls row">
-                    <button id="toggleSearch" aria-label="Hide search bar component" class="icon-button" onclick="toggleComponent('search')">
-                        <i id="searchIconVisibility" class="material-icons">visibility</i>
-                    </button>
-                    <div id="searchToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleSearch">
-                        Hide search
-                    </div>
-                    <button id="closeSearchDialog" type="button" class="icon-button close"><i class="material-icons">close</i></button>
-                    <div id="closeSearchTooltip" class="mdl-tooltip" data-mdl-for="closeSearchDialog">
-                        Close search dialog
-                    </div>
+        <div class="modal micromodal-slide mdl-dialog" id="searchDialog">
+          <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="searchDialogTitle">
+              <div class="modal-title row">
+                <h4 id="searchDialogTitle">Search bar</h4>
+                <div class="modal-title-controls row">
+                  <button id="toggleSearch" aria-label="Hide search bar component" class="icon-button" onclick="toggleComponent('search')">
+                    <i id="searchIconVisibility" class="material-icons">visibility</i>
+                  </button>
+                  <button id="closeSearchDialog" type="button" class="icon-button close" onclick="closeDialog('searchDialog')"><i class="material-icons">close</i></button>
                 </div>
             </div>
-            <div class="mdl-dialog__content interactive">
+            <main class="modal__content interactive">
                 <form name="profileDemos" onsubmit="event.preventDefault();updateSearchBar();">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="searchPlaceholder">
@@ -387,7 +412,7 @@
                                 <option value="yahoo">Change some text on screen</option>
                             </select>
                         </div>
-                    <div class="mdl-dialog__actions">
+                    <div class="modal__actions">
                         <button type="submit" class="mdl-button md-js-button mdl-button--raised">Update search component</button>
                     </div>
                 </form>
@@ -397,27 +422,25 @@
                     The example code below demonstrates how this page handles searches:
                 </p>
                 <pre class="language-js"><code id="searchCallbackCode"></code></pre>
+              </main>
             </div>
-        </dialog>
+          </div>
+        </div>
 
         <!-- PROFILE BUTTON INTERACTIVE CONTENT -->
-        <dialog class="mdl-dialog" id="profileDialog">
-            <div class="dialog-title row">
-                <h4>Profile button/menu</h4>
-                <div class="dialog-title-controls row">
+        <div class="modal micromodal-slide mdl-dialog" id="profileDialog">
+          <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="profileDialogTitle">
+              <div class="modal-title row">
+                <h4 id="profileDialogTitle">Profile button/menu</h4>
+                <div class="modal-title-controls row">
                     <button id="toggleProfile" aria-label="Hide profile menu component" class="icon-button" onclick="toggleComponent('profile')">
                         <i id="profileIconVisibility" class="material-icons">visibility</i>
                     </button>
-                    <div id="profileToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleProfile">
-                        Hide profile
-                    </div>
-                    <button id="closeProfileDialog" type="button" class="icon-button close"><i class="material-icons">close</i></button>
-                    <div id="closeProfileTooltip" class="mdl-tooltip" data-mdl-for="closeProfileDialog">
-                        Close profile dialog
-                    </div>
+                    <button id="closeProfileDialog" type="button" class="icon-button close" onclick="closeDialog('profileDialog')"><i class="material-icons">close</i></button>
                 </div>
             </div>
-            <div class="mdl-dialog__content interactive">
+            <main class="modal__content interactive">
                 <form name="profileDemos" onsubmit="event.preventDefault(); updateProfileTemplate()">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="profileColor">
@@ -442,7 +465,7 @@
                         <input class="mdl-textfield__input" type="text" id="profileLinkUrl">
                         <label class="mdl-textfield__label" for="profileLinkUrl">Menu link url</label>
                     </div>
-                    <div class="mdl-dialog__actions">
+                    <div class="modal__actions">
                         <button class="mdl-button md-js-button mdl-button--raised">Update profile component</button>
                         <span id="profileHelperText" class="helper"></span>
                     </div>
@@ -454,27 +477,25 @@
                     <button aria-label="set alternate session" class="mdl-button md-js-button" onclick="setSession('Bucky')" type="button">Known user session</button>&nbsp;&nbsp;
                     <button aria-label="restore demo session" class="mdl-button md-js-button" onclick="setSession()" type="button">Generic session</button>
                 </div>
+              </main>
             </div>
-        </dialog>
+          </div>
+        </div>
 
         <!-- HELP AND FEEDBACK DIALOG -->
-        <dialog class="mdl-dialog" id="helpDialog">
-            <div class="dialog-title row">
-                <h4>Help and feedback</h4>
-                <div class="dialog-title-controls row">
+        <div class="modal micromodal-slide mdl-dialog" id="helpDialog">
+          <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="helpDialogTitle">
+              <div class="modal-title row">
+                <h4 id="helpDialogTitle">Help and feedback</h4>
+                <div class="modal-title-controls row">
                     <button id="toggleHelp" aria-label="Hide help component" class="icon-button" onclick="toggleComponent('help')">
                         <i id="helpIconVisibility" class="material-icons">visibility</i>
                     </button>
-                    <div id="helpToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleHelp">
-                        Hide help and feedback
-                    </div>
-                    <button id="closeHelpDialog" type="button" class="icon-button close"><i class="material-icons">close</i></button>
-                    <div id="closeHelpTooltip" class="mdl-tooltip" data-mdl-for="closeHelpDialog">
-                        Close help dialog
-                    </div>
+                    <button id="closeHelpDialog" type="button" class="icon-button close" onclick="closeDialog('helpDialog')"><i class="material-icons">close</i></button>
                 </div>
             </div>
-            <div class="mdl-dialog__content interactive">
+            <main class="modal__content interactive">
                 <form name="helpDemos">
                     <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="helpTitle" >
@@ -497,24 +518,30 @@
                         <p><em>Note: Custom content will not be reflected in the live demo on this page, but will be included in the generated code.</em></p>
                     </div>
                 </form>
-                <div class="mdl-dialog__actions">
+                <div class="modal__actions">
                     <button class="mdl-button md-js-button mdl-button--raised" type="button" onclick="updateHelpTemplate()">Update help component</button>
                     <span id="helpHelperText" class="helper"></span>
                 </div>
+              </main>
             </div>
-        </dialog>
+          </div>
+        </div>
 
         <!-- Demo interactions -->
-        <script src='./src/interactions.js'></script>
-        <script src='./src/dialogs.js'></script>
+        <script src="./src/interactions.js"></script>
+        <script src="./src/dialogs.js"></script>
+        <script src="./src/tour.js"></script>
         <!-- Syntax highlighting -->
         <script src="./src/themes/prism.js" data-manual></script>
         <script>
           document.addEventListener('WebComponentsReady', function() {
             document.body.style.opacity = 1;
+            // Set up profile component
             var initProfile = new CustomEvent('myuw-login', {
               detail: {}
             });
+            setupTour();
+            MicroModal.init();
             document.dispatchEvent(initProfile);
           });
         </script>

@@ -77,6 +77,13 @@
                   icon="apps"
                   href="https://github.com/myuw-web-components/">
                 </myuw-drawer-link>
+                <myuw-drawer-link
+                  slot="myuw-drawer-links"
+                  name="Take the tour"
+                  icon="directions"
+                  onclick="startTour()"
+                  href="#">
+                </myuw-drawer-link>
             </myuw-drawer>
         </myuw-app-bar>
 
@@ -84,6 +91,13 @@
             <section class="section__demos">
                 <div class="card">
                     <h2 id="page-title">Project info &amp; contacts</h2>
+                    <p>You can see myuw-web-components being used on the following sites*:</p>
+                    <ul>
+                        <li><a href="https://kbtest.wisc.edu/kb-site/">KnowledgeBase redesign test site</a></li>
+                        <li><a href="https://buckybackup.doit.wisc.edu/admin/app/#!/">Bucky Backup admin app</a></li>
+                        <li><a href="https://predev.my.wisc.edu/">MyUW predev tier</a></li>
+                    </ul>
+                    <p><i>*may require a static vpn connection and/or Shibboleth session to view</i></p>
                     <p>
                         The myuw-web-components project does not have a formal project structure or members with assigned 
                         roles. It is an open source project, always looking for collaborators from within the UW-Madison app development 
