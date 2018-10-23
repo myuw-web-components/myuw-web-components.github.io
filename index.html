@@ -12,12 +12,12 @@
         <link rel="stylesheet" id="uwmadison-fonts-css"  href="https://brand.wisc.edu/content/themes/uw-theme/dist/fonts/uw160/fonts.css?ver=1.2.2" type="text/css" media="all" />
 
         <!-- Syntax highlighting -->
-        <link href="./src/themes/prism.css" rel="stylesheet" />
+        <link href="./src/styles/prism.css" rel="stylesheet" />
 
         <!-- Demo styles -->
-        <link rel="stylesheet" href="./src/styles.css" type="text/css" />
-        <link rel="stylesheet" href="./src/themes/tour-styles.css" type="text/css" />
-        <link rel="stylesheet" href="./src/themes/modals.css" type="text/css" />
+        <link rel="stylesheet" href="./src/styles/styles.css" type="text/css" />
+        <link rel="stylesheet" href="./src/styles/tour-styles.css" type="text/css" />
+        <link rel="stylesheet" href="./src/styles/modals.css" type="text/css" />
 
         <style>
             body {
@@ -57,12 +57,12 @@
         <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-help@^1"></script>
 
         <!-- micromodal for modals -->
-        <script src="./node_modules/micromodal/dist/micromodal.min.js"></script>
+        <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 
         <!-- ShepherdJS tour guide -->
-        <script src="./node_modules/shepherd.js/dist/js/popper.min.js"></script>
-        <script src="./node_modules/shepherd.js/dist/js/popper-utils.min.js"></script>
-        <script src="./node_modules/shepherd.js/dist/js/shepherd.min.js"></script>
+        <script src="./dist/popper.min.js"></script>
+        <script src="./dist/popper-utils.min.js"></script>
+        <script src="./dist/shepherd.min.js"></script>
     </head>
     <body class="">
         <myuw-app-bar
@@ -528,11 +528,11 @@
         </div>
 
         <!-- Demo interactions -->
-        <script src="./src/interactions.js"></script>
-        <script src="./src/dialogs.js"></script>
-        <script src="./src/tour.js"></script>
+        <script src="./src/scripts/interactions.js"></script>
+        <script src="./src/scripts/dialogs.js"></script>
+        <script src="./src/scripts/tour.js"></script>
         <!-- Syntax highlighting -->
-        <script src="./src/themes/prism.js" data-manual></script>
+        <script src="./src/scripts/prism.js" data-manual></script>
         <script>
           document.addEventListener('WebComponentsReady', function() {
             document.body.style.opacity = 1;
