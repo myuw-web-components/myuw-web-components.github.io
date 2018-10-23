@@ -81,6 +81,13 @@
   margin-top: -36px;
 }
 
+@media (max-width: 600px) {
+  .shepherd-element {
+    width: 80%;
+    max-width: 80%;
+  }
+}
+
 @media (min-width: 960px) {
   .tour-banner {
     justify-content: center;

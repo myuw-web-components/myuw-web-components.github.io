@@ -4,7 +4,8 @@ const mediator = new Shepherd.Evented();
 const tableRow = document.getElementById('tourHighlightAppBar');
 const themeNameField = document.getElementById('themeName');
 const updateButton = document.getElementById('tour-button__step3');
-const visibilityButton = document.getElementById('tour-button__step4');
+const visibilityButton = document.getElementById('profileToggleButton');
+const visibilityRow = document.getElementById('tourAnchorStep4');
 const generateCodeButton = document.getElementById('tour-button__step5');
 
 let tour = new Shepherd.Tour({
@@ -79,13 +80,14 @@ const stepFour = tour.addStep('step4', {
   title: 'Update it!',
   text: 'When you\'re done, click "Update top bar" to see your changes live on this page.',
   showCancelLink: true,
-  attachTo: '#tour-button__step3 left',
+  attachTo: '#tour-button__step3 top',
   buttons: [
     {
       text: 'Click "Update top bar"',
       classes: 'disabled'
     }
   ],
+  classes: 'reposition',
   when: {
     show: function() {
       themeNameField.classList.remove('tour__highlight');
@@ -99,7 +101,7 @@ const stepFive = tour.addStep('step5', {
   title: 'Now hide some components',
   text: 'To hide a component, click the corresponding eye icon in the list of components or when viewing its customization options. Try hiding and showing the myuw-profile component now.',
   showCancelLink: true,
-  attachTo: '#tour-button__step4 left',
+  attachTo: '#tourAnchorStep4 top',
   buttons: [
     {
       text: 'Change the visibility',
@@ -123,7 +125,7 @@ const stepSix = tour.addStep('step6', {
   all the HTML (along with any extra info) needed to display the components exactly as you see them 
   on this page.`,
   showCancelLink: true,
-  attachTo: '#tour-button__step5 right',
+  attachTo: '#tour-button__step5 top',
   scrollTo: true,
   advanceOn: "#tour-button__step6-trigger click",
   buttons: [
