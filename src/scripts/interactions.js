@@ -371,6 +371,7 @@ function generateComponentMarkup() {
 &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
 &lt;script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-loader.js"&gt;&lt;/script&gt;
 &lt;script src="https://unpkg.com/css-vars-ponyfill@1"&gt;&lt;/script&gt;
+&lt;script&gt;cssVars({shadowDOM: true,watch: true});&lt;/script&gt;
 
 &lt!-- UW-Madison app styles (recommended if you're a UW-Madison adopter) --&gt;
 &lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1?module"&gt;&lt;/script&gt;
