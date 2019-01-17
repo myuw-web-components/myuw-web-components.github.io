@@ -56,6 +56,9 @@
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-help@^1?module"></script>
         <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-help@^1"></script>
 
+        <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-notifications@^1?module"></script>
+        <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-notifications@^1"></script>
+
         <!-- micromodal for modals -->
         <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 
@@ -97,6 +100,11 @@
                   href="#">
                 </myuw-drawer-link>
             </myuw-drawer>
+            <myuw-search id="search"
+                input-label="Search"
+                button-label="Submit search"
+                icon="search"
+                slot="myuw-search"></myuw-search>
             <myuw-help id="help"
               slot="myuw-help"
               myuw-help-title="Need more help?"
@@ -109,11 +117,11 @@
                 </p>
               </div>
             </myuw-help>
-            <myuw-search id="search"
-                input-label="Search"
-                button-label="Submit search"
-                icon="search"
-                slot="myuw-search"></myuw-search>
+            <myuw-notifications id="notifications"
+              slot="myuw-notifications"
+              see-all-url="/">
+              <span slot="myuw-notifications-empty">All caught up!</span>
+            </myuw-notifications>
             <myuw-profile id="profile"
                 slot="myuw-profile"
                 session-endpoint="./demo/session.json"
@@ -186,6 +194,18 @@
                                       Hide nav
                                     </div>
                                 </td>
+                            </tr>
+                            <tr onclick="showDialog('notificationsDialog')">
+                              <td class="mdl-data-table__cell--non-numeric">Notifications <span class="badge__new-release"><i class="material-icons">new_releases</i> (new for 2019)</span></td>
+                              <td><a href="https://github.com/myuw-web-components/myuw-notifications" target="_blank" onclick="event.stopImmediatePropagation()">myuw-notifications</a></td>
+                              <td>
+                                <button id="toggleNotifications" aria-label="hide notifications component" class="icon-button" onclick="event.stopImmediatePropagation();toggleComponent('notifications')">
+                                  <i id="notificationsIconVisibilityTable" class="material-icons">visibility</i>
+                                </button>
+                                <div id="notificationsToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleNotifications">
+                                  Hide notifications
+                                </div>
+                              </td>
                             </tr>
                             <tr onclick="showDialog('searchDialog')">
                                 <td class="mdl-data-table__cell--non-numeric">Search bar</td>
@@ -286,18 +306,17 @@
 &#47;&#42;  Custom CSS properties will appear here &#42;&#47;
                         </code></pre>
                         <!-- Component javascript -->
-                        <li id="profileJsDescription">
-                          <span>
-                            Profile component custom event
-                            <p>When you know a user has an active session, dispatch this custom event to tell the profile component that someone is logged in.</p>
-                          </span>
+                        <li id="customJsDescription">
+                          <span>Custom javascript events</span>
                           <button id="copyJsButton" class="icon-button" onclick="copyMarkup('generatedJs')"><i class="material-icons">file_copy</i></button>
                           <div class="mdl-tooltip" data-mdl-for="copyJsButton">
                             Copy to clipboard
                           </div>
                         </li>
+                            <p><strong>myuw-help:</strong> When you know a user has an active session, dispatch the "myuw-login" custom event to tell the profile component that someone is logged in.</p>
+                            <p><strong>myuw-notifications:</strong> When you have organized the notifications you want to display, dispatch the "myuw-has-notifications" custom event.</p>
                         <pre class="lang-js"><code class="lang-js" id="generatedJs">
-&#47;&#42; Javascript event for profile component &#42;&#47;
+&#47;&#42; Javascript events for selected components &#42;&#47;
                         </code></pre>
                     </ol>
                 </div>
@@ -540,6 +559,52 @@
             </div>
           </div>
         </div>
+
+        <!-- NOTIFICATIONS DIALOG -->
+        <div class="modal micromodal-slide mdl-dialog" id="notificationsDialog">
+          <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="notificationsDialogTitle">
+              <div class="modal-title row">
+                <h4 id="notificationsDialogTitle">Notifications bell and list</h4>
+                <div class="modal-title-controls row">
+                    <button id="toggleNotifications" aria-label="Hide notifications menu component" class="icon-button" onclick="toggleComponent('notifications')">
+                        <i id="notificationsIconVisibility" class="material-icons">visibility</i>
+                    </button>
+                    <button id="closeNotificationsDialog" type="button" class="icon-button close" onclick="closeDialog('notificationsDialog')"><i class="material-icons">close</i></button>
+                </div>
+            </div>
+            <main class="modal__content interactive">
+              <div class="modal__actions notifications">
+                <button class="mdl-button md-js-button mdl-button--raised" type="button" onclick="event.stopPropagation(); getDemoNotifications();">Display demo notifications</button>
+                <span id="notificationsHelperText" class="helper"></span>
+              </div>
+              <h5>Add a new notification</h5>
+              <form name="notificationsDemos" onsubmit="event.preventDefault(); addNewNotification()">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="notificationId" required>
+                  <label class="mdl-textfield__label" for="notificationId">Unique ID (e.g. "custom-id-1") </label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="notificationBody" required>
+                  <label class="mdl-textfield__label" for="notificationBody">Notification text</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="actionButtonUrl" required>
+                  <label class="mdl-textfield__label" for="actionButtonUrl">Action button URL</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="actionButtonLabel" required>
+                  <label class="mdl-textfield__label" for="actionButtonLabel">Action button label (e.g. "Enroll now")</label>
+                </div>
+                <div class="modal__actions">
+                  <button class="mdl-button md-js-button mdl-button--raised">Add notification</button>
+                  <span id="newNotificationHelperText" class="helper"></span>
+                </div>
+              </form>
+            </main>
+          </div>
+        </div>
+      </div>
 
         <!-- Demo interactions -->
         <script src="./src/scripts/interactions.js"></script>

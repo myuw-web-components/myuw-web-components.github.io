@@ -1,5 +1,5 @@
 /* Initial properties */
-this.includedComponents = ['nav', 'search', 'profile', 'help'];
+this.includedComponents = ['nav', 'search', 'profile', 'help', 'notifications'];
 
 this.searchCallbackCode = `\ndocument.getElementById('search').callback = (value) => {\n\twindow.alert('You searched for: ' + value);\n}\n\n`;
 
@@ -35,6 +35,8 @@ this.profileTemplate = `&lt;myuw-profile
         &lt;a href="" slot="nav-item"&gt;&lt;/a&gt;
     &lt;/myuw-profile&gt;`;
 
+this.profileJsTemplate = `\n//myuw-profile\nvar profileLoginEvent = new CustomEvent('myuw-login', {\n\tdetail: {\n\t\tperson: {\n\t\t\tfirstName: "Bucky" // Name you want to pass to the component\n\t\t}\n\t}\n});\ndocument.dispatchEvent(profileLoginEvent);\n`;
+
 this.helpTemplate = `&lt;myuw-help
         slot="myuw-help"
         myuw-help-title="Need more help?"
@@ -42,9 +44,17 @@ this.helpTemplate = `&lt;myuw-help
         &lt;div slot="myuw-help-content"&gt;&lt;/div&gt;
     &lt;/myuw-help&gt;`;
 
+this.notificationsTemplate = `&lt;myuw-notifications
+        slot="myuw-notifications"
+        see-all-url=""&gt;
+        &lt;span slot="myuw-notifications-empty"&gt;&lt;/span&gt;
+&lt;/myuw-notifications&gt;`;
+
+this.notificationsJsTemplate = `\n// myuw-notifications\nvar showNotificationsEvent = new CustomEvent('myuw-has-notifications', {\n\tdetail: {\n\t\tnotifications: [yourNotificationsObjects] // Must always pass an array here\n\t\t}\n\t}\n});\ndocument.dispatchEvent(showNotificationsEvent);\n\n`;
+
 this.customCssTemplate = `&#47;&#42; You didn't change any theme colors &#42;&#47;`;
 
-this.customJsTemplate = profileJs = `\nvar profileLoginEvent = new CustomEvent('myuw-login', {\n\tdetail: {\n\t\tperson: {\n\t\t\tfirstName: "Bucky" // Name you want to pass to the component\n\t\t}\n\t}\n});\ndocument.dispatchEvent(profileLoginEvent);\n`;
+this.customJsTemplate = "";
 
 
 /*
@@ -307,7 +317,102 @@ function updateHelpTemplate() {
   helperText.innerText = 'Updated help component';
 }
 
-/* SHOW/HIDE COMPONENTS */
+/*
+  NOTIFICATIONS COMPONENT DEMO FUNCTIONS
+*/
+
+this.localNotificationIds = [];
+document.addEventListener('myuw-notification-dismissed', updateLocalIds.bind(this));
+
+function getDemoNotifications() {
+  var notifications = [];
+  var helper = document.getElementById('notificationsHelperText');
+  fetch('src/data/notifications.json')
+    .then(res => {
+      // Check if the request was valid
+      if(res.status === 200) {
+        res.json()
+        .then( data => {
+          // Check for duplicates
+          for (var i in data) {
+            if (this.localNotificationIds.indexOf(data[i].id) !== -1) {
+              // Report finding a duplicate
+              helper.innerText = helper.innerText = 'Oops! A notification with the ID "' + data[i].id + '" already exists. Try dismissing your notification(s).';
+              return;
+            } else {
+              // Add to the array
+              notifications.push(data[i]);
+            }
+          }
+
+          // Send the notifications to the component
+          var customEvent = new CustomEvent('myuw-has-notifications', {
+            bubbles: true,
+            detail: {
+              notifications: notifications
+            }
+          });
+          document.dispatchEvent(customEvent);
+          // Add known IDs to local tracking
+          for (var i in data) {
+            localNotificationIds.push(data[i].id);
+          }
+
+          // Update helper text
+          helper.innerText = 'Got ' + data.length + ' notifications from demo data. Click the bell in the top bar to see them!'
+        })
+      } else {
+        // Log an error
+      }
+    })
+    .catch( e => {
+      // Log an error
+    });
+}
+
+function addNewNotification() {
+  var form = document.querySelector('form[name="notificationsDemos"]');
+  var helper = document.getElementById('newNotificationHelperText');
+  helper.innerText = "";
+  // Create new notification
+  if (this.localNotificationIds.indexOf(form.notificationId.value) !== -1) {
+    helper.innerText = 'Oops! A notification with the ID "' + form.notificationId.value + '" already exists. Try a different unique ID.'
+    return; 
+  }
+  var newNotification = {
+    "id": form.notificationId.value,
+    "title": form.notificationBody.value,
+    "actionButton": {
+      "url": form.actionButtonUrl.value,
+      "label": form.actionButtonLabel.value
+    }
+  };
+  // Dispatch notification
+  var event = new CustomEvent('myuw-has-notifications', {
+    bubbles: true,
+    detail: {
+      notifications: [newNotification]
+    }
+  });
+  document.dispatchEvent(event);
+  // Update helper text and clear form fields
+  helper.innerText = 'Added notification with ID: "' + newNotification.id + '". Click the bell to see it!';
+  this.localNotificationIds.push(newNotification.id);
+  form.reset();
+}
+
+/**
+ * Remove dismissed notification IDs from local tracking array
+ * @param {} event 
+ */
+function updateLocalIds(event) {
+  var index = this.localNotificationIds.indexOf(event.detail.notificationId);
+  this.localNotificationIds.splice(index, 1);
+};
+
+/* 
+  SHOW/HIDE COMPONENTS 
+*/
 function toggleComponent(componentId) {
     if (this.includedComponents.indexOf(componentId) != -1) {
         document.getElementById(componentId).hidden = true;
@@ -345,6 +450,8 @@ function generateComponentMarkup() {
     var profileNoModule = '';
     var helpImport = '';
     var helpNoModule = '';
+    var notificationsImport = '';
+    var notificationsNoModule = '';
 
     
     if (this.includedComponents.indexOf('nav') != -1) {
@@ -364,6 +471,11 @@ function generateComponentMarkup() {
         helpImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-help@^1?module"&gt;&lt;/script&gt';
         helpNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-help@^1"&gt;&lt;/script&gt';
     }
+
+    if (this.includedComponents.indexOf('notifications') != -1) {
+      notificationsImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-notifications@^1?module"&gt;&lt;/script&gt';
+      notificationsNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-notifications@^1"&gt;&lt;/script&gt';
+  }
 
     // Include script tags for all components currently toggled ON
     var importsString = `
@@ -391,6 +503,8 @@ ${profileImport}
 ${profileNoModule}
 ${helpImport}
 ${helpNoModule}
+${notificationsImport}
+${notificationsNoModule}
 `;
     
     // Build component template string, including only markup for visible components
@@ -405,14 +519,21 @@ ${helpNoModule}
     }
 
     if (this.includedComponents.indexOf('profile') != -1) {
-        templateString += `\n\t${this.profileTemplate}`;        
-    } else {
-      document.getElementById('profileJsDescription').hidden = true;
-      jsContainer.hidden = true;
+        templateString += `\n\t${this.profileTemplate}`;
+        this.customJsTemplate += this.profileJsTemplate;
+        document.getElementById('customJsDescription').hidden = false;
+        jsContainer.hidden = false;        
     }
 
     if (this.includedComponents.indexOf('help' != -1)) {
       templateString += `\n\t${this.helpTemplate}`;
+    }
+
+    if (this.includedComponents.indexOf('navigation' != -1)) {
+      templateString += `\n\t${this.notificationsTemplate}`;
+      this.customJsTemplate += this.notificationsJsTemplate;
+      document.getElementById('customJsDescription').hidden = false;
+      jsContainer.hidden = false;
     }
     
     templateString += `\n${this.appBarTemplateEnd}`;

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "title": "The MyUW Web Components team is now working closely with the Center for User Experience to ensure the usability of our components!",
+    "actionButton": {
+      "label": "Check them out",
+      "url": "http://www.github.com/myuw-web-components"
+    }
+  },
+  {
+    "id": "2",
+    "title": "Our top priority is ease of use. Let us know how we're doing!",
+    "actionButton": {
+      "label": "Tell us",
+      "url": "./contacts.html"
+    }
+  }
+]
