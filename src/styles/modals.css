@@ -175,7 +175,11 @@
   align-items: center;
 }
 
-.modal__actions>* {
+.modal__actions.notifications {
+  display: flex;
+}
+
+.modal__actions:not(.notifications)>* {
   height: auto;
 }
 

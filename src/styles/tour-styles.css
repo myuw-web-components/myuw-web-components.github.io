@@ -40,6 +40,11 @@
 .tour-banner__actions {
   justify-content: flex-end;
   align-items: center;
+  display: none;
+}
+
+.tour-banner.open .tour-banner__actions {
+  display: block;
 }
 
 .tour-banner__actions .mdl-button {

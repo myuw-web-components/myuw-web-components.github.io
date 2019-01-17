@@ -62,6 +62,17 @@ h3 {
     cursor: pointer;
 }
 
+.badge__new-release {
+  font-size: 12px;
+  color: rgba(0,0,0,0.54); 
+}
+
+.badge__new-release .material-icons {
+  vertical-align: middle;
+  color: #0679a8;
+  font-size: 24px;
+}
+
 .mdl-textfield.html-textfield {
   width: auto;
 }

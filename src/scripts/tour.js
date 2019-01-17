@@ -58,8 +58,7 @@ const stepThree = tour.addStep('step3', {
   title: 'Try changing the app title',
   text: 'Type a new title, then click "Update top bar." When you\'re done the text at the top of this page will reflect your change.',
   showCancelLink: true,
-  attachTo: '#themeName bottom',
-  classes: 'reposition-bottom',
+  attachTo: '#themeName right',
   buttons: [
     {
       text: 'Enter some text to proceed',
