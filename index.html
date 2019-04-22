@@ -59,6 +59,9 @@
         <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-notifications@^1?module"></script>
         <script nomodule src="https://unpkg.com/@myuw-web-components/myuw-notifications@^1"></script>
 
+        <script type="module" src="https://unpkg.com/@myuw-web-components/myuw-banner@^1?module"></script>
+        <script nomodule scr="https://unpkg.com/@myuw-web-components/myuw-banner@^1"></script>
+
         <!-- micromodal for modals -->
         <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
 
@@ -131,17 +134,14 @@
             </myuw-profile>
         </myuw-app-bar>
 
-        <div id="tour-banner" class="tour-banner" role="alert">
-          <div class="tour-banner__message">
-            <i class="material-icons">directions</i>
-            <span>First time here? Consider taking the quick, five-step tour to get the most out of this site.</span>
-          </div>
-          <div class="tour-banner__actions">
-            <button class="mdl-button mdl-js-button" type="button" onclick="dismissTourBanner()" aria-label="dismiss banner">Dismiss</button>
-            <button class="mdl-button mdl-js-button" type="button" onclick="startTour()">Take the tour</button>
-          </div>
-        </div>
-
+        <!-- Tour banner message -->
+        <myuw-banner id="tour-banner" role="alert" hidden="true"
+          icon="directions"
+          message="First time here? Consider taking the quick, five-step tour to get the most out of this site."
+          confirming-text="Take the tour"
+          confirming-callback="startTour()"
+          dismissive-text="Skip for now"></myuw-banner>
+        
         <div class="demo__container" role="main">
             <section class="section__demos">
                 <div class="card">
@@ -196,7 +196,7 @@
                                 </td>
                             </tr>
                             <tr onclick="showDialog('notificationsDialog')">
-                              <td class="mdl-data-table__cell--non-numeric">Notifications <span class="badge__new-release"><i class="material-icons">new_releases</i> (new for 2019)</span></td>
+                              <td class="mdl-data-table__cell--non-numeric">Notifications <span class="badge__new-release"><i class="material-icons">new_releases</i> (new in 2019)</span></td>
                               <td><a href="https://github.com/myuw-web-components/myuw-notifications" target="_blank" onclick="event.stopImmediatePropagation()">myuw-notifications</a></td>
                               <td>
                                 <button id="toggleNotifications" aria-label="hide notifications component" class="icon-button" onclick="event.stopImmediatePropagation();toggleComponent('notifications')">
@@ -204,6 +204,18 @@
                                 </button>
                                 <div id="notificationsToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleNotifications">
                                   Hide notifications
+                                </div>
+                              </td>
+                            </tr>
+                            <tr onclick="showDialog('bannerDialog')">
+                              <td class="mdl-data-table__cell--non-numeric">Banner message <span class="badge__new-release"><i class="material-icons">new_releases</i> (new in 2019)</span></td>
+                              <td><a href="https://github.com/myuw-web-components/myuw-banner" target="_blank" onclick="event.stopImmediatePropagation()">myuw-banner</a></td>
+                              <td>
+                                <button id="toggleBanner" aria-label="hide banner component" class="icon-button" onclick="event.stopImmediatePropagation();toggleComponent('banner')">
+                                  <i id="bannerIconVisibilityTable" class="material-icons">visibility</i>
+                                </button>
+                                <div id="bannerToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleBanner">
+                                  Hide banner message
                                 </div>
                               </td>
                             </tr>
@@ -601,6 +613,65 @@
                   <span id="newNotificationHelperText" class="helper"></span>
                 </div>
               </form>
+            </main>
+          </div>
+        </div>
+      </div>
+
+      <!-- BANNER DIALOG -->
+      <div class="modal micromodal-slide mdl-dialog" id="bannerDialog">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+          <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="bannerDialogTitle">
+            <div class="modal-title row">
+              <h4 id="bannerDialogTitle">Banner message</h4>
+              <div class="modal-title-controls row">
+                  <button id="toggleBanner" aria-label="Hide banner message component" class="icon-button" onclick="toggleComponent('banner')">
+                      <i id="bannerIconVisibility" class="material-icons">visibility</i>
+                  </button>
+                  <button id="closeBannerDialog" type="button" class="icon-button close" onclick="closeDialog('bannerDialog')"><i class="material-icons">close</i></button>
+              </div>
+            </div>
+            <main class="modal__content interactive">
+              <div class="modal__actions banner">
+                <button class="mdl-button md-js-button mdl-button--raised" type="button" onclick="event.stopPropagation(); showTourBanner();">Display first-time tour banner</button>
+                <span id="bannerHelperText" class="helper"></span>
+              </div>
+              <h5>Change banner content</h5>
+              <form name="bannerDemos">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="bannerIcon">
+                  <label class="mdl-textfield__label" for="bannerIcon">Banner icon</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="bannerMessage" >
+                  <label class="mdl-textfield__label" for="bannerMessage">Banner message</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="bannerConfirmingText" >
+                  <label class="mdl-textfield__label" for="bannerConfirmingText">Confirmation button text</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="bannerConfirmingUrl">
+                  <label class="mdl-textfield__label" for="bannerConfirmingUrl">Confirmation url</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="bannerDismissiveText">
+                  <label class="mdl-textfield__label" for="bannerDismissiveText">Dismissal button text</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="bannerConfirmingCallback">
+                  <label class="mdl-textfield__label" for="bannerConfirmingCallback">Confirmation callback name</label>
+                </div>
+                <bubtton aria-label="see banner callback help" id="bannerCallbackHelp" class="icon-button"><i class="material-icons">help</i></button>
+                <div class="mdl-tooltip" data-mdl-for="bannerCallbackHelp">
+                  Optionally set a function to execute instead of navigating to a URL
+                </div>
+              </form>
+              <div class="modal__actions">
+                <span id="tour-button__step3">
+                  <button type="button" class="mdl-button md-js-button mdl-button--raised" onclick="updateBanner(event)">Update banner component</button>
+                </span>
+              </div>
             </main>
           </div>
         </div>

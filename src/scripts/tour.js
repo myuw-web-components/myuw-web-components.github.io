@@ -1,5 +1,5 @@
 
-const banner = document.getElementById('tour-banner');
+const banner = document.getElementsByTagName('myuw-banner')[0];
 const mediator = new Shepherd.Evented();
 const tableRow = document.getElementById('tourHighlightAppBar');
 const themeNameField = document.getElementById('themeName');
@@ -204,19 +204,15 @@ mediator.on('enable-step-6', () => {
 function setupTour() {
   if (!localStorage.getItem("firstTimeTour")) {
     // Display a message about taking the tour
-    banner.classList.add('open');
+    banner.removeAttribute('hidden');
     localStorage.setItem("firstTimeTour", true);
   }
-}
-
-function dismissTourBanner() {
-  banner.classList.remove('open');
 }
 
 function startTour() {
   if (Shepherd.activeTour) {
     Shepherd.activeTour.cancel();
   }
-  banner.classList.remove('open');
+  banner.removeAttribbute('hidden');
   tour.start();
 }

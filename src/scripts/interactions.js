@@ -1,5 +1,5 @@
 /* Initial properties */
-this.includedComponents = ['nav', 'search', 'profile', 'help', 'notifications'];
+this.includedComponents = ['nav', 'search', 'profile', 'help', 'notifications', 'banner'];
 
 this.searchCallbackCode = `\ndocument.getElementById('search').callback = (value) => {\n\twindow.alert('You searched for: ' + value);\n}\n\n`;
 
@@ -51,6 +51,14 @@ this.notificationsTemplate = `&lt;myuw-notifications
 &lt;/myuw-notifications&gt;`;
 
 this.notificationsJsTemplate = `\n// myuw-notifications\nvar showNotificationsEvent = new CustomEvent('myuw-has-notifications', {\n\tdetail: {\n\t\tnotifications: [yourNotificationsObjects] // Must always pass an array here\n\t\t}\n\t}\n});\ndocument.dispatchEvent(showNotificationsEvent);\n\n`;
+
+this.bannerTemplate = `&lt;myuw-banner
+    icon="directions"
+    message="First time here? Consider taking the quick, five-step tour to get the most out of this site."
+    confirming-text="Take the tour"
+    confirming-callback="startTour()"
+    dismissive-text="Skip for now"&gt;
+&lt;/myuw-banner&gt;`;
 
 this.customCssTemplate = `&#47;&#42; You didn't change any theme colors &#42;&#47;`;
 
@@ -410,6 +418,55 @@ function updateLocalIds(event) {
   this.localNotificationIds.splice(index, 1);
 };
 
+/*
+  BANNER COMPONENT DEMO FUNCTIONS
+*/
+function showTourBanner() {
+  var banner = document.getElementById('tour-banner');
+  if (banner.getAttribute('hidden') == 'true') {
+    banner.removeAttribute('hidden');
+  }
+}
+
+function updateBanner(e) {
+  e.preventDefault();
+
+  // Get app bar
+  var _banner = document.getElementsByTagName('myuw-banner')[0];
+  
+  // Get property fields
+  var icon = document.getElementById('bannerIcon');
+  var message = document.getElementById('bannerMessage');
+  var confirmingText = document.getElementById('bannerConfirmingText');
+  var confirmingUrl = document.getElementById('bannerConfirmingUrl');
+  var confirmingCallback = document.getElementById('bannerConfirmingCallback');
+  var dismissiveText = document.getElementById('bannerDismissiveText');
+  
+  // Update attributes
+  _banner.setAttribute('icon', icon.value);
+  _banner.setAttribute('message', message.value);
+  _banner.setAttribute('confirming-url', confirmingUrl.value);
+  _banner.setAttribute('confirming-callback', confirmingCallback.value);
+  _banner.setAttribute('confirming-text', confirmingText.value);
+  _banner.setAttribute('dismissive-text', dismissiveText.value);
+
+  // Update template for code generation
+  this.bannerTemplate = `&lt;myuw-banner
+  icon="${icon.value}"
+  message="${message.value}" 
+  confirming-text="${confirmingText.value}"`;
+
+  if (confirmingUrl.value.length > 0) {
+    this.bannerTemplate += `confirming-url="${confirmingUrl.value}"`;
+  }
+
+  if (confirmingCallback.value.length > 0) {
+    this.bannerTemplate += `confirming-callback="${confirmingCallback.value}"`;
+  }
+
+  this.bannerTemplate += `\n\tdismissive-text="${dismissiveText.value}"&gt;&lt;/myuw-banner&gt;`;
+}
+
 /* 
   SHOW/HIDE COMPONENTS 
 */
@@ -452,6 +509,8 @@ function generateComponentMarkup() {
     var helpNoModule = '';
     var notificationsImport = '';
     var notificationsNoModule = '';
+    var bannerImport = '';
+    var bannerNoModule = '';
 
     
     if (this.includedComponents.indexOf('nav') != -1) {
@@ -475,7 +534,12 @@ function generateComponentMarkup() {
     if (this.includedComponents.indexOf('notifications') != -1) {
       notificationsImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-notifications@^1?module"&gt;&lt;/script&gt';
       notificationsNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-notifications@^1"&gt;&lt;/script&gt';
-  }
+    }
+
+    if (this.includedComponents.indexOf('banner') != -1) {
+      bannerImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-banner@^1?module"&gt;&lt;/script&gt';
+      bannerNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-banner@^1"&gt;&lt;/script&gt';
+    }
 
     // Include script tags for all components currently toggled ON
     var importsString = `
@@ -505,6 +569,8 @@ ${helpImport}
 ${helpNoModule}
 ${notificationsImport}
 ${notificationsNoModule}
+${bannerImport}
+${bannerNoModule}
 `;
     
     // Build component template string, including only markup for visible components
@@ -537,6 +603,10 @@ ${notificationsNoModule}
     }
     
     templateString += `\n${this.appBarTemplateEnd}`;
+
+    if (this.includedComponents.indexOf('banner' != -1)) {
+      templateString += `\n${this.bannerTemplate}`;
+    }
 
     // Update DOM and call syntax highlighter
     importsContainer.innerHTML = importsString;
