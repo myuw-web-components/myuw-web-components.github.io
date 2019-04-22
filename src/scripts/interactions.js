@@ -421,10 +421,15 @@ function updateLocalIds(event) {
 /*
   BANNER COMPONENT DEMO FUNCTIONS
 */
+var displayedBanner = 0;
 function showTourBanner() {
-  var banner = document.getElementById('tour-banner');
+  if (displayedBanner > 0) {
+    alert('Due to the way myuw-banner responds to user interaction, if you have already displayed the banner and clicked one of its buttons, you must refresh the page to interact with it again.');
+  }
+  var banner = document.getElementById('banner');
   if (banner.getAttribute('hidden') == 'true') {
     banner.removeAttribute('hidden');
+    displayedBanner = 1;
   }
 }
 
@@ -591,11 +596,11 @@ ${bannerNoModule}
         jsContainer.hidden = false;        
     }
 
-    if (this.includedComponents.indexOf('help' != -1)) {
+    if (this.includedComponents.indexOf('help') != -1) {
       templateString += `\n\t${this.helpTemplate}`;
     }
 
-    if (this.includedComponents.indexOf('navigation' != -1)) {
+    if (this.includedComponents.indexOf('navigation') != -1) {
       templateString += `\n\t${this.notificationsTemplate}`;
       this.customJsTemplate += this.notificationsJsTemplate;
       document.getElementById('customJsDescription').hidden = false;
@@ -604,7 +609,7 @@ ${bannerNoModule}
     
     templateString += `\n${this.appBarTemplateEnd}`;
 
-    if (this.includedComponents.indexOf('banner' != -1)) {
+    if (this.includedComponents.indexOf('banner') != -1) {
       templateString += `\n${this.bannerTemplate}`;
     }
 

@@ -204,7 +204,9 @@ mediator.on('enable-step-6', () => {
 function setupTour() {
   if (!localStorage.getItem("firstTimeTour")) {
     // Display a message about taking the tour
-    banner.removeAttribute('hidden');
+    if (banner.getAttribute('hidden')) {
+      banner.setAttribute('hidden', 'false');
+    }
     localStorage.setItem("firstTimeTour", true);
   }
 }
@@ -213,6 +215,6 @@ function startTour() {
   if (Shepherd.activeTour) {
     Shepherd.activeTour.cancel();
   }
-  banner.removeAttribbute('hidden');
+  banner.setAttribute('hidden', 'false');
   tour.start();
 }
