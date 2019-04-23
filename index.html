@@ -651,20 +651,18 @@
                   <label class="mdl-textfield__label" for="bannerConfirmingText">Confirmation button text</label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <input class="mdl-textfield__input" type="text" id="bannerDismissiveText">
+                  <label class="mdl-textfield__label" for="bannerDismissiveText">Dismissal button text</label>
+                </div>
+                <p style="margin: 8px 0 0">Only one of the following two fields is expected. If you provide values for both, "confirmation url" will be used:</p>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                   <input class="mdl-textfield__input" type="text" id="bannerConfirmingUrl">
                   <label class="mdl-textfield__label" for="bannerConfirmingUrl">Confirmation url</label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                  <input class="mdl-textfield__input" type="text" id="bannerDismissiveText">
-                  <label class="mdl-textfield__label" for="bannerDismissiveText">Dismissal button text</label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                   <input class="mdl-textfield__input" type="text" id="bannerConfirmingCallback">
                   <label class="mdl-textfield__label" for="bannerConfirmingCallback">Confirmation callback name</label>
-                </div>
-                <bubtton aria-label="see banner callback help" id="bannerCallbackHelp" class="icon-button"><i class="material-icons">help</i></button>
-                <div class="mdl-tooltip" data-mdl-for="bannerCallbackHelp">
-                  Optionally set a function to execute instead of navigating to a URL
+                  <span class="helper" style="position: absolute; margin: 4px 0;">Note: Expects a function to set "onclick" attribute (e.g. <code>doTheThing()</code>)</span>
                 </div>
               </form>
               <div class="modal__actions">
