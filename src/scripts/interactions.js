@@ -149,6 +149,34 @@ function addDrawerLink(label, url, icon) {
     document.getElementById('navItemIcon').value = "";
 }
 
+function addSubheader(name, divider) {
+  // Get form elements
+  var subheaderName = document.getElementById('subheaderName');
+  var subheaderDivider = document.getElementById('subheaderDivider');
+  var subheaderHelper = document.getElementById('subheaderHelperText');
+
+  // Update template for code generation
+  this.drawerLinkTemplate += `&lt;myuw-drawer-subheader
+          slot="myuw-drawer-links"
+          label="${subheaderName.value}"
+          divider="${subheaderDivider.value}"&gt;
+      &lt;/myuw-drawer-subheader&gt;`;
+
+  // Update demo drawer
+  var newSubheader = document.createElement('myuw-drawer-subheader');
+  newSubheader.setAttribute('slot', "myuw-drawer-links");
+  newSubheader.setAttribute('name', subheaderName.value);
+  newSubheader.setAttribute('divider', subheaderDivider.value);
+
+  document.getElementById('nav').appendChild(newSubheader);
+
+  // Reset fields and update help text
+  subheaderHelper.innerText = `Added "${subheaderName.value}"`;
+  subheaderName.value = '';
+  subheaderDivider.value = false;
+
+}
+
 /*
     SEARCH BAR DEMO FUNCTIONS
 */
