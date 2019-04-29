@@ -85,22 +85,21 @@
                 </myuw-drawer-link>
                 <myuw-drawer-link
                   slot="myuw-drawer-links"
-                  name="MyUW home"
-                  icon="home"
-                  href="https://my.wisc.edu/">
-                </myuw-drawer-link>
-                <myuw-drawer-link
-                  slot="myuw-drawer-links"
-                  name="MyUW Web Components"
-                  icon="apps"
-                  href="https://github.com/myuw-web-components/">
-                </myuw-drawer-link>
-                <myuw-drawer-link
-                  slot="myuw-drawer-links"
                   name="Take the tour"
                   icon="directions"
                   onclick="startTour()"
                   href="#">
+                </myuw-drawer-link>
+                <myuw-drawer-subheader
+                  slot="myuw-drawer-links"
+                  name="Resources"
+                  divider="true">
+                </myuw-drawer-subheader>
+                <myuw-drawer-link
+                  slot="myuw-drawer-links"
+                  name="MyUW Web Components on Github"
+                  icon="apps"
+                  href="https://github.com/myuw-web-components/">
                 </myuw-drawer-link>
             </myuw-drawer>
             <myuw-search id="search"
@@ -405,13 +404,23 @@
                     <input class="mdl-textfield__input" type="text" id="navItemIcon">
                     <label class="mdl-textfield__label" for="navItemIcon">Material icon</label>
                   </div>
-                  <a aria-label="see material icons" id="navIconInfo" class="icon-button" href="https://material.io/tools/icons" target="_blank"><i class="material-icons">help</i></a>
-                  <div id="materialIconTooltip" class="mdl-tooltip" data-mdl-for="navIconInfo">
-                    See available icons
-                  </div>
                   <div class="modal__actions">
                     <button type="submit" class="mdl-button md-js-button mdl-button--raised">Add navigation link</button>
                     <span id="drawerHelperText" class="helper"></span>
+                  </div>
+                </form>
+                <form name="drawerSubheaderDemo" onsubmit="event.preventDefault(); addSubheader()">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input" type="text" id="subheaderName">
+                    <label class="mdl-textfield__label" for="subheaderName">Subheader label</label>
+                  </div>
+                  <div style="display: inline-block">
+                    <input class="checkbox" type="checkbox" id="subheaderDivider">
+                    <label for="subheaderDivider">Show divider?</label>
+                  </div>
+                  <div class="modal__actions">
+                    <button type="submit" class="mdl-button md-js-button mdl-button--raised">Add navigation subheader</button>
+                    <span id="subheaderHelperText" class="helper"></span>
                   </div>
                 </form>
               </main>
