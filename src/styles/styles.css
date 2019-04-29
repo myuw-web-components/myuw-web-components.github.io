@@ -152,6 +152,26 @@ div.demo__container {
     padding: 1rem;
     font-size: 14px;
 }
+.grid__contributors {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+a.grid__contributors--entry {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 14px;
+}
+a.grid__contributors--entry img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 12px;
+}
 .interactive .form-control {
     margin-bottom: 20px;
 }
