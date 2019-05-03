@@ -1,0 +1,65 @@
+---
+title: Navigation drawer
+layout: component
+status: stable
+readme: https://github.com/myuw-web-components/myuw-drawer#readme
+material-guide: https://material.io/design/components/navigation-drawer.html
+---
+<h3>Patterns</h3>
+
+<ul class="list__dos-and-donts">
+  <span class="list__dos-and-donts--do">Do</span>
+  <li>Add a navigation item for each major "page" in your app</li>
+  <li>Use subheaders to break up long navigation lists (when items can be grouped)</li>
+  <li>Use link icons when they add meaningful context (i.e. Something your users will recognize)</li><br>
+
+  <span class="list__dos-and-donts--dont">Don't</span>
+  <li>Use drawer items for app functionality (e.g. Search, form controls, toggles, etc.)</li>
+  <li>Use link icons purely for the sake of providing a nice visual</li>
+
+</ul>
+
+<p>For more in-depth design guidance, refer to <a href="{{ page.material-guide }}" target="_blank">Material.io<i class="material-icons">open_in_new</i></a></p>
+
+<h3>How to use</h3>
+
+<p>Refer to the <a href="{{ page.readme }}" target="_blank">readme<i class="material-icons">open_in_new</i></a> for detailed information.</p>
+
+<pre class="language-markup"><code class="language-markup" id="markupContainer">
+&lt;myuw-drawer slot="myuw-navigation"&gt;
+  &lt;myuw-drawer-subheader
+    slot="myuw-drawer-links"
+    label=""
+    divider=""&gt;
+  &lt;/myuw-drawer-subheader&gt;
+  &lt;myuw-drawer-link
+    slot="myuw-drawer-links"
+    name=""
+    icon=""
+    href=""&gt;
+  &lt;/myuw-drawer-link&gt;
+&lt;/myuw-drawer&gt;
+
+</code></pre>
+
+<h4>Slots & Child Components</h4>
+
+<ul>
+  <li><strong>myuw-drawer-link:</strong> Used to populate one or more of the following child components:
+    <ul>
+      <li><code class="language-markup">&lt;myuw-drawer-link&gt;</code>: A navigation item with the following attributes:
+        <ul>
+          <li><strong>name:</strong> Name of the navigation item</li>
+          <li><strong>icon:</strong> <em>(optional)</em> A <a href="https://material.io/tools/icons">material icon</a> to add context to the link</li>
+          <li><strong>href:</strong> URL the navigation item should link to</li>
+        </ul>
+      </li>
+      <li><code class="language-markup">&lt;myuw-drawer-subheader&gt;</code> A subheader to identify navigation items with shared context, using the following attributes:
+        <ul>
+          <li><strong>label:</strong> Text the subheader should display</li>
+          <li><strong>divider:</strong> <em>(optional)</em> Set to "true" if you want to separate the label from sections above it with a thin dividing line</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>

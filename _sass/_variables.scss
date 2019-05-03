@@ -1,0 +1,58 @@
+// Red
+$color-red: #c5050c;
+$color-red-light: #d79999;
+$color-red-dark: #9b0000;
+
+// Gray
+$color-gray-dark: #494949;
+$color-gray-light: #adadad;
+$color-gray-lighter: #dadfe1;
+$color-gray-lightest: #f7f7f7;
+
+// Orange
+$color-orange-light: #ffb74d;
+$color-orange-medium: #ff9800;
+$color-orange-dark: #ef6c00;
+
+// Yellow
+$color-yellow-light: #ffe082;
+$color-yellow-medium: #ffc82c;
+$color-yellow-dark: #f8b700;
+
+// Green
+$color-green-light: #81b184;
+$color-green-medium: #2e7d32;
+$color-green-dark: #1b4b1e;
+
+//Blue
+$color-blue: #0479a8;
+$color-blue-light: #9ac9dc;
+$color-blue-dark: #034e6c;
+
+/* Font Colors */
+$color-black-font: #282728;
+$color-white-font: #f9f9f9;
+
+/* Transparencies */
+$alpha-very-light: rgba(0,0,0,0.12);
+$alpha-medium: rgba(0,0,0,0.54);
+
+/* Functional Patterns */
+$gutter: 30px;
+$topbar-height: 64px;
+$sidebar-width: 300px;
+$body-max-width: 850px;
+$breakpoint-medium: 40em;
+
+/* Fonts */
+$font-family-text: "Roboto", Helvetica, Arial, sans-serif;
+
+/* Media Queries */
+$x-sm: 600px;
+$sm: 960px;
+
+/* Library CSS Vars (from myuw-web-components/myuw-app-styles */
+$link-color: var(--myuw-link-color);
+
+$color-accent: var(--myuw-accent-bg);
+$color-on-accent: var(--myuw-accent-color)

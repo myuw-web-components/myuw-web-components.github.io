@@ -1,0 +1,70 @@
+---
+title: Top app bar
+layout: component
+status: stable
+readme: https://github.com/myuw-web-components/myuw-app-bar#readme
+material-guide: https://material.io/design/components/app-bars-top.html
+---
+<h3>Patterns</h3>
+
+<ul class="list__dos-and-donts">
+  <span class="list__dos-and-donts--do">Do</span>
+  <li>Set the <code class="language-markup">app-url</code> to the app's home page</li>
+  <li><em>CAUTIOUSLY</em> utilize unused slots for task-related buttons/features
+    <p><strong>For example:</strong> Your app doesn't have "notifications" functionality, but it does have an app settings menu. You could use the "myuw-notifications" slot to house that menu button</p>
+  </li>
+  <span class="list__dos-and-donts--dont">Don't</span>
+  <li>Populate slots with components you don't need</li>
+  <li>Utilize unused slots for navigation items</li>
+  <li>Put myuw-web-components in unintended slots
+    <p><strong>For example:</strong> Don't put the <code class="language-markup">myuw-notifications</code> component in the "myuw-navigation" slot because you like it better on the left</p>
+  </li>
+</ul>
+
+<p>For more in-depth design guidance, refer to <a href="{{ page.material-guide }}"
+    target="_blank">Material.io<i class="material-icons">open_in_new</i></a></p>
+
+<h3>How to use</h3>
+
+<p>Refer to the <a href="{{ page.readme }}" target="_blank">readme<i class="material-icons">open_in_new</i></a> for
+  detailed information.</p>
+
+<pre class="language-markup"><code class="language-markup" id="markupContainer">
+&lt;myuw-app-bar
+  theme-name=""
+  app-name=""
+  app-url=""&gt;
+&lt;/myuw-app-bar&gt;
+
+</code></pre>
+
+<h4>Attributes</h4>
+<ul>
+  <li><strong>theme-name:</strong> Lightly bolded name of the "ecosystem" in which the app lives (e.g. MyUW, UMark, DoIT, etc.)</li>
+  <li><strong>app-name:</strong> The name of the app</li>
+  <li><strong>app-url:</strong> The URL to go to when the app name is clicked</li>
+</ul>
+
+<h4>Slots</h4>
+<p>The top app bar's slots are designed to house other myuw-web-components to ensure consistent placement and recognizable patterns wherever the bar is used.</p>
+<ul>
+  <li><strong>myuw-navigation:</strong> Insert the <code class="language-markup">myuw-drawer</code> component</li>
+  <li><strong>myuw-search:</strong> Insert the <code class="language-markup">myuw-search</code> component</li>
+  <li><strong>myuw-notifications:</strong> Insert the <code class="language-markup">myuw-notifications</code> component</li>
+  <li><strong>myuw-help:</strong> Insert the <code class="language-markup">myuw-help</code> component</li>
+  <li><strong>myuw-profile:</strong> Insert the <code class="language-markup">myuw-profile</code> component</li>
+</ul>
+
+<h4>Customizable CSS</h4>
+
+<pre class="language-css"><code class="language-css" id="cssContainer">
+myuw-app-bar {
+  --myuw-app-bar-bg: #fff;
+  --myuw-app-bar-color: #c5050c;
+  --myuw-app-bar-font: 'Roboto', sans-serif;
+  --myuw-app-bar-font-weight: 400;
+  --theme-text-font-weight: 600;
+  --z-index: 56;
+}
+
+</code></pre>

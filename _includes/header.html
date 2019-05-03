@@ -1,0 +1,54 @@
+<myuw-app-bar role="toolbar" theme-name="MyUW" app-name="Web Components" app-url="/">
+  <!-- NAVIGATION -->
+  <myuw-drawer id="nav" slot="myuw-navigation">
+    <myuw-drawer-link slot="myuw-drawer-links" name="Project info and contacts" icon="person" href="{{ site.baseUrl }}/pages/contacts.html">
+    </myuw-drawer-link>
+    <myuw-drawer-link slot="myuw-drawer-links" name="Take the tour" icon="directions" onclick="startTour()" href="#">
+    </myuw-drawer-link>
+    <myuw-drawer-subheader slot="myuw-drawer-links" name="COMPONENTS" divider="true">
+    </myuw-drawer-subheader>
+    <myuw-drawer-link slot="myuw-drawer-links" name="Top app bar" href="{{ site.baseUrl }}/pages/top-bar.html">
+    </myuw-drawer-link>
+    <myuw-drawer-link slot="myuw-drawer-links" name="Navigation drawer" href="{{ site.baseUrl }}/pages/drawer.html">
+    </myuw-drawer-link>
+    <myuw-drawer-link slot="myuw-drawer-links" name="Notifications" href="{{ site.baseUrl }}/pages/notifications.html">
+    </myuw-drawer-link>
+    <myuw-drawer-link slot="myuw-drawer-links" name="Banner message" href="{{ site.baseUrl }}/pages/banner.html">
+    </myuw-drawer-link>
+    <myuw-drawer-link slot="myuw-drawer-links" name="Search" href="{{ site.baseUrl }}/pages/search.html">
+    </myuw-drawer-link>
+    <myuw-drawer-link slot="myuw-drawer-links" name="Profile" href="{{ site.baseUrl }}/pages/profile.html">
+    </myuw-drawer-link>
+    <myuw-drawer-link slot="myuw-drawer-links" name="Help and feedback" href="{{ site.baseUrl }}/pages/help-and-feedback.html">
+    </myuw-drawer-link>
+    <myuw-drawer-subheader slot="myuw-drawer-links" name="RESOURCES" divider="true">
+    </myuw-drawer-subheader>
+    <myuw-drawer-link slot="myuw-drawer-links" name="Component & feature request board" icon="new_releases"
+      href="https://github.com/orgs/myuw-web-components/projects/1">
+    </myuw-drawer-link>
+    <myuw-drawer-link slot="myuw-drawer-links" name="MyUW Web Components on Github" icon="apps"
+      href="https://github.com/myuw-web-components/">
+    </myuw-drawer-link>
+  </myuw-drawer>
+  <!-- SEARCH -->
+  <myuw-search id="search" input-label="Search" button-label="Submit search" icon="search" slot="myuw-search">
+  </myuw-search>
+  <!-- HELP -->
+  <myuw-help id="help" slot="myuw-help" myuw-help-title="Need more help?" show-button>
+    <div slot="myuw-help-content">
+      <p>
+        If you feel lost or overwhelmed, check out the
+        <a href="contacts.html" target="_blank">contacts page</a>
+        and feel free to email one of our developers.
+      </p>
+    </div>
+  </myuw-help>
+  <!-- NOTIFICATIONS -->
+  <myuw-notifications id="notifications" slot="myuw-notifications" see-all-url="/">
+    <span slot="myuw-notifications-empty">All caught up!</span>
+  </myuw-notifications>
+  <!-- SESSION -->
+  <myuw-profile id="profile" slot="myuw-profile" session-endpoint="./demo/session.json" login-url="#" logout-url="#" onclick="loginClicked()">
+    <a href="https://github.com/myuw-web-components/myuw-profile" slot="nav-item">Profile README</a>
+  </myuw-profile>
+</myuw-app-bar>

@@ -1,0 +1,53 @@
+.guidance__component {
+  .symbol__status {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    margin-left: 12px;
+    vertical-align: middle;
+
+    &--beta {
+      background: $color-yellow-medium;
+    }
+
+    &--stable {
+      background: $color-green-medium;
+    }
+  }
+  a {
+    .material-icons {
+      font-size: 16px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+  }
+
+  .list__dos-and-donts {
+    .material-icons {
+      font-size: 16px;
+      vertical-align: middle;
+    }
+
+    &--do,
+    &--dont {
+      font-size: 18px;
+      font-weight: 500;
+      display: inline-block;
+      margin-bottom: 8px;
+      border-bottom-width: 6px;
+      border-bottom-style: solid;
+      min-width: 60px;
+    }
+
+    &--do {
+      color: $color-green-medium;
+      border-bottom-color: $color-green-medium;
+    }
+
+    &--dont {
+      color: $color-red;
+      border-bottom-color: $color-red;
+    }
+  }
+}

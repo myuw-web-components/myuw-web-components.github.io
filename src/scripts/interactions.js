@@ -6,7 +6,7 @@ this.searchCallbackCode = `\ndocument.getElementById('search').callback = (value
 // Code generation templates
 this.appBarTemplateStart = `&lt;myuw-app-bar
     theme-name="MyUW"
-    app-name="Web Components" 
+    app-name="Web Components"
     app-url=""&gt;`;
 
 this.appBarTemplateEnd = `&lt;/myuw-app-bar&gt;`;
@@ -86,13 +86,13 @@ function updateTopAppBar(e) {
 
     // Get app bar
     var _appBar = document.getElementsByTagName('myuw-app-bar')[0];
-    
+
     // Get property fields
     var themeText = document.getElementById('themeName');
     var appText = document.getElementById('appName');
     var appUrl = document.getElementById('appUrl');
     var barBackground = document.getElementById('barBackground');
-    
+
     // Update attributes
     _appBar.setAttribute('theme-name', themeText.value);
     _appBar.setAttribute('app-name', appText.value);
@@ -101,7 +101,7 @@ function updateTopAppBar(e) {
     // Update template for code generation
     this.appBarTemplateStart = `&lt;myuw-app-bar
     theme-name="${themeName.value}"
-    app-name="${appName.value}" 
+    app-name="${appName.value}"
     app-url="${appUrl.value}"&gt;`;
 
     // If value was entered for background, create and use custom css template
@@ -124,7 +124,7 @@ function addDrawerLink(label, url, icon) {
     var linkText = document.getElementById('navItemLabel');
     var linkUrl = document.getElementById('navItemHref');
     var linkIcon = document.getElementById('navItemIcon');
-    
+
     // Update template for code generation
     this.drawerLinkTemplate = `&lt;myuw-drawer-link
             slot="myuw-drawer-links"
@@ -132,7 +132,7 @@ function addDrawerLink(label, url, icon) {
             icon="${linkIcon.value}"
             href="${linkUrl.value}"&gt;
         &lt;/myuw-drawer-link&gt;`;
-    
+
     // Update demo drawer
     var newLink = document.createElement('myuw-drawer-link');
     newLink.setAttribute('slot', 'myuw-drawer-links');
@@ -195,7 +195,7 @@ function updateSearchBar() {
     var icon = document.getElementById('searchIcon');
 
     // Update search template for code generation
-    this.searchTemplate = `&lt;myuw-search id="search" 
+    this.searchTemplate = `&lt;myuw-search id="search"
         input-label="${placeholder.value}"
         button-label="${ariaLabel.value}"
         icon="${icon.value}"
@@ -234,6 +234,19 @@ function updateCallback(value) {
     PROFILE DEMO FUNCTIONS
 */
 
+function loginClicked () {
+  var customEvent = new CustomEvent('myuw-login', {
+    detail: {
+      person: {
+        "firstName": "Bucky"
+      }
+    }
+  });
+  // Dispatch the event
+  document.dispatchEvent(customEvent);
+}
+
+
 function noSession() {
   var initProfile = new CustomEvent('myuw-login', {
     detail: {}
@@ -268,7 +281,7 @@ function updateProfileTemplate() {
     var logout = document.getElementById('logoutUrl');
     var linkText = document.getElementById('profileLinkLabel');
     var linkUrl = document.getElementById('profileLinkUrl');
-    
+
     // Update template for code generation
     this.profileTemplate = `&lt;myuw-profile
         slot="myuw-profile"
@@ -330,7 +343,7 @@ function updateHelpTemplate() {
   } else {
     helpComponent.removeAttribute('show-default-content');
   }
-  
+
   // Update template for code creation
   // Update template for code generation
   this.helpTemplate = `&lt;myuw-help\n\t\tslot="myuw-help"\n\t\tmyuw-help-title="${title.value}"`;
@@ -413,7 +426,7 @@ function addNewNotification() {
   // Create new notification
   if (this.localNotificationIds.indexOf(form.notificationId.value) !== -1) {
     helper.innerText = 'Oops! A notification with the ID "' + form.notificationId.value + '" already exists. Try a different unique ID.'
-    return; 
+    return;
   }
   var newNotification = {
     "id": form.notificationId.value,
@@ -439,7 +452,7 @@ function addNewNotification() {
 
 /**
  * Remove dismissed notification IDs from local tracking array
- * @param {} event 
+ * @param {} event
  */
 function updateLocalIds(event) {
   var index = this.localNotificationIds.indexOf(event.detail.notificationId);
@@ -466,7 +479,7 @@ function updateBanner(e) {
 
   // Get app bar
   var _banner = document.getElementsByTagName('myuw-banner')[0];
-  
+
   // Get property fields
   var icon = document.getElementById('bannerIcon');
   var message = document.getElementById('bannerMessage');
@@ -474,7 +487,7 @@ function updateBanner(e) {
   var confirmingUrl = document.getElementById('bannerConfirmingUrl');
   var confirmingCallback = document.getElementById('bannerConfirmingCallback');
   var dismissiveText = document.getElementById('bannerDismissiveText');
-  
+
   // Update attributes
   _banner.setAttribute('icon', icon.value);
   _banner.setAttribute('message', message.value);
@@ -486,7 +499,7 @@ function updateBanner(e) {
   // Update template for code generation
   this.bannerTemplate = `&lt;myuw-banner
   icon="${icon.value}"
-  message="${message.value}" 
+  message="${message.value}"
   confirming-text="${confirmingText.value}"`;
 
   if (confirmingUrl.value.length > 0) {
@@ -500,8 +513,8 @@ function updateBanner(e) {
   this.bannerTemplate += `\n\tdismissive-text="${dismissiveText.value}"&gt;&lt;/myuw-banner&gt;`;
 }
 
-/* 
-  SHOW/HIDE COMPONENTS 
+/*
+  SHOW/HIDE COMPONENTS
 */
 function toggleComponent(componentId) {
     if (this.includedComponents.indexOf(componentId) != -1) {
@@ -531,7 +544,7 @@ function generateComponentMarkup() {
     var templateContainer = document.getElementById('generatedTemplate');
     var cssContainer = document.getElementById('generatedCss');
     var jsContainer = document.getElementById('generatedJs');
-    
+
     var drawerImport = '';
     var drawerNoModule = '';
     var searchImport = '';
@@ -545,7 +558,7 @@ function generateComponentMarkup() {
     var bannerImport = '';
     var bannerNoModule = '';
 
-    
+
     if (this.includedComponents.indexOf('nav') != -1) {
         drawerImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-drawer@^1?module"&gt;&lt;/script&gt';
         drawerNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-drawer@^1"&gt;&lt;/script&gt';
@@ -586,9 +599,9 @@ function generateComponentMarkup() {
 &lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1?module"&gt;&lt;/script&gt;
 &lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1"&gt;&lt;/script&gt;
 
-&lt!-- 
-  Import selected myuw-web-components 
-  Note: "nomodule" fallbacks are required for cross-browser support. They will only be loaded in browsers without ES6 module support. 
+&lt!--
+  Import selected myuw-web-components
+  Note: "nomodule" fallbacks are required for cross-browser support. They will only be loaded in browsers without ES6 module support.
 --&gt;
 &lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1?module"&gt;&lt;/script&gt;
 &lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1"&gt;&lt;/script&gt;
@@ -605,7 +618,7 @@ ${notificationsNoModule}
 ${bannerImport}
 ${bannerNoModule}
 `;
-    
+
     // Build component template string, including only markup for visible components
     var templateString = `${this.appBarTemplateStart}`;
 
@@ -621,20 +634,20 @@ ${bannerNoModule}
         templateString += `\n\t${this.profileTemplate}`;
         this.customJsTemplate += this.profileJsTemplate;
         document.getElementById('customJsDescription').hidden = false;
-        jsContainer.hidden = false;        
+        jsContainer.hidden = false;
     }
 
     if (this.includedComponents.indexOf('help') != -1) {
       templateString += `\n\t${this.helpTemplate}`;
     }
 
-    if (this.includedComponents.indexOf('navigation') != -1) {
+    if (this.includedComponents.indexOf('notifications') != -1) {
       templateString += `\n\t${this.notificationsTemplate}`;
       this.customJsTemplate += this.notificationsJsTemplate;
       document.getElementById('customJsDescription').hidden = false;
       jsContainer.hidden = false;
     }
-    
+
     templateString += `\n${this.appBarTemplateEnd}`;
 
     if (this.includedComponents.indexOf('banner') != -1) {
@@ -646,7 +659,7 @@ ${bannerNoModule}
     templateContainer.innerHTML = templateString;
     cssContainer.innerHTML = this.customCssTemplate;
     jsContainer.innerHTML = this.customJsTemplate;
-    
+
     Prism.highlightElement(importsContainer);
     Prism.highlightElement(templateContainer);
     Prism.highlightElement(cssContainer);

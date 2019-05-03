@@ -1,0 +1,75 @@
+div.demo__container {
+  margin: 0;
+
+  ol {
+    font-size: 16px;
+  }
+
+  a {
+    color: $link-color;
+  }
+
+  button {
+    &.mdl-button {
+      text-transform: none;
+      background: transparent;
+      color: $color-on-accent;
+
+      &.mdl-button--raised,
+      &.mdl-button--fab {
+        text-transform: none;
+        background: $color-accent;
+        color: $color-on-accent;
+      }
+
+    }
+
+    &.icon-button {
+      color: $color-accent;
+      background: transparent;
+      border-radius: 50%;
+      height: 48px;
+      max-height: 48px;
+      width: 48px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+
+      &:hover {
+        background: $alpha-very-light;
+      }
+    }
+  }
+
+  .mdl-data-table {
+    width: 100%;
+    font-size: 16px;
+
+    tr {
+      cursor: pointer;
+    }
+
+    .badge__new-release {
+      font-size: 12px;
+      color: $alpha-medium;
+
+      .material-icons {
+        vertical-align: middle;
+        color: $color-accent;
+        font-size: 24px;
+      }
+    }
+  }
+
+  @media screen and (min-width: $x-sm) {
+    margin: 24px 0;
+
+    .mdl-data-table {
+      table-layout:fixed;
+
+      td {
+        overflow-x: hidden;
+      }
+    }
+  }
+}
