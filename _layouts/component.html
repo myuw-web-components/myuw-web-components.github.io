@@ -1,0 +1,41 @@
+<html>
+  {% include head.html %}
+
+  <body class="">
+    {% include header.html %}
+    {% include banner.html %}
+
+    <div class="demo__container" role="main">
+      <section class="guidance__component">
+        <div class="card">
+          <div class="title row">
+            <h2 id="page-title">{{ page.title }}<span class="symbol__status symbol__status--{{ page.status }}"></span></h2>
+          </div>
+          <p><a href="{{ page.readme }}" target="_blank">See the readme on Github<i class="material-icons">open_in_new</i></a></p>
+          <p>This page outlines some basic pattern and usage guidance. Following these guidelines helps give your users a consistent experience across apps.</p>
+          {{ content }}
+        </div>
+      </section>
+    </div>
+
+  </body>
+  <script src="{{ site.baseurl }}/src/scripts/prism.js" data-manual></script>
+  <script>
+    cssVars({ shadowDOM: true, watch: true });
+
+    document.addEventListener('WebComponentsReady', function () {
+      document.body.style.opacity = 1;
+    });
+
+    // Containers that most component pages have, which require syntax highlighting
+    var markupContainer = document.getElementById('markupContainer');
+    var jsContainer = document.getElementById('jsContainer');
+    var jsonContainer = document.getElementById('jsonContainer');
+    var cssContainer = document.getElementById('cssContainer');
+
+    if (markupContainer) { Prism.highlightElement(markupContainer); }
+    if (jsContainer) { Prism.highlightElement(jsContainer); }
+    if (jsonContainer) { Prism.highlightElement(jsContainer); }
+    if (cssContainer) { Prism.highlightElement(cssContainer); }
+  </script>
+</html>

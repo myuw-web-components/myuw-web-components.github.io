@@ -1,0 +1,90 @@
+---
+title: Profile menu
+layout: component
+status: stable
+readme: https://github.com/myuw-web-components/myuw-profile#readme
+material-guide: https://material.io/design/components/menus.html
+---
+<h3>Patterns</h3>
+
+The myuw-profile component loosely follows guidelines set by Material Design's
+<a href="{{ page.material-guide }}" target="_blank">menu guidelines<i class="material-icons">open_in_new</i></a>.
+
+<ul class="list__dos-and-donts">
+  <span class="list__dos-and-donts--do">Do</span>
+  <li>Provide a first name in the "myuw-login" event when possible</li>
+  <li>Provide confirmation upon logout by redirecting to a page telling the user they have successfully logged out</li>
+  <li>Add menu items for links/functionality that specifically pertains to the user (possibly external to your application)</li><br>
+
+  <span class="list__dos-and-donts--dont">Don't</span>
+  <li>Avoid adding menu items for links to pages that are duplicated in other navigation (such as the myuw-drawer)</li>
+
+</ul>
+
+<h3>How to use</h3>
+
+<p>Refer to the <a href="{{ page.readme }}" target="_blank">readme<i class="material-icons">open_in_new</i></a> for detailed information.</p>
+
+<pre class="language-markup"><code class="language-markup" id="markupContainer">
+&lt;myuw-profile
+  slot="myuw-profile"
+  login-url=""
+  logout-url=""&gt;
+  &lt;a href="" slot="nav-item"&gt;&lt;/a&gt;
+&lt;/myuw-profile&gt;
+
+</code></pre>
+
+<h4>Attributes</h4>
+<ul>
+  <li><strong>login-url:</strong> The URL to redirect users to on login</li>
+  <li><strong>logout-url:</strong>  The Logout URL to redirect users to on logout</li>
+</ul>
+
+<h4>Slots</h4>
+<ul>
+  <li><strong>nav-item:</strong> Add one or more menu items in the profile menu. This slot expects an anchor tag.
+  <p><strong>For example:</strong> <code class="language-markup">&lt;a href="/settings" slot="nav-item"&gt;Settings&lt;/a&gt;</code></p>
+  </li>
+</ul>
+
+<h4>Custom Event</h4>
+
+<p>The myuw-profile component is <strong>dumb</strong>, meaning it has no internal logic or functionality beyond what it needs to update its appearance when you tell it a user is logged in.
+  To this end, the component listens for you to dispatch a custom event with the name <strong>"myuw-login"</strong>, like so:
+</p>
+
+<pre class="language-js"><code class="language-js" id="jsContainer">
+/*
+  Notes about configuring the event:
+  - The event MUST contain a "detail" object. The contents of the detail object determine what the component will display:
+    - An empty "detail" object ( detail: {} ) will result in the login button being displayed
+    - An empty "person" object ( person: {} ) will result in a generic session being displayed (using the person icon). This should only be used when the session doesn't provide a user's name, username, email, etc.
+    - A person object containing a "firstName" ( person: {firstName: "Name"} ) will result in the full session display
+    - The "bubbles" property is optional unless you're dispatching the event from an element/scope other than "document"
+*/
+var customEvent = new CustomEvent('myuw-login', {
+  bubbles: true,            // optional
+  detail: {                 // required always
+    person: {               // required for generic session display
+      "firstName": "User"   // required for full session display
+    }
+  }
+});
+// Dispatch the event
+document.dispatchEvent(customEvent);
+
+</code></pre>
+
+<h4>Customizable CSS</h4>
+
+<pre class="language-css"><code class="language-css" id="cssContainer">
+myuw-profile {
+  --myuw-profile-font: 'Roboto';          /* Set the font stack for this component (inherits by default) */
+  --myuw-profile-login-color: #000        /* Set the font color of the "Login" button */
+  --myuw-profile-background-color: #fff;  /* Set the background color of the circular menu button */
+  --myuw-menu-color: #222;                /* The text color of links/buttons in the profile menu */
+}
+</code></pre>
+
+

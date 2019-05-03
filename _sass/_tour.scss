@@ -1,13 +1,14 @@
+
 .tour__highlight {
   padding: 6px;
   border: 5px dashed #007aac85;
   background: #9de0fb85
-}
 
-.tour__highlight-green {
-  padding: 6px;
-  border: 5px dashed #00ac0485;
-  background: #80ff5cb5
+  &-green {
+    padding: 6px;
+    border: 5px dashed #00ac0485;
+    background: #80ff5cb5
+  }
 }
 
 .tour__button-highlight,
@@ -36,10 +37,13 @@
   .tour-banner__message,
   .tour-banner__actions {
     width: 85%;
-  } 
+  }
 }
 
-/* Shepherd JS custom theme */
+/*************************\
+  ShepherdJS Custom Theme
+  https://github.com/shipshapecode/shepherd
+\*************************/
 .shepherd-element, .shepherd-element:after, .shepherd-element:before,
 .shepherd-element *,
 .shepherd-element *:after,

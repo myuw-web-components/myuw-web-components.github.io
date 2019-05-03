@@ -1,0 +1,74 @@
+---
+title: Search bar
+layout: component
+status: stable
+readme: https://github.com/myuw-web-components/myuw-search#readme
+material-guide: https://material.io/design/navigation/search.html#usage
+---
+<h3>Patterns</h3>
+
+MyUW Web Components features a bespoke implementation of search that is based on prior/existing MyUW functionality. We intend to change this model over time to better reflect <a href="{{ page.material-guide }}" target="_blank">Material Design patterns<i class="material-icons">open_in_new</i>.</a>
+
+<ul class="list__dos-and-donts">
+  <span class="list__dos-and-donts--do">Do</span>
+  <li>Use the search bar for app-wide search</li>
+  <li>Set the <strong>input-label</strong> to give users more context about what exactly the input can search for</li>
+
+  <span class="list__dos-and-donts--dont">Don't</span>
+  <li>Make the search behave differently on different pages within the same app (i.e. Searches should always be app-wide)
+    <p><strong>For example: </strong> Say you have a directory of apps and a directory of people, with separate pages for each. The search bar in the top app bar should always search against both
+      (regardless of which page the user is currently viewing) and contextualize the results on the "search results" page.</p>
+  </li>
+
+  <p><em>Note: The myuw-search component is best used in apps with very generic, simple searchable information (where there's no need for complicated search parameters).</em></p>
+
+</ul>
+
+<h3>How to use</h3>
+
+<p>Refer to the <a href="{{ page.readme }}" target="_blank">readme<i class="material-icons">open_in_new</i></a> for detailed information.</p>
+
+<pre class="language-markup"><code class="language-markup" id="markupContainer">
+&lt;myuw-search
+  input-label=""
+  button-label=""
+  icon=""
+  slot="myuw-search"&gt;
+&lt;/myuw-search&gt;
+
+</code></pre>
+
+<h4>Attributes</h4>
+<ul>
+  <li><strong>input-label:</strong> Text to use in the aria-label and placeholder of the search field</li>
+  <li><strong>button-label:</strong> Text to use for the aria-label of the search button</li>
+  <li><strong>icon:</strong> <a href="https://material.io/tools/icons">Material icon</a> for the search button (defaults to "search" spyglass)</li>
+</ul>
+
+<h4>Custom Event</h4>
+
+<p>Upon clicking the submit button (or pressing the "Enter" key when focusing the search field), the myuw-search component dispatches a custom event called <strong>"myuw-search"</strong>.
+  React to searches by listening for this event.
+</p>
+
+<pre class="language-js"><code class="language-js" id="jsContainer">
+document.body.addEventListener('myuw-search', (event) => {
+  var valueFromSearchBar = event.detail.value // "detail" object is part of CustomEvent spec
+  /*
+    Perform search logic here. For example:
+      - Pass the search value as a parameter to your app's search page
+  */
+}, false );
+
+</code></pre>
+
+<h4>Customizable CSS</h4>
+
+<pre class="language-css"><code class="language-css" id="cssContainer">
+myuw-search {
+  --myuw-search-border: none; /* Set border (useful for themes with light background colors) */
+  --myuw-app-bar-color: #fff; /* Set color of search bar icon on small screens */
+}
+</code></pre>
+
+

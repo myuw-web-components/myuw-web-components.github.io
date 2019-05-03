@@ -1,0 +1,21 @@
+<!-- Site interactions -->
+<script src="{{ site.baseurl }}/src/scripts/interactions.js"></script>
+<script src="{{ site.baseurl }}/src/scripts/dialogs.js"></script>
+<script src="{{ site.baseurl }}/src/scripts/tour.js"></script>
+
+<!-- Syntax highlighting -->
+<script src="{{ site.baseurl }}/src/scripts/prism.js" data-manual></script>
+<script>
+  cssVars({ shadowDOM: true, watch: true });
+
+  document.addEventListener('WebComponentsReady', function () {
+    document.body.style.opacity = 1;
+    // Set up profile component
+    var initProfile = new CustomEvent('myuw-login', {
+      detail: {}
+    });
+    setupTour();
+    MicroModal.init();
+    document.dispatchEvent(initProfile);
+  });
+</script>

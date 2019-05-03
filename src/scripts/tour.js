@@ -1,5 +1,5 @@
 
-const banner = document.getElementsByTagName('myuw-banner')[0];
+const tourBanner = document.getElementsByTagName('myuw-banner')[0];
 const mediator = new Shepherd.Evented();
 const tableRow = document.getElementById('tourHighlightAppBar');
 const themeNameField = document.getElementById('themeName');
@@ -19,7 +19,7 @@ let tour = new Shepherd.Tour({
 const stepOne = tour.addStep('step1', {
   title: 'Welcome to myuw-web-components!',
   text: `This site was created to allow anyone to see, test, and play with the
-  <a href="https://github.com/myuw-web-components" target="_blank">MyUW Web Components</a> library. This tour 
+  <a href="https://github.com/myuw-web-components" target="_blank">MyUW Web Components</a> library. This tour
   will explain how to configure the components and use them in your own projects.
   <p>You can exit the tour at any time by clicking the "X" in the top right corner.</p>`,
   showCancelLink: true,
@@ -121,7 +121,7 @@ const stepFive = tour.addStep('step5', {
 const stepSix = tour.addStep('step6', {
   title: 'Generate custom HTML',
   text: `Now that you've customized some components, click this button to generate
-  all the HTML (along with any extra info) needed to display the components exactly as you see them 
+  all the HTML (along with any extra info) needed to display the components exactly as you see them
   on this page.`,
   showCancelLink: true,
   attachTo: '#tour-button__step5 top',
@@ -143,7 +143,7 @@ const stepSix = tour.addStep('step6', {
 
 const stepSeven = tour.addStep('step7', {
   title: 'Copy the generated code',
-  text: `Here you'll find of the code you need to use myuw-web-components. Just copy and paste it into your own app or web page. If you have 
+  text: `Here you'll find of the code you need to use myuw-web-components. Just copy and paste it into your own app or web page. If you have
    questions or concerns, or if you need more help getting started, feel free to <a href="contacts.html">contact our development team</a>.
   `,
   showCancelLink: true,
@@ -190,7 +190,7 @@ mediator.on('show-step-5', () => {
     MicroModal.close('topAppBar');
     // Show next step and remove highlights
     Shepherd.activeTour.show('step5');
-    
+
   }
 });
 
@@ -204,8 +204,8 @@ mediator.on('enable-step-6', () => {
 function setupTour() {
   if (!localStorage.getItem("firstTimeTour")) {
     // Display a message about taking the tour
-    if (banner.getAttribute('hidden')) {
-      banner.setAttribute('hidden', 'false');
+    if (tourBanner.getAttribute('hidden')) {
+      tourBanner.setAttribute('hidden', 'false');
     }
     localStorage.setItem("firstTimeTour", true);
   }
@@ -215,6 +215,6 @@ function startTour() {
   if (Shepherd.activeTour) {
     Shepherd.activeTour.cancel();
   }
-  banner.setAttribute('hidden', 'false');
+  tourBanner.setAttribute('hidden', 'false');
   tour.start();
 }

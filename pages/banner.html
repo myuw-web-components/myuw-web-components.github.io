@@ -1,0 +1,61 @@
+---
+title: Banner message
+layout: component
+status: beta
+readme: https://github.com/myuw-web-components/myuw-banner#readme
+material-guide: https://material.io/design/components/banners.html
+---
+<h3>Patterns</h3>
+
+<ul class="list__dos-and-donts">
+  <span class="list__dos-and-donts--do">Do</span>
+  <li>Reserve for high priority, prominent messaging</li>
+  <li>Display one banner at a time whenever possible</li>
+  <li>Try to keep message length under 240 characters</li>
+  <li>Use the <code class="lang-markup">icon=""</code> attribute only when the icon communicates something meaningful by itself.
+    <p><strong>For example:</strong> If your banner message is asking a user to update a setting, it is appropriate to use the settings (<i class="material-icons">settings</i>) icon</p>
+  </li>
+  <span class="list__dos-and-donts--dont">Don't</span>
+  <li>Use banners to tell users about new features or other information that doesn't require the user to take action</li>
+  <li>(Generally) Use an icon if it's not something your users will recognize as a consequence of using your app(s)</li>
+</ul>
+
+<p>For more in-depth design guidance, refer to <a href="{{ page.material-guide }}" target="_blank">Material.io<i class="material-icons">open_in_new</i></a></p>
+
+<h3>How to use</h3>
+
+<p>Refer to the <a href="{{ page.readme }}" target="_blank">readme<i class="material-icons">open_in_new</i></a> for detailed information.</p>
+
+<pre class="language-markup"><code class="language-markup" id="markupContainer">
+&lt;myuw-banner
+  message=""
+  icon=""
+  confirming-text=""
+  confirming-url=""
+  confirming-callback=""
+  dismissive-text=""&gt;
+&lt;/myuw-banner&gt;
+
+</code></pre>
+
+<h4>Attributes</h4>
+<ul>
+  <li><strong>message:</strong> The content of your banner message (keep it short and sweet</li>
+  <li><strong>icon:</strong> <em>(optional)</em> A <a href="https://material.io/tools/icons">material icon</a> to convey the context of your message</li>
+  <li><strong>confirming-text:</strong> What should the "take action" button say?</li>
+  <li><strong>dismissive-text:</strong> What should the "dismiss" button say?</li>
+  <li><strong>confirming-url:</strong> URL to navigate to when "take action" button is clicked</li>
+  <li><strong>confirming-callback:</strong> Name of function to execute when "take action" button is clicked (sets the button's <code class="language-markup">onclick=""</code> value)</li>
+</ul>
+
+<p><em>Note: "confirming-url" and "confirming-callback" are mutually exclusive attributes. In cases where both are set, the component will set "confirming-url" and ignore "confirming-callback".</em></p>
+
+<h4>Customizable CSS</h4>
+
+<pre class="language-css"><code class="language-css" id="cssContainer">
+myuw-banner {
+  --myuw-banner-bg: #c5050c;
+  --myuw-on-banner: #fff;
+}
+
+</code></pre>

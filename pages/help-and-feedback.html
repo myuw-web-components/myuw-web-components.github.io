@@ -1,0 +1,83 @@
+---
+title: Help and feedback
+layout: component
+status: stable
+readme: https://github.com/myuw-web-components/myuw-help#readme
+material-guide: https://material.io/design/communication/help-feedback.html#
+---
+<h3>Patterns</h3>
+
+The myuw-help component loosely follows guidelines set by Material Design's
+<a href="{{ page.material-guide }}" target="_blank">guidelines<i class="material-icons">open_in_new</i></a>.
+
+<ul class="list__dos-and-donts">
+  <span class="list__dos-and-donts--do">Do</span>
+  <li>Keep the content of the help dialog simple (no walls of text, fewer than 10 links)</li>
+  <li>Provide help specific to your app (e.g. Accessibility assistance) as well as institutional help, when possible (e.g. Help Desk contact information)</li>
+  <li>Keep the help dialog content the same throughout the application (with the exception of additional contextual information)</li>
+  <li>Optionally add contextual help content (i.e. A task-oriented page may have additional information in the help dialog when the user is viewing that page)</li><br>
+
+  <span class="list__dos-and-donts--dont">Don't</span>
+  <li>Provide different help dialog content on different pages (only include additional contextual info)</li>
+
+</ul>
+
+<h3>How to use</h3>
+
+<p>Refer to the <a href="{{ page.readme }}" target="_blank">readme<i class="material-icons">open_in_new</i></a> for detailed information.</p>
+
+<pre class="language-markup"><code class="language-markup" id="markupContainer">
+&lt;myuw-help
+  slot="myuw-help"
+  myuw-help-title=""
+  show-button
+  show-default-content&gt;
+  &lt;div slot="myuw-help-content"&gt;&lt;/div&gt;
+&lt;/myuw-help&gt;
+
+</code></pre>
+
+<h4>Attributes</h4>
+<ul>
+  <li><strong>myuw-help-title:</strong> The title to display at the top of the help dialog</li>
+  <li><strong>show-button:</strong> Include this attribute if you want the help icon button to appear the the top bar. If you want to trigger the dialog some other way, you're free to omit this attribute.</li>
+  <li><strong>show-default-content:</strong> Include this attribute if you want to include the default UW-Madison-flavored help links. At this time we do not recommend showing the default content, as it is still a work in progress.</li>
+</ul>
+
+<h4>Slots</h4>
+<ul>
+  <li><strong>myuw-help-content:</strong> Use this slot to insert your own content into the dialog (with whatever markup and styling you want).</li>
+</ul>
+
+<h4>Custom Events</h4>
+
+<p>If you aren't using the top bar button (via the show-button attribute), you can fire the custom event <strong>"show-myuw-help"</strong> event on the
+  when you want the dialog to display (e.g. when your "help" button is clicked). If you need to control the exact positioning of the dialog,
+  you can fire the <strong>"set-myuw-help-position</strong> custom event.
+</p>
+
+<pre class="language-js"><code class="language-js" id="jsContainer">
+// Show the dialog
+function showHelpDialog() {
+  var event = new Event('show-myuw-help');
+  document.dispatchEvent(event);
+}
+
+// Set position (defaults to horizontally center, vertically centered in top 1/2)
+function setDialogPosition() {
+  var event = new CustomEvent('set-myuw-help-position', {
+    detail: {
+      position: {       // Include a "position" object only if you want to control the
+        top: '100px',   // exact positioning of the dialog
+        left: '100px',
+      }
+    }
+  });
+
+  document.dispatchEvent(event);
+}
+
+</code></pre>
+
+
+

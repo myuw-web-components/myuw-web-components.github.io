@@ -1,0 +1,82 @@
+---
+title: Notifications
+layout: component
+status: beta
+readme: https://github.com/myuw-web-components/myuw-notifications#readme
+material-guide: https://material.io/design/
+---
+<h3>Patterns</h3>
+
+MyUW Web Components features a bespoke implementation of delivering notifications to users that is loosely based on patterns users might encounter in many desktop Google applications (e.g. Google Keep, Inbox, Drive, etc.).
+
+<ul class="list__dos-and-donts">
+  <span class="list__dos-and-donts--do">Do</span>
+  <li>Link to a page where users can see all new and old notifications, via <strong>see-all-url</strong></li>
+  <li>Send notifications for non-critical, non-interruptive information that is personalized for the user</li><br>
+
+  <span class="list__dos-and-donts--dont">Don't</span>
+  <li>Send notifications for high priority alerts that require user action</li>
+  <li>Send notifications to confirm/acknowledge a user action (this better accomplished with snackbars/toasts)</li>
+
+</ul>
+
+<h3>How to use</h3>
+
+<p>Refer to the <a href="{{ page.readme }}" target="_blank">readme<i class="material-icons">open_in_new</i></a> for detailed information.</p>
+
+<pre class="language-markup"><code class="language-markup" id="markupContainer">
+&lt;myuw-notifications
+  slot="myuw-notifications"
+  limit=""
+  see-all-url=""&gt;
+  &lt;span slot="myuw-notifications-empty"&gt;&lt;/span&gt;
+&lt;/myuw-notifications&gt;
+
+</code></pre>
+
+<h4>Attributes</h4>
+<ul>
+  <li><strong>limit:</strong> <em>(optional)</em> Sets the maximum number (e.g. 3) of notifications that can be shown in the list</li>
+  <li><strong>see-all-url:</strong> <em>(optional)</em> A URL where users can see notifications that exceed the display limit</li>
+</ul>
+
+<h4>Slots</h4>
+<ul>
+  <li><strong>myuw-notifications-empty:</strong> A flexible slot used to display some markup for when the user has no new notifications to view.
+  <p><strong>For example:</strong> <code class="language-markup">&lt;span slot="myuw-notifications-empty"&gt;All caught up!&lt;/span&gt;</code></p>
+</li>
+</ul>
+
+<h4>Custom Event</h4>
+
+<p>The myuw-notifications component is <strong>dumb</strong>, meaning it doesn't have any internal logic beyond what it needs to parse the information it receives from you.
+  When you have notifications ready to display, dispatch a custom event with the name <strong>"myuw-has-notifications"</strong>. Normally this event is dispatched as soon as your GET call
+  for notifications returns data.
+</p>
+
+<pre class="language-js"><code class="language-js" id="jsContainer">
+var showNotificationsEvent = new CustomEvent('myuw-has-notifications', {
+	detail: {
+		notifications: [yourNotificationsObjects] // Must always pass an array here
+	}
+});
+document.dispatchEvent(showNotificationsEvent);
+
+</code></pre>
+
+<h4>Anatomy of a Notification</h4>
+
+<p>Each notification in the array passed to the component must contain the following properties:</p>
+
+<pre class="language-json"><code class="language-json" id="jsonContainer">
+{
+  "id": "",       // a unique id
+  "title:" "",    // notification text content
+  "actionButton": {
+    "label": "",  // "take action" button text
+    "url": ""     // "take action" button url
+  }
+}
+</code></pre>
+
+

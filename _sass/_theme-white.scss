@@ -1,0 +1,35 @@
+/* TODO: Update more components to use variables that can be set in theme component (like search field colors/borders) */
+.uw-madison-white-theme {
+  .card {
+    button {
+      &.mdl-button {
+        font-weight: 500;
+        &.mdl-button--raised {
+          &:hover {
+            background-color: $alpha-very-light;
+          }
+        }
+      }
+    }
+  }
+
+  div.demo__container {
+    .mdl-data-table {
+      .badge__new-release {
+        .material-icons {
+          vertical-align: middle;
+          color: $color-on-accent;
+          font-size: 24px;
+        }
+      }
+    }
+
+    button {
+      &.icon-button {
+        .material-icons {
+          color: $color-on-accent;
+        }
+      }
+    }
+  }
+}
