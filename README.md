@@ -28,10 +28,10 @@ Follow these basic rules when contributing to the site:
 
 - Clone the repo and do all your work on a new feature branch
 - Submit a merge request comparing the master branch to your feature branch
-- If your merge request goes unreviewed for more than a few days, notify a team member (see: pages/contacts.html)
+- If your merge request goes unreviewed for more than a few days, notify a team member (see: [pages/contacts.html](pages/contacts.html))
 - Merge your own merge request once it has received at least one approval
 - If you are adding a new web component to the site:
-    - Include it in the table of components on the home page (see: index.html)
-    - Create a dialog on the home page to house the interactive/demo content (see: index.html)
-    - Create a page in the `/pages/` directory and link to it from the side navigation (see: _includes/header.html)
-    - Ensure the proper import statements and markup templates are generated during code generation (see: src/scripts/interactions.js)
+    - Include it in the table of components on the home page (see: [index.html](index.html))
+    - Create a dialog on the home page to house the interactive/demo content (see: [index.html](index.html))
+    - Create a page in the `/pages/` directory and link to it from the side navigation (see: [_includes/header.html](_includes/header.html))
+    - Ensure the proper import statements and markup templates are generated during code generation (see: [src/scripts/interactions.js](src/scripts/interactions.js))
