@@ -1,0 +1,46 @@
+---
+title: MyUW badge
+layout: component
+status: beta
+readme: https://github.com/myuw-web-components/myuw-badge#readme
+---
+<h3>Patterns</h3>
+
+<p>This badge was designed to improve discoverability of MyUW widgets across other UW-Madison (wisc.edu) domains.</p>
+
+<p>For example, the following badge could be used on a departmental website (e.g. Engineering) to help students find the Course Guide widget in MyUW:</p>
+
+
+<p><myuw-badge url="https://public.my.wisc.edu/web/apps/details/CourseGuide-Browse-Courses"></myuw-badge></p>
+
+<ul class="list__dos-and-donts">
+  <span class="list__dos-and-donts--do">Do</span>
+  <li>Use the badge when referring to content that is represented by a widget in MyUW</li>
+  <li>Use the url for a widget's detail page in the  <code class="language-markup">url=""</code> attribute</li>
+  <br>
+  <span class="list__dos-and-donts--dont">Don't</span>
+  <li>Link to the MyUW home page</li>
+  <li>Link to a MyUW search results page (unless multiple widgets match the criteria)</li>
+</ul>
+
+<h3>How to use</h3>
+
+<p>Refer to the <a href="{{ page.readme }}" target="_blank">readme<i class="material-icons">open_in_new</i></a> for detailed information.</p>
+
+<pre class="language-markup"><code class="language-markup" id="markupContainer">
+&lt;myuw-badge
+  url=""
+  dark-theme
+  white-border&gt;
+&lt;/myuw-badge&gt;
+
+</code></pre>
+
+<h4>Attributes</h4>
+<ul>
+  <li><strong>url:</strong> Set the URL the badge should link to (e.g. The detail page for a MyUW widget)</li>
+  <li><strong>dark-theme:</strong> <em>(optional)</em> If this attribute is present, the badge will use the black theme (red by default)</li>
+  <li><strong>white-border:</strong> <em>(optional)</em> If this attribute is present, the badge will have a white border (e.g. when using the badge on a dark background)</li>
+</ul>
+
+</code></pre>
