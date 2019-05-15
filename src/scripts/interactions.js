@@ -1,5 +1,5 @@
 /* Initial properties */
-this.includedComponents = ['nav', 'search', 'profile', 'help', 'notifications', 'banner'];
+this.includedComponents = ['nav', 'search', 'profile', 'help', 'notifications', 'banner', 'badge'];
 
 this.searchCallbackCode = `\ndocument.getElementById('search').callback = (value) => {\n\twindow.alert('You searched for: ' + value);\n}\n\n`;
 
@@ -59,6 +59,13 @@ this.bannerTemplate = `&lt;myuw-banner
     confirming-callback="startTour()"
     dismissive-text="Skip for now"&gt;
 &lt;/myuw-banner&gt;`;
+
+this.badgeTemplateUrl = '';
+this.badgeTemplateTheme = '';
+this.badgeTemplateBorder = '';
+this.badgeTemplate = `&lt;myuw-badge
+    url=""&gt;
+&lt;/myuw-badge&gt;`;
 
 this.customCssTemplate = `&#47;&#42; You didn't change any theme colors &#42;&#47;`;
 
@@ -514,23 +521,94 @@ function updateBanner(e) {
 }
 
 /*
+  BADGE COMPONENT DEMO FUNCTIONS
+*/
+function updateDemoBadge(e, attribute) {
+  e.preventDefault();
+  // Get demo badge
+  var _badge = document.getElementsByTagName('myuw-badge')[0];
+
+  // Get property fields
+  var url = document.getElementById('badgeUrl');
+  var theme = document.getElementById('badgeDarkTheme');
+  var border = document.getElementById('badgeWhiteBorder');
+  var helper = document.getElementById('badgeHelperText');
+
+  // Update template for code generation
+  var badgeTemplateStart = '&lt;myuw-badge';
+  var badgeTemplateEnd =  '&gt;&lt;/myuw-badge&gt;';
+
+  // Update corresponding attribute and templates
+  switch (attribute) {
+    case 'url':
+      _badge.setAttribute('url', url.value);
+      this.badgeTemplateUrl = `url="${url.value}"`;
+      helper.innerText = `Updated url to: "${url.value}"`;
+      url.value = '';
+      break;
+    case 'theme':
+      if (theme.checked == true) {
+        _badge.setAttribute('dark-theme', '');
+        this.badgeTemplateTheme = `\n\tdark-theme`;
+        helper.innerText = 'Added the dark-theme attribute';
+      } else {
+        _badge.removeAttribute('dark-theme');
+        this.badgeTemplateTheme = '';
+        helper.innerText = 'Removed the dark-theme attribute';
+      }
+      break;
+    case 'border':
+      if (border.checked == true) {
+        _badge.setAttribute('white-border', '');
+        this.badgeTemplateBorder = `\n\twhite-border`;
+        helper.innerText = 'Added the white-border attribute';
+      } else {
+        _badge.removeAttribute('white-border');
+        this.badgeTemplateBorder = '';
+        helper.innerText = 'Removed the white-border attribute';
+      }
+      break;
+  }
+
+  // Update badge template for code generation
+  this.badgeTemplate = `${badgeTemplateStart}\n\t${badgeTemplateUrl}`;
+  if (this.badgeTemplateTheme.length > 0) { this.badgeTemplate += `${this.badgeTemplateTheme}` }
+  if (this.badgeTemplateBorder.length > 0) { this.badgeTemplate += `${this.badgeTemplateBorder}` }
+  this.badgeTemplate += `\n${badgeTemplateEnd}`;
+}
+
+/*
   SHOW/HIDE COMPONENTS
 */
 function toggleComponent(componentId) {
     if (this.includedComponents.indexOf(componentId) != -1) {
+      // Exclude badge from show/hide since there is no demo on the page
+      if (componentId != 'badge') {
         document.getElementById(componentId).hidden = true;
-        document.getElementById(componentId + 'IconVisibility').innerText = 'visibility_off';
-        document.getElementById(componentId + 'IconVisibilityTable').innerText = 'visibility_off';
         document.getElementById(componentId + 'ToggleTooltip').innerText = 'Show ' + componentId;
-        // Remove hidden component from "included" array for code generation
-        this.includedComponents.splice(this.includedComponents.indexOf(componentId), 1);
+      } else {
+        document.getElementById(componentId + 'ToggleTooltip').innerText = 'Include ' + componentId + ' in code generation';
+      }
+
+      document.getElementById(componentId + 'IconVisibility').innerText = 'visibility_off';
+      document.getElementById(componentId + 'IconVisibilityTable').innerText = 'visibility_off';
+
+      // Remove hidden component from "included" array for code generation
+      this.includedComponents.splice(this.includedComponents.indexOf(componentId), 1);
     } else {
+      // Exclude badge from show/hide since there is no demo on the page
+      if (componentId != 'badge') {
         document.getElementById(componentId).hidden = false;
-        document.getElementById(componentId + 'IconVisibility').innerText = 'visibility';
-        document.getElementById(componentId + 'IconVisibilityTable').innerText = 'visibility';
         document.getElementById(componentId + 'ToggleTooltip').innerText = 'Hide ' + componentId;
-        // Add component to "included" array for code generation
-        this.includedComponents.push(componentId);
+      } else {
+        document.getElementById(componentId + 'ToggleTooltip').innerText = 'Exclude ' + componentId + ' in code generation';
+      }
+
+      document.getElementById(componentId + 'IconVisibility').innerText = 'visibility';
+      document.getElementById(componentId + 'IconVisibilityTable').innerText = 'visibility';
+
+      // Add component to "included" array for code generation
+      this.includedComponents.push(componentId);
     }
 }
 
@@ -557,6 +635,8 @@ function generateComponentMarkup() {
     var notificationsNoModule = '';
     var bannerImport = '';
     var bannerNoModule = '';
+    var badgeImport = '';
+    var badgeNoModule = '';
 
 
     if (this.includedComponents.indexOf('nav') != -1) {
@@ -585,6 +665,11 @@ function generateComponentMarkup() {
     if (this.includedComponents.indexOf('banner') != -1) {
       bannerImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-banner@^1?module"&gt;&lt;/script&gt';
       bannerNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-banner@^1"&gt;&lt;/script&gt';
+    }
+
+    if (this.includedComponents.indexOf('badge') != -1) {
+      badgeImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-badge@^1?module"&gt;&lt;/script&gt';
+      badgeNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-badge@^1"&gt;&lt;/script&gt';
     }
 
     // Include script tags for all components currently toggled ON
@@ -617,6 +702,8 @@ ${notificationsImport}
 ${notificationsNoModule}
 ${bannerImport}
 ${bannerNoModule}
+${badgeImport}
+${badgeNoModule}
 `;
 
     // Build component template string, including only markup for visible components
@@ -652,6 +739,10 @@ ${bannerNoModule}
 
     if (this.includedComponents.indexOf('banner') != -1) {
       templateString += `\n${this.bannerTemplate}`;
+    }
+
+    if (this.includedComponents.indexOf('badge') != -1) {
+      templateString += `\n${this.badgeTemplate}`;
     }
 
     // Update DOM and call syntax highlighter
