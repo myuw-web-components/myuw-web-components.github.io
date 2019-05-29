@@ -1,5 +1,6 @@
 div.demo__container {
   margin: 0;
+  box-sizing: border-box;
 
   ol {
     font-size: 16px;
@@ -64,6 +65,10 @@ div.demo__container {
         }
       }
     }
+  }
+
+  .wrapper__code-wrapper pre {
+    overflow-x: scroll;
   }
 
   @media screen and (min-width: $x-sm) {
