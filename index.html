@@ -34,124 +34,127 @@ title: Home
       <h3>Interactive Demos</h3>
       <p>Each entry in the table below has information about one of our components, the latest versions of which are
         currently in use on this site.</p>
-      <table class="mdl-data-table mdl-js-data-table">
-        <thead>
-          <tr>
-            <th class="mdl-data-table__cell--non-numeric">Component</th>
-            <th>Github link</th>
-            <th>Toggle visibility</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr id="tourHighlightAppBar" onclick="showDialog('topBarDialog');mediator.trigger('show-step-3');">
-            <td id="tourAnchorAppBar" class="mdl-data-table__cell--non-numeric">Top app bar</td>
-            <td><a href="https://github.com/myuw-web-components/myuw-app-bar" target="_blank"
-                onclick="event.stopImmediatePropagation()">myuw-app-bar</a></td>
-            <td>n/a</td>
-          </tr>
-          <tr onclick="showDialog('drawerDialog')">
-            <td class="mdl-data-table__cell--non-numeric">Navigation drawer</td>
-            <td><a href="https://github.com/myuw-web-components/myuw-drawer" target="_blank"
-                onclick="event.stopImmediatePropagation()">myuw-drawer</a></td>
-            <td>
-              <button id="toggleNav" aria-label="Hide navigation drawer" class="icon-button"
-                onclick="event.stopPropagation();toggleComponent('nav')">
-                <i id="navIconVisibilityTable" class="material-icons">visibility</i>
-              </button>
-              <div id="navToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleNav">
-                Hide nav
-              </div>
-            </td>
-          </tr>
-          <tr onclick="showDialog('notificationsDialog')">
-            <td class="mdl-data-table__cell--non-numeric">Notifications <span class="badge__new-release"><i
-                  class="material-icons">new_releases</i> (new 2019)</span></td>
-            <td><a href="https://github.com/myuw-web-components/myuw-notifications" target="_blank"
-                onclick="event.stopImmediatePropagation()">myuw-notifications</a></td>
-            <td>
-              <button id="toggleNotifications" aria-label="hide notifications component" class="icon-button"
-                onclick="event.stopImmediatePropagation();toggleComponent('notifications')">
-                <i id="notificationsIconVisibilityTable" class="material-icons">visibility</i>
-              </button>
-              <div id="notificationsToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleNotifications">
-                Hide notifications
-              </div>
-            </td>
-          </tr>
-          <tr onclick="showDialog('bannerDialog')">
-            <td class="mdl-data-table__cell--non-numeric">Banner message <span class="badge__new-release"><i
-                  class="material-icons">new_releases</i> (new 2019)</span></td>
-            <td><a href="https://github.com/myuw-web-components/myuw-banner" target="_blank"
-                onclick="event.stopImmediatePropagation()">myuw-banner</a></td>
-            <td>
-              <button id="toggleBanner" aria-label="hide banner component" class="icon-button"
-                onclick="event.stopImmediatePropagation();toggleComponent('banner')">
-                <i id="bannerIconVisibilityTable" class="material-icons">visibility</i>
-              </button>
-              <div id="bannerToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleBanner">
-                Hide banner message
-              </div>
-            </td>
-          </tr>
-          <tr onclick="showDialog('searchDialog')">
-            <td class="mdl-data-table__cell--non-numeric">Search bar</td>
-            <td><a href="https://github.com/myuw-web-components/myuw-search" target="_blank"
-                onclick="event.stopImmediatePropagation()">myuw-search</a></td>
-            <td>
-              <button id="toggleSearch" aria-label="Hide search box" class="icon-button"
-                onclick="event.stopPropagation();toggleComponent('search')">
-                <i id="searchIconVisibilityTable" class="material-icons">visibility</i>
-              </button>
-              <div id="searchToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleSearch">
-                Hide search
-              </div>
-            </td>
-          </tr>
-          <tr id="tourAnchorStep4" onclick="showDialog('profileDialog')">
-            <td class="mdl-data-table__cell--non-numeric">Profile button</td>
-            <td><a href="https://github.com/myuw-web-components/myuw-profile" target="_blank"
-                onclick="event.stopImmediatePropagation()">myuw-profile</a></td>
-            <td>
-              <button id="profileToggleButton" aria-label="Hide profile button" class="icon-button"
-                onclick="event.stopPropagation();toggleComponent('profile');mediator.trigger('enable-step-6');">
-                <i id="profileIconVisibilityTable" class="material-icons">visibility</i>
-              </button>
-              <div id="profileToggleTooltip" class="mdl-tooltip" data-mdl-for="profileToggleButton">
-                Hide profile
-              </div>
-            </td>
-          </tr>
-          <tr onclick="showDialog('helpDialog')">
-            <td class="mdl-data-table__cell--non-numeric">Help and feedback</td>
-            <td><a href="https://github.com/myuw-web-components/myuw-help" target="_blank"
-                onclick="event.stopImmediatePropagation()">myuw-help</a></td>
-            <td>
-              <button id="toggleHelp" aria-label="Hide help component" class="icon-button"
-                onclick="event.stopPropagation();toggleComponent('help')">
-                <i id="helpIconVisibilityTable" class="material-icons">visibility</i>
-              </button>
-              <div id="helpToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleHelp">
-                Hide help
-              </div>
-            </td>
-          </tr>
-          <tr onclick="showDialog('badgeDialog')" style="height: 70px;">
-            <td class="mdl-data-table__cell--non-numeric">MyUW badge <span class="badge__new-release"><i
-                  class="material-icons">new_releases</i> (new 2019)</span></td>
-            <td><a href="https://github.com/myuw-web-components/myuw-badge" target="_blank"
-                onclick="event.stopImmediatePropagation()">myuw-badge</a></td>
-            <td>
-              <button id="toggleBadge" aria-label="exclude badge from code generation" class="icon-button"
-                onclick="event.stopImmediatePropagation();toggleComponent('badge')">
-                <i id="badgeIconVisibilityTable" class="material-icons">visibility</i>
-              </button>
-              <div id="badgeToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleBadge">
-                Exclude badge from code generation
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="wrapper__table-scroll-wrapper">
+        <table class="mdl-data-table mdl-js-data-table">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Component</th>
+              <th>Github link</th>
+              <th>Toggle visibility</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="tourHighlightAppBar" onclick="showDialog('topBarDialog');mediator.trigger('show-step-3');">
+              <td id="tourAnchorAppBar" class="mdl-data-table__cell--non-numeric">Top app bar</td>
+              <td><a href="https://github.com/myuw-web-components/myuw-app-bar" target="_blank"
+                  onclick="event.stopImmediatePropagation()">myuw-app-bar</a></td>
+              <td>n/a</td>
+            </tr>
+            <tr onclick="showDialog('drawerDialog')">
+              <td class="mdl-data-table__cell--non-numeric">Navigation drawer</td>
+              <td><a href="https://github.com/myuw-web-components/myuw-drawer" target="_blank"
+                  onclick="event.stopImmediatePropagation()">myuw-drawer</a></td>
+              <td>
+                <button id="toggleNav" aria-label="Hide navigation drawer" class="icon-button"
+                  onclick="event.stopPropagation();toggleComponent('nav')">
+                  <i id="navIconVisibilityTable" class="material-icons">visibility</i>
+                </button>
+                <div id="navToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleNav">
+                  Hide nav
+                </div>
+              </td>
+            </tr>
+            <tr onclick="showDialog('notificationsDialog')">
+              <td class="mdl-data-table__cell--non-numeric">Notifications <span class="badge__new-release"><i
+                    class="material-icons">new_releases</i> (new 2019)</span></td>
+              <td><a href="https://github.com/myuw-web-components/myuw-notifications" target="_blank"
+                  onclick="event.stopImmediatePropagation()">myuw-notifications</a></td>
+              <td>
+                <button id="toggleNotifications" aria-label="hide notifications component" class="icon-button"
+                  onclick="event.stopImmediatePropagation();toggleComponent('notifications')">
+                  <i id="notificationsIconVisibilityTable" class="material-icons">visibility</i>
+                </button>
+                <div id="notificationsToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleNotifications">
+                  Hide notifications
+                </div>
+              </td>
+            </tr>
+            <tr onclick="showDialog('bannerDialog')">
+              <td class="mdl-data-table__cell--non-numeric">Banner message <span class="badge__new-release"><i
+                    class="material-icons">new_releases</i> (new 2019)</span></td>
+              <td><a href="https://github.com/myuw-web-components/myuw-banner" target="_blank"
+                  onclick="event.stopImmediatePropagation()">myuw-banner</a></td>
+              <td>
+                <button id="toggleBanner" aria-label="hide banner component" class="icon-button"
+                  onclick="event.stopImmediatePropagation();toggleComponent('banner')">
+                  <i id="bannerIconVisibilityTable" class="material-icons">visibility</i>
+                </button>
+                <div id="bannerToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleBanner">
+                  Hide banner message
+                </div>
+              </td>
+            </tr>
+            <tr onclick="showDialog('searchDialog')">
+              <td class="mdl-data-table__cell--non-numeric">Search bar</td>
+              <td><a href="https://github.com/myuw-web-components/myuw-search" target="_blank"
+                  onclick="event.stopImmediatePropagation()">myuw-search</a></td>
+              <td>
+                <button id="toggleSearch" aria-label="Hide search box" class="icon-button"
+                  onclick="event.stopPropagation();toggleComponent('search')">
+                  <i id="searchIconVisibilityTable" class="material-icons">visibility</i>
+                </button>
+                <div id="searchToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleSearch">
+                  Hide search
+                </div>
+              </td>
+            </tr>
+            <tr id="tourAnchorStep4" onclick="showDialog('profileDialog')">
+              <td class="mdl-data-table__cell--non-numeric">Profile button</td>
+              <td><a href="https://github.com/myuw-web-components/myuw-profile" target="_blank"
+                  onclick="event.stopImmediatePropagation()">myuw-profile</a></td>
+              <td>
+                <button id="profileToggleButton" aria-label="Hide profile button" class="icon-button"
+                  onclick="event.stopPropagation();toggleComponent('profile');mediator.trigger('enable-step-6');">
+                  <i id="profileIconVisibilityTable" class="material-icons">visibility</i>
+                </button>
+                <div id="profileToggleTooltip" class="mdl-tooltip" data-mdl-for="profileToggleButton">
+                  Hide profile
+                </div>
+              </td>
+            </tr>
+            <tr onclick="showDialog('helpDialog')">
+              <td class="mdl-data-table__cell--non-numeric">Help and feedback</td>
+              <td><a href="https://github.com/myuw-web-components/myuw-help" target="_blank"
+                  onclick="event.stopImmediatePropagation()">myuw-help</a></td>
+              <td>
+                <button id="toggleHelp" aria-label="Hide help component" class="icon-button"
+                  onclick="event.stopPropagation();toggleComponent('help')">
+                  <i id="helpIconVisibilityTable" class="material-icons">visibility</i>
+                </button>
+                <div id="helpToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleHelp">
+                  Hide help
+                </div>
+              </td>
+            </tr>
+            <tr onclick="showDialog('badgeDialog')" style="height: 70px;">
+              <td class="mdl-data-table__cell--non-numeric">MyUW badge <span class="badge__new-release"><i
+                    class="material-icons">new_releases</i> (new 2019)</span></td>
+              <td><a href="https://github.com/myuw-web-components/myuw-badge" target="_blank"
+                  onclick="event.stopImmediatePropagation()">myuw-badge</a></td>
+              <td>
+                <button id="toggleBadge" aria-label="exclude badge from code generation" class="icon-button"
+                  onclick="event.stopImmediatePropagation();toggleComponent('badge')">
+                  <i id="badgeIconVisibilityTable" class="material-icons">visibility</i>
+                </button>
+                <div id="badgeToggleTooltip" class="mdl-tooltip" data-mdl-for="toggleBadge">
+                  Exclude badge from code generation
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <h3>How to use this site</h3>
       <p>The best way to get the most out of this site is to <a href="#" onclick="startTour()">take a quick tour.</a>
         <p>Otherwise, you can follow these basic instructions:</p>
@@ -187,7 +190,7 @@ title: Home
         <button id="tour-button__step6-trigger" class="mdl-button mdl-js-button mdl-button--raised"
           onclick="generateComponentMarkup()">Generate code</button>
       </span>
-      <ol>
+      <ol class="wrapper__code-wrapper">
         <li>
           Import components and dependencies into your document
           <button id="copyImportsButton" class="icon-button" onclick="copyMarkup('generatedModuleImports')"><i
