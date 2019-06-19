@@ -1,17 +1,58 @@
 ---
 title: MyUW badge
 layout: component
-status: beta
+status: stable
 readme: https://github.com/myuw-web-components/myuw-badge#readme
 ---
+<h3>Quick start</h3>
+
+<p>Use this section to configure the component, see a live demo, and generate all the code you need to use it on your site. As you interact with the "Customizations" section below, the following live preview will update to match your changes:</p>
+
+<div class="column">
+  <myuw-badge id="demoBadge" url="myuw-web-components.github.io"></myuw-badge>
+  <p>
+    <br>
+    <span id="badgeHelperText" class="helper" style="font-size:14px;height:14px;color:#adadad;"></span>
+  </p>
+</div>
+
+<h4 style="margin-top:0;">Customize your badge</h4>
+<div class="column">
+  <form name="badgePageDemo" onsubmit="event.preventDefault();">
+    <p><strong>Step one:</strong> Set the URL the badge should link to. For example, link to the Wiscard details page in MyUW with the following URL: <a href="https://my.wisc.edu/web/apps/details/wiscard-balance" target="_blank">https://my.wisc.edu/web/apps/details/wiscard-balance</a></p>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <input class="mdl-textfield__input" type="text" id="badgeUrl" placeholder="public.my.wisc.edu/web/apps/details/CourseGuide-Browse-Courses">
+      <label class="mdl-textfield__label" for="badgeUrl">URL</label>
+    </div>
+    <button type="button" class="mdl-button md-js-button mdl-button--raised"
+      onclick="updateDemoBadge(event, 'url');">Set URL</button><br><br>
+    <p><strong>Step two:</strong> Toggle optional customizations</p>
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="badgeDarkTheme" onchange="updateDemoBadge(event, 'theme')">
+      <label for="badgeDarkTheme">Use dark theme?</label>
+    </div>
+    <br>
+    <div class="row">
+      <input class="checkbox" type="checkbox" id="badgeWhiteBorder" onchange="updateDemoBadge(event, 'border')">
+      <label for="badgeWhiteBorder">Use white border?</label>
+    </div>
+  </form>
+</div>
+
+<p><strong>Step three: Generate and copy your custom code</strong></p>
+<p>Click the "Generate badge code" button when you have customized the live preview to your liking.</p>
+<button type="button" class="mdl-button md-js-button mdl-button--raised"
+  onclick="generateBadgeCode();">Generate badge code</button>
+
+<!-- Badge code -->
+<pre class="lang-markup"><code class="lang-markup" id="generateBadgeCode">
+  &lt;!-- muyuw-badge component code will appear here --&gt;
+</code></pre>
+
+
 <h3>Patterns</h3>
 
 <p>This badge was designed to improve discoverability of MyUW widgets across other UW-Madison (wisc.edu) domains.</p>
-
-<p>For example, the following badge could be used on a departmental website (e.g. Engineering) to help students find the Course Guide widget in MyUW:</p>
-
-
-<p><myuw-badge url="https://public.my.wisc.edu/web/apps/details/CourseGuide-Browse-Courses"></myuw-badge></p>
 
 <ul class="list__dos-and-donts">
   <span class="list__dos-and-donts--do">Do</span>
@@ -44,3 +85,90 @@ readme: https://github.com/myuw-web-components/myuw-badge#readme
 </ul>
 
 </code></pre>
+
+
+<script>
+this.badgeTemplate = `
+&lt;myuw-badge
+  url=""&gt;
+&lt;/myuw-badge&gt;`;
+this.badgeTemplateUrl = 'url=""';
+this.badgeTemplateTheme = '';
+this.badgeTemplateBorder = '';
+
+function updateDemoBadge(e, attribute) {
+  e.preventDefault();
+  // Get demo badge
+  var _badge = document.getElementById('demoBadge');
+
+  // Get property fields
+  var url = document.getElementById('badgeUrl');
+  var theme = document.getElementById('badgeDarkTheme');
+  var border = document.getElementById('badgeWhiteBorder');
+  var helper = document.getElementById('badgeHelperText');
+
+  // Update template for code generation
+  var badgeTemplateStart = '&lt;myuw-badge';
+  var badgeTemplateEnd =  '&gt;&lt;/myuw-badge&gt;';
+
+  // Update corresponding attribute and templates
+  switch (attribute) {
+    case 'url':
+      _badge.setAttribute('url', url.value);
+      this.badgeTemplateUrl = `url="${url.value}"`;
+      helper.innerText = `Updated url to: "${url.value}"`;
+      url.value = '';
+      break;
+    case 'theme':
+      if (theme.checked == true) {
+        _badge.setAttribute('dark-theme', '');
+        this.badgeTemplateTheme = `\n\tdark-theme`;
+        helper.innerText = 'Added the dark-theme attribute';
+      } else {
+        _badge.removeAttribute('dark-theme');
+        this.badgeTemplateTheme = '';
+        helper.innerText = 'Removed the dark-theme attribute';
+      }
+      break;
+    case 'border':
+      if (border.checked == true) {
+        _badge.setAttribute('white-border', '');
+        this.badgeTemplateBorder = `\n\twhite-border`;
+        helper.innerText = 'Added the white-border attribute';
+      } else {
+        _badge.removeAttribute('white-border');
+        this.badgeTemplateBorder = '';
+        helper.innerText = 'Removed the white-border attribute';
+      }
+      break;
+  }
+
+  // Update badge template for code generation
+  this.badgeTemplate = `${badgeTemplateStart}\n\t${this.badgeTemplateUrl}`;
+  if (this.badgeTemplateTheme.length > 0) { this.badgeTemplate += `${this.badgeTemplateTheme}` }
+  if (this.badgeTemplateBorder.length > 0) { this.badgeTemplate += `${this.badgeTemplateBorder}` }
+  this.badgeTemplate += `\n${badgeTemplateEnd}`;
+}
+function generateBadgeCode() {
+  var markupContainer = document.getElementById('generateBadgeCode');
+  var badgeImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-badge@1.0.2?module"&gt;&lt;/script&gt';
+  var badgeNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-badge@1.0.2"&gt;&lt;/script&gt';
+  var markupString = `
+&lt;!-- Copy and paste the following script tags into your page's &lt;head&gt; element --&gt;
+&lt;script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-loader.js"&gt;&lt;/script&gt;
+${badgeImport}
+${badgeNoModule}
+
+&lt!-- Copy and add the following markup wherever you want to see your customized badge --&gt;
+${this.badgeTemplate}
+
+
+`;
+
+  // Replace placeholder markup
+  markupContainer.innerHTML = markupString;
+
+  // Highlight code
+  Prism.highlightElement(markupContainer);
+}
+</script>
