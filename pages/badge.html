@@ -19,7 +19,7 @@ readme: https://github.com/myuw-web-components/myuw-badge#readme
 <h4 style="margin-top:0;">Customize your badge</h4>
 <div class="column">
   <form name="badgePageDemo" onsubmit="event.preventDefault();">
-    <p><strong>Step one:</strong> Set the URL the badge should link to. For example, link to the Wiscard details page in MyUW with the following URL: <a href="https://my.wisc.edu/web/apps/details/wiscard-balance" target="_blank">https://my.wisc.edu/web/apps/details/wiscard-balance</a></p>
+    <p><strong>Step one:</strong> Set the URL the badge should link to. For example, link to the Wiscard details page in MyUW with the following URL: <a href="https://my.wisc.edu/web/apps/details/wiscard-balance" target="_blank">https://my.wisc.edu/web/apps/details/wiscard-balance</a> . For another example, link to the HR, Payroll, and Benefit News details page in MyUW with <a href="https://my.wisconsin.edu/web/apps/details/uw-system-hr-payroll-benefits-news" target="_blank">https://my.wisconsin.edu/web/apps/details/uw-system-hr-payroll-benefits-news</a></p>
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
       <input class="mdl-textfield__input" type="text" id="badgeUrl" placeholder="public.my.wisc.edu/web/apps/details/CourseGuide-Browse-Courses">
       <label class="mdl-textfield__label" for="badgeUrl">URL</label>
@@ -52,16 +52,19 @@ readme: https://github.com/myuw-web-components/myuw-badge#readme
 
 <h3>Patterns</h3>
 
-<p>This badge was designed to improve discoverability of MyUW widgets across other UW-Madison (wisc.edu) domains.</p>
+<p>This badge was designed to improve discoverability of MyUW widgets across
+  other UW-Madison (wisc.edu) (or UW-System, as appropriate) domains.</p>
 
 <ul class="list__dos-and-donts">
   <span class="list__dos-and-donts--do">Do</span>
   <li>Use the badge when referring to content that is represented by a widget in MyUW</li>
   <li>Use the url for a widget's detail page in the  <code class="language-markup">url=""</code> attribute</li>
+  <li>Use the dark-theme in non-Madison-specific contexts</li>
   <br>
   <span class="list__dos-and-donts--dont">Don't</span>
   <li>Link to the MyUW home page</li>
   <li>Link to a MyUW search results page (unless multiple widgets match the criteria)</li>
+  <li>Use the red theme in non-Madison-specific contexts</li>
 </ul>
 
 <h3>How to use</h3>
