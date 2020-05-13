@@ -22,6 +22,10 @@ bundle exec jekyll serve
 
 View the site at http://127.0.0.1:4000/
 
+## Notes
+
+This repository uses [this](https://github.com/lob/generate-changelog) package to auto-generate the changelog file, therefore it is recommended to follow the [conventional commits](https://www.conventionalcommits.org) specification.
+
 ### Contribution guidelines
 
 Follow these basic rules when contributing to the site:

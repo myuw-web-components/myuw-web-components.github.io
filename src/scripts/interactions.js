@@ -640,56 +640,56 @@ function generateComponentMarkup() {
 
 
     if (this.includedComponents.indexOf('nav') != -1) {
-        drawerImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-drawer@^1?module"&gt;&lt;/script&gt';
-        drawerNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-drawer@^1"&gt;&lt;/script&gt';
+        drawerImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-drawer@latest?module"&gt;&lt;/script&gt';
+        drawerNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-drawer@latest"&gt;&lt;/script&gt';
     }
     if (this.includedComponents.indexOf('search') != -1) {
-        searchImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-search@^1?module"&gt;&lt;/script&gt';
-        searchNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-search@^1"&gt;&lt;/script&gt';
+        searchImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-search@latest?module"&gt;&lt;/script&gt';
+        searchNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-search@latest"&gt;&lt;/script&gt';
     }
     if (this.includedComponents.indexOf('profile') != -1) {
-        profileImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-profile@^1?module"&gt;&lt;/script&gt';
-        profileNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-profile@^1"&gt;&lt;/script&gt';
+        profileImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-profile@latest?module"&gt;&lt;/script&gt';
+        profileNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-profile@latest"&gt;&lt;/script&gt';
     }
 
     if (this.includedComponents.indexOf('help') != -1) {
-        helpImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-help@^1?module"&gt;&lt;/script&gt';
-        helpNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-help@^1"&gt;&lt;/script&gt';
+        helpImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-help@latest?module"&gt;&lt;/script&gt';
+        helpNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-help@latest"&gt;&lt;/script&gt';
     }
 
     if (this.includedComponents.indexOf('notifications') != -1) {
-      notificationsImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-notifications@^1?module"&gt;&lt;/script&gt';
-      notificationsNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-notifications@^1"&gt;&lt;/script&gt';
+      notificationsImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-notifications@latest?module"&gt;&lt;/script&gt';
+      notificationsNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-notifications@latest"&gt;&lt;/script&gt';
     }
 
     if (this.includedComponents.indexOf('banner') != -1) {
-      bannerImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-banner@^1?module"&gt;&lt;/script&gt';
-      bannerNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-banner@^1"&gt;&lt;/script&gt';
+      bannerImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-banner@latest?module"&gt;&lt;/script&gt';
+      bannerNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-banner@latest"&gt;&lt;/script&gt';
     }
 
     if (this.includedComponents.indexOf('badge') != -1) {
-      badgeImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-badge@^1?module"&gt;&lt;/script&gt';
-      badgeNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-badge@^1"&gt;&lt;/script&gt';
+      badgeImport = '&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-badge@latest?module"&gt;&lt;/script&gt';
+      badgeNoModule = '&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-badge@latest"&gt;&lt;/script&gt';
     }
 
     // Include script tags for all components currently toggled ON
     var importsString = `
 &lt;!-- The following tags are required for cross-browser support --&gt;
 &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
-&lt;script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-loader.js"&gt;&lt;/script&gt;
-&lt;script src="https://unpkg.com/css-vars-ponyfill@1"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/@webcomponents/webcomponentsjs@latest/webcomponents-loader.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/css-vars-ponyfill@latest"&gt;&lt;/script&gt;
 &lt;script&gt;cssVars({shadowDOM: true,watch: true});&lt;/script&gt;
 
 &lt!-- UW-Madison app styles (recommended if you're a UW-Madison adopter) --&gt;
-&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1?module"&gt;&lt;/script&gt;
-&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-styles@^1"&gt;&lt;/script&gt;
+&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-styles@latest?module"&gt;&lt;/script&gt;
+&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-styles@latest"&gt;&lt;/script&gt;
 
 &lt!--
   Import selected myuw-web-components
   Note: "nomodule" fallbacks are required for cross-browser support. They will only be loaded in browsers without ES6 module support.
 --&gt;
-&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1?module"&gt;&lt;/script&gt;
-&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-bar@^1"&gt;&lt;/script&gt;
+&lt;script type="module" src="https://unpkg.com/@myuw-web-components/myuw-app-bar@latest?module"&gt;&lt;/script&gt;
+&lt;script nomodule src="https://unpkg.com/@myuw-web-components/myuw-app-bar@latest"&gt;&lt;/script&gt;
 ${drawerImport}
 ${drawerNoModule}
 ${searchImport}

@@ -144,7 +144,7 @@ const stepSix = tour.addStep('step6', {
 const stepSeven = tour.addStep('step7', {
   title: 'Copy the generated code',
   text: `Here you'll find of the code you need to use myuw-web-components. Just copy and paste it into your own app or web page. If you have
-   questions or concerns, or if you need more help getting started, feel free to <a href="contacts.html">contact our development team</a>.
+   questions or concerns, or if you need more help getting started, feel free to <a href="pages/contacts.html">contact our development team</a>.
   `,
   showCancelLink: true,
   buttons: [
